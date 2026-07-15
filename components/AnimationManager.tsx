@@ -24,7 +24,7 @@ export default function AnimationManager() {
     // Disable scrolling during load
     document.body.style.overflow = 'hidden';
 
-    const duration = 2400; // 2.4s total load time
+    const duration = 1200; // 1.2s total load time
     const start = Date.now();
 
     const updateLoader = () => {
@@ -270,14 +270,73 @@ export default function AnimationManager() {
         <span>SYS.V1.2.0</span>
       </div>
 
-      {/* Main Counter Graphic */}
-      <div ref={counterRef} className="flex flex-col items-center gap-2 z-10 my-auto">
-        <div className="text-8xl sm:text-9xl font-black font-sans tracking-tighter bg-gradient-to-r from-white via-accent to-mint bg-clip-text text-transparent">
-          {progress.toString().padStart(2, '0')}
+      {/* Main Spinning Logo Graphic */}
+      <div ref={counterRef} className="flex flex-col items-center gap-6 z-10 my-auto relative">
+        <div className="relative w-36 h-36 flex items-center justify-center">
+          {/* Outer Ring - Spinning Line Arc */}
+          <svg className="absolute inset-0 w-full h-full animate-[spin_2s_linear_infinite]" viewBox="0 0 100 100">
+            <circle
+              cx="50"
+              cy="50"
+              r="46"
+              fill="none"
+              stroke="url(#loader-gradient-1)"
+              strokeWidth="2"
+              strokeDasharray="80 100"
+              strokeLinecap="round"
+            />
+            <defs>
+              <linearGradient id="loader-gradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#0066D6" />
+                <stop offset="50%" stopColor="#00BFA5" />
+                <stop offset="100%" stopColor="#1DE9B6" />
+              </linearGradient>
+            </defs>
+          </svg>
+
+          {/* Middle Ring - Spinning Dots (Counter-clockwise) */}
+          <svg className="absolute w-[80%] h-[80%] animate-[spin_3s_linear_infinite_reverse]" viewBox="0 0 100 100">
+            <circle
+              cx="50"
+              cy="50"
+              r="44"
+              fill="none"
+              stroke="#00BFA5"
+              strokeWidth="3.5"
+              strokeDasharray="1 18"
+              strokeLinecap="round"
+              opacity="0.8"
+            />
+          </svg>
+
+          {/* Inner Ring - Spinning Dashed Arc */}
+          <svg className="absolute w-[60%] h-[60%] animate-[spin_1.5s_linear_infinite]" viewBox="0 0 100 100">
+            <circle
+              cx="50"
+              cy="50"
+              r="42"
+              fill="none"
+              stroke="#1DE9B6"
+              strokeWidth="2"
+              strokeDasharray="40 40"
+              strokeLinecap="round"
+              opacity="0.9"
+            />
+          </svg>
+
+          {/* Glowing Aura behind Logo */}
+          <div className="absolute w-20 h-20 bg-gradient-to-br from-primary via-accent to-mint rounded-full blur-2xl opacity-30 animate-pulse" />
+
+          {/* Central Logo 'eg' */}
+          <div className="absolute flex items-center justify-center w-20 h-20 rounded-full bg-black/80 border border-white/10 backdrop-blur-xl shadow-[0_0_30px_rgba(0,183,165,0.15)]">
+            <span className="text-3xl font-black tracking-tight bg-gradient-to-br from-white via-slate-200 to-accent bg-clip-text text-transparent select-none font-sans">
+              eg
+            </span>
+          </div>
         </div>
-        
+
         {/* Loading Progress Line */}
-        <div className="w-64 sm:w-80 h-[2px] bg-white/10 rounded-full overflow-hidden relative mt-4">
+        <div className="w-56 sm:w-64 h-[2px] bg-white/5 rounded-full overflow-hidden relative mt-2">
           <div
             ref={lineRef}
             className="h-full bg-gradient-to-r from-primary via-accent to-mint transition-all duration-100 ease-out"

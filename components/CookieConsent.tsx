@@ -1,8 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Link from 'next/'; // Let's avoid URL encoding typos as per anti-typo rules
-import LinkComponent from 'next/link';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'motion/react';
 import { Shield, X } from 'lucide-react';
 
@@ -57,9 +56,9 @@ export default function CookieConsent() {
                 <h4 className="text-white text-sm font-bold">Cookie Consent</h4>
                 <p className="text-gray-400 text-xs leading-relaxed">
                   We use cookies to measure technical performance, optimize loading speed, and provide tailored service recommendations. Read our{' '}
-                  <LinkComponent href="/legal/cookies" className="text-accent hover:underline">
+                  <Link href="/legal/cookies" className="text-accent hover:underline">
                     Cookie Policy
-                  </LinkComponent>{' '}
+                  </Link>{' '}
                   for details.
                 </p>
               </div>

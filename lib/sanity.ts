@@ -1,4 +1,4 @@
-// Mock Sanity Client with Realistic Schema Definitions & Content for Edgrow Technologies
+// Shared content types and fallback content for Edgrow Technologies.
 
 export interface Author {
   name: string;
@@ -119,11 +119,11 @@ const initialAuthors: Record<string, Author> = {
   },
 };
 
-const initialServices: Service[] = [
+export const initialServices: Service[] = [
   {
     id: 'custom-web',
     title: 'Custom Web Development',
-    icon: 'Code',
+    icon: 'code',
     shortDescription: 'Enterprise-grade custom web applications engineered with Next.js, React, Node.js, and cloud ecosystems.',
     detailedDescription: 'We craft high-performance, responsive web portals and SaaS platforms tailored to automate your operations. Our expert web developers in Colombo and London implement modern architectures that guarantee speedy loads, solid security, and frictionless SEO.',
     features: [
@@ -138,7 +138,7 @@ const initialServices: Service[] = [
   {
     id: 'enterprise-software',
     title: 'Custom Software Development',
-    icon: 'Cpu',
+    icon: 'cpu',
     shortDescription: 'Scalable cloud-native enterprise business logic, database architectures, and customized ERP/CRM portals.',
     detailedDescription: 'Transform legacy bottlenecks into lightweight, automated web solutions. We specialize in cross-border agile software engineering across e-learning verticals, fintech, healthcare, and retail sectors.',
     features: [
@@ -152,7 +152,7 @@ const initialServices: Service[] = [
   {
     id: 'ecommerce-solutions',
     title: 'E-commerce Solutions',
-    icon: 'ShoppingBag',
+    icon: 'shopping-bag',
     shortDescription: 'Omnichannel retail stores, payment gateways, complex inventory hubs, and fully optimized conversion funnels.',
     detailedDescription: 'Harness high-converting digital storefronts. We build fully custom e-commerce engines as well as headless Shopify/Magento portals that scale effortlessly on Black Fridays.',
     features: [
@@ -166,7 +166,7 @@ const initialServices: Service[] = [
   {
     id: 'ui-ux-design',
     title: 'UI/UX Design',
-    icon: 'Layers',
+    icon: 'layers',
     shortDescription: 'Figma prototypes, customer journey mapping, custom design systems, and rapid wireframe testing.',
     detailedDescription: 'Design is not just what it looks like, it is how it works. We produce high-fidelity design systems and user journey paths that drive massive customer actions and trust.',
     features: [
@@ -180,7 +180,7 @@ const initialServices: Service[] = [
   {
     id: 'seo-services',
     title: 'SEO & Growth Services',
-    icon: 'TrendingUp',
+    icon: 'trending-up',
     shortDescription: 'Semantic content strategies, technical site health audits, speed optimizations, and localized search rank.',
     detailedDescription: 'Own your digital search visibility. We specialize in technical SEO optimizations, Core Web Vitals remediation, and semantic content engineering that beats major competitors in Google Search results.',
     features: [
@@ -194,7 +194,7 @@ const initialServices: Service[] = [
   {
     id: 'cloud-devops',
     title: 'Cloud & DevOps',
-    icon: 'Cloud',
+    icon: 'cloud',
     shortDescription: 'Serverless deployments, continuous integration (CI/CD), scalable SQL/NoSQL databases, and security audits.',
     detailedDescription: 'Secure, reliable cloud environments that scale. We provision optimized infrastructures on AWS, Google Cloud, and Azure with continuous deployment workflows.',
     features: [

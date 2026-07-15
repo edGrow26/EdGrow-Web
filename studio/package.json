@@ -1,0 +1,22 @@
+{
+  "name": "edgrow-studio",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "node --env-file=../.env.local ../node_modules/sanity/bin/sanity dev",
+    "build": "node --env-file=../.env.local ../node_modules/sanity/bin/sanity build",
+    "deploy": "node --env-file=../.env.local ../node_modules/sanity/bin/sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/icons": "^5.1.0",
+    "@sanity/vision": "^6.5.0",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "sanity": "^6.5.0",
+    "styled-components": "^6.1.19"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "typescript": "~5.8.2"
+  }
+}
