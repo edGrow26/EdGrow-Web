@@ -7,6 +7,7 @@ import { Sparkles, Award, Users, Compass, Shield, Briefcase, Zap } from 'lucide-
 import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ScrollAnimate from '../../components/ScrollAnimate';
 
 const coreValues = [
   { icon: Shield, title: 'Absolute Data Security', desc: 'Every application we compile undergoes meticulous vulnerability assessments and implements rigorous encryption protocols.' },
@@ -36,10 +37,10 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-6"
           >
-            <Sparkles className="w-3.5 h-3.5 text-mint" />
+            <Sparkles className="w-3.5 h-3.5 text-mint" aria-hidden="true" />
             <span>Connecting Colombo & London Globally</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -66,41 +67,37 @@ export default function AboutPage() {
       <section className="py-20 relative z-10 bg-white/[0.005] border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.6 }}
-              className="flex flex-col gap-6"
-            >
-              <span className="text-xs font-bold text-accent uppercase tracking-widest">Our Mandate</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                To Accelerate Digital Growth with Custom-Engineered Clarity
-              </h2>
-              <p className="text-gray-300 text-sm leading-relaxed">
-                At Edgrow Tech, we believe software development shouldn&apos;t feel like a black box. Our dual-shore architecture allows our clients to gain immediate access to brilliant frontend developers and deep-tier backend coders in Sri Lanka, completely backed by local accounts, timelines, and structures in the UK.
-              </p>
-              <div className="flex gap-4 py-2 text-xs font-bold text-gray-400">
-                <span className="flex items-center gap-1.5"><Shield className="w-4 h-4 text-accent" /> ISO Compliant Processes</span>
-                <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-mint" /> Global Talent Hubs</span>
-              </div>
-            </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="relative rounded-2xl overflow-hidden aspect-video border border-white/10 shadow-2xl"
-            >
-              <img
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
-                alt="Edgrow team brainstorming session"
-                className="w-full h-full object-cover filter brightness-90"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-65" />
-            </motion.div>
+            <ScrollAnimate variant="slideRight">
+              <div className="flex flex-col gap-6">
+                <span className="text-xs font-bold text-accent uppercase tracking-widest">Our Mandate</span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                  To Accelerate Digital Growth with Custom-Engineered Clarity
+                </h2>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  At Edgrow Tech, we believe software development shouldn&apos;t feel like a black box. Our dual-shore architecture allows our clients to gain immediate access to brilliant frontend developers and deep-tier backend coders in Sri Lanka, completely backed by local accounts, timelines, and structures in the UK.
+                </p>
+                <div className="flex gap-4 py-2 text-xs font-bold text-gray-400">
+                  <span className="flex items-center gap-1.5"><Shield className="w-4 h-4 text-accent" aria-hidden="true" /> ISO Compliant Processes</span>
+                  <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-mint" aria-hidden="true" /> Global Talent Hubs</span>
+                </div>
+              </div>
+            </ScrollAnimate>
+
+            <ScrollAnimate variant="slideLeft" delay={0.15}>
+              <div className="relative rounded-2xl overflow-hidden aspect-video border border-white/10 shadow-2xl">
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
+                  alt="Edgrow team brainstorming session"
+                  loading="lazy"
+                  decoding="async"
+                  width={800}
+                  height={450}
+                  className="w-full h-full object-cover filter brightness-90"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-65" aria-hidden="true" />
+              </div>
+            </ScrollAnimate>
 
           </div>
         </div>
@@ -109,78 +106,61 @@ export default function AboutPage() {
       {/* Core values block */}
       <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.05 }}
-            transition={{ duration: 0.5 }}
-            className="text-center max-w-2xl mx-auto mb-16"
-          >
-            <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Core Pillars</span>
-            <h2 className="text-3xl font-extrabold text-white tracking-tight">Our Operational Values</h2>
-          </motion.div>
+          <ScrollAnimate variant="fadeUp">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Core Pillars</span>
+              <h2 className="text-3xl font-extrabold text-white tracking-tight">Our Operational Values</h2>
+            </div>
+          </ScrollAnimate>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {coreValues.map((val, idx) => {
               const Icon = val.icon;
+              const variants: Array<'fadeUp' | 'slideRight' | 'scaleIn' | 'rotateIn'> = ['fadeUp', 'slideRight', 'scaleIn', 'rotateIn'];
               return (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.05 }}
-                  transition={{ duration: 0.5, delay: idx * 0.1 }}
-                  className="glass-panel p-8 rounded-2xl border border-white/5 hover:border-white/10 transition-all duration-300 flex flex-col justify-between"
-                >
-                  <div>
-                    <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-accent mb-6">
-                      <Icon className="w-5 h-5" />
+                <ScrollAnimate key={idx} variant={variants[idx % variants.length]} delay={idx * 0.1}>
+                  <div className="glass-panel p-8 rounded-2xl border border-white/5 hover:border-white/10 transition-all duration-300 flex flex-col justify-between h-full">
+                    <div>
+                      <div className="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center text-accent mb-6">
+                        <Icon className="w-5 h-5" aria-hidden="true" />
+                      </div>
+                      <h3 className="text-base font-bold text-white mb-3">{val.title}</h3>
+                      <p className="text-gray-400 text-xs leading-relaxed">{val.desc}</p>
                     </div>
-                    <h3 className="text-base font-bold text-white mb-3">{val.title}</h3>
-                    <p className="text-gray-400 text-xs leading-relaxed">{val.desc}</p>
                   </div>
-                </motion.div>
+                </ScrollAnimate>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Animated Milestones Timeline (Section 4 TIMELINE REQUIREMENT) */}
+      {/* Animated Milestones Timeline */}
       <section className="py-24 relative z-10 border-t border-white/5 bg-white/[0.005]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.05 }}
-            transition={{ duration: 0.5 }}
-            className="text-center mb-16"
-          >
-            <span className="text-xs font-bold text-mint uppercase tracking-widest block mb-3">Chronology</span>
-            <h2 className="text-3xl font-extrabold text-white tracking-tight">The Edgrow Story Timeline</h2>
-          </motion.div>
+          <ScrollAnimate variant="fadeUp">
+            <div className="text-center mb-16">
+              <span className="text-xs font-bold text-mint uppercase tracking-widest block mb-3">Chronology</span>
+              <h2 className="text-3xl font-extrabold text-white tracking-tight">The Edgrow Story Timeline</h2>
+            </div>
+          </ScrollAnimate>
 
           <div className="relative border-l border-white/10 pl-8 ml-4 flex flex-col gap-12">
             {timelineMilestones.map((mil, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -15 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.05 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="relative"
-              >
-                {/* Timeline node circle */}
-                <div className="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full bg-black border-2 border-accent flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-accent animate-ping" />
+              <ScrollAnimate key={idx} variant="slideRight" delay={idx * 0.12}>
+                <div className="relative">
+                  {/* Timeline node circle */}
+                  <div className="absolute -left-[41px] top-1.5 w-6 h-6 rounded-full bg-black border-2 border-accent flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-accent animate-ping" aria-hidden="true" />
+                  </div>
+
+                  <div>
+                    <span className="text-xs font-bold text-accent font-mono block mb-1">{mil.year}</span>
+                    <h3 className="text-lg font-bold text-white mb-2">{mil.title}</h3>
+                    <p className="text-gray-400 text-xs leading-relaxed max-w-xl">{mil.desc}</p>
+                  </div>
                 </div>
-                
-                <div>
-                  <span className="text-xs font-bold text-accent font-mono block mb-1">{mil.year}</span>
-                  <h3 className="text-lg font-bold text-white mb-2">{mil.title}</h3>
-                  <p className="text-gray-400 text-xs leading-relaxed max-w-xl">{mil.desc}</p>
-                </div>
-              </motion.div>
+              </ScrollAnimate>
             ))}
           </div>
         </div>

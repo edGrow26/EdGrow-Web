@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { usePathname } from 'next/navigation';
 
 // Register ScrollTrigger client-side
 if (typeof window !== 'undefined') {
@@ -10,6 +11,7 @@ if (typeof window !== 'undefined') {
 }
 
 export default function AnimationManager() {
+  const pathname = usePathname();
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [logText, setLogText] = useState('INITIALIZING ARCHITECTURES...');
@@ -21,6 +23,11 @@ export default function AnimationManager() {
 
   // 1. Loader simulation & exit
   useEffect(() => {
+    let cancelled = false;
+    let animationFrameId: number | null = null;
+    let exitTimerId: ReturnType<typeof setTimeout> | null = null;
+    let exitTimeline: gsap.core.Timeline | null = null;
+
     // Disable scrolling during load
     document.body.style.overflow = 'hidden';
 
@@ -28,6 +35,8 @@ export default function AnimationManager() {
     const start = Date.now();
 
     const updateLoader = () => {
+      if (cancelled) return;
+
       const elapsed = Date.now() - start;
       const percent = Math.min(Math.round((elapsed / duration) * 100), 100);
       
@@ -53,12 +62,16 @@ export default function AnimationManager() {
       }
 
       if (percent < 100) {
-        requestAnimationFrame(updateLoader);
+        animationFrameId = requestAnimationFrame(updateLoader);
       } else {
         // Trigger exit animation
-        setTimeout(() => {
-          const tl = gsap.timeline({
+        exitTimerId = setTimeout(() => {
+          if (cancelled || !loaderRef.current) return;
+
+          exitTimeline = gsap.timeline({
             onComplete: () => {
+              if (cancelled) return;
+
               setLoading(false);
               document.body.style.overflow = '';
               // Refresh scrolltrigger after page content layout settles
@@ -70,7 +83,7 @@ export default function AnimationManager() {
           });
 
           // Elegant fade and slide out of loader elements
-          tl.to([counterRef.current, lineRef.current, logsRef.current], {
+          exitTimeline.to([counterRef.current, lineRef.current, logsRef.current], {
             opacity: 0,
             y: -20,
             duration: 0.4,
@@ -79,14 +92,14 @@ export default function AnimationManager() {
           });
 
           // Slide the entire loader screen UP like a shutter
-          tl.to(loaderRef.current, {
+          exitTimeline.to(loaderRef.current, {
             yPercent: -100,
             duration: 0.85,
             ease: 'power4.inOut'
           }, '-=0.1');
 
           // Subtle reveal effect on main page content wrapper
-          tl.fromTo('main, .relative', {
+          exitTimeline.fromTo('#main-content', {
             scale: 0.96,
             opacity: 0.8
           }, {
@@ -104,6 +117,17 @@ export default function AnimationManager() {
     updateLoader();
 
     return () => {
+      cancelled = true;
+
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      if (exitTimerId !== null) {
+        clearTimeout(exitTimerId);
+      }
+      exitTimeline?.kill();
+
+      gsap.set('#main-content', { clearProps: 'opacity,transform' });
       document.body.style.overflow = '';
     };
   }, []);
@@ -112,49 +136,51 @@ export default function AnimationManager() {
   useEffect(() => {
     if (loading) return;
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      gsap.set('[data-scroll-animate]', { clearProps: 'all' });
+      return;
+    }
+
+    const listenerCleanups: Array<() => void> = [];
+
     // A. Clean up helper
     const ctx = gsap.context(() => {
-      
-      // B. Reveal titles & section headers
-      const headings = document.querySelectorAll('section h2, .gsap-reveal-title');
-      headings.forEach((heading) => {
-        gsap.fromTo(heading, 
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.85,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: heading,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            }
-          }
-        );
+
+      // B. Animate page blocks that have not opted into the shared Motion
+      // component. This covers CMS detail pages and legal content without
+      // double-transforming components wrapped in <ScrollAnimate>.
+      const autoRevealCandidates = Array.from(document.querySelectorAll<HTMLElement>(
+        '#main-content article > *, #main-content section > div > *, [data-auto-scroll-animate]'
+      )).filter((element, index, elements) => {
+        if (elements.indexOf(element) !== index) return false;
+        if (element.closest('[data-scroll-animate], #hero, nav, footer, [data-no-scroll-animation]')) return false;
+
+        const position = window.getComputedStyle(element).position;
+        return position !== 'fixed' && position !== 'sticky';
       });
 
-      // C. Stagger glass panels / service cards / portfolio grids
-      const grids = document.querySelectorAll('.grid, .gsap-stagger-container');
-      grids.forEach((grid) => {
-        const items = grid.querySelectorAll('.glass-panel, .gsap-stagger-item, article, .p-5');
-        if (items.length > 0) {
-          gsap.fromTo(items,
-            { opacity: 0, y: 35 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.75,
-              stagger: 0.12,
-              ease: 'power2.out',
-              scrollTrigger: {
-                trigger: grid,
-                start: 'top 80%',
-                toggleActions: 'play none none none',
-              }
-            }
-          );
-        }
+      autoRevealCandidates.forEach((element, index) => {
+        const horizontalDistance = window.innerWidth < 640 ? 20 : 46;
+        const x = index % 2 === 0 ? -horizontalDistance : horizontalDistance;
+
+        gsap.fromTo(element,
+          { autoAlpha: 0, x, y: 24, scale: 0.97 },
+          {
+            autoAlpha: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 0.75,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: element,
+              start: 'top 90%',
+              end: 'bottom 10%',
+              toggleActions: 'play reverse play reverse',
+            },
+          }
+        );
       });
 
       // D. Interactive magnetic / fluid CTA button effect
@@ -186,35 +212,27 @@ export default function AnimationManager() {
 
         btn.addEventListener('mousemove', onMouseMove);
         btn.addEventListener('mouseleave', onMouseLeave);
+        listenerCleanups.push(() => {
+          btn.removeEventListener('mousemove', onMouseMove);
+          btn.removeEventListener('mouseleave', onMouseLeave);
+        });
       });
-
-      // E. Custom sweep/clip-path reveals on images
-      const images = document.querySelectorAll('img, .gsap-image-reveal');
-      images.forEach((img) => {
-        gsap.fromTo(img,
-          { clipPath: 'inset(10% 10% 10% 10% round 16px)', scale: 1.05, opacity: 0.5 },
-          {
-            clipPath: 'inset(0% 0% 0% 0% round 12px)',
-            scale: 1,
-            opacity: 1,
-            duration: 1.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: img,
-              start: 'top 85%',
-              toggleActions: 'play none none none',
-            }
-          }
-        );
-      });
-
     });
 
-    return () => ctx.revert();
-  }, [loading]);
+    const refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh());
+
+    return () => {
+      cancelAnimationFrame(refreshFrame);
+      listenerCleanups.forEach((cleanup) => cleanup());
+      ctx.revert();
+    };
+  }, [loading, pathname]);
 
   // 3. Hero entrance choreography
   const triggerHeroEntrance = () => {
+    const hero = document.querySelector('#hero');
+    if (!hero) return;
+
     const tl = gsap.timeline();
 
     // Stagger hero badge, main heading split words, and sub-paragraphs
@@ -242,12 +260,6 @@ export default function AnimationManager() {
       '-=0.5'
     );
 
-    // Stats counter animate
-    tl.fromTo('#stats div',
-      { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.8, stagger: 0.15, ease: 'power3.out' },
-      '-=0.4'
-    );
   };
 
   if (!loading) return null;

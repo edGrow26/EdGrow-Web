@@ -6,7 +6,7 @@
   --color-mint: #1DE9B6;
   --color-ink: #000000;
   --color-paper: #FFFFFF;
-  --font-sans: "Montserrat", "Avenir Next", "Segoe UI", sans-serif;
+  --font-sans: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 /* Theme variables */
@@ -18,9 +18,9 @@
 }
 
 html.light {
-  --bg-ambient-from: rgba(0, 102, 214, 0.08);
-  --bg-ambient-via: #f1f5f9;
-  --bg-ambient-to: #f8fafc;
+  --bg-ambient-from: rgba(0, 102, 214, 0.04);
+  --bg-ambient-via: #ffffff;
+  --bg-ambient-to: #ffffff;
   --grid-line-color: rgba(0, 102, 214, 0.04);
 }
 
@@ -32,7 +32,7 @@ html {
 body {
   background-color: #000000;
   color: #FFFFFF;
-  font-family: "Montserrat", "Avenir Next", "Segoe UI", sans-serif;
+  font-family: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 /* Scrollbar styling */
@@ -119,8 +119,8 @@ body {
    ========================================================================== */
 
 html.light body {
-  background-color: #f6f8fa !important;
-  background-image: radial-gradient(circle at 80% 20%, rgba(0, 102, 214, 0.07) 0%, rgba(246, 248, 250, 1) 80%) !important;
+  background-color: #ffffff !important;
+  background-image: none !important;
   color: #1e293b !important;
   transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -361,7 +361,7 @@ html.light ::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   background-color: #000000 !important;
   color: #ffffff !important;
-  font-family: "Montserrat", "Avenir Next", "Segoe UI", sans-serif !important;
+  font-family: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif !important;
   font-weight: 600 !important;
   font-size: 1.05rem !important;
   letter-spacing: -0.01em !important;
@@ -409,7 +409,7 @@ html.light .btn-premium-pill:hover {
   justify-content: center;
   background-color: transparent !important;
   color: #ffffff !important;
-  font-family: "Montserrat", "Avenir Next", "Segoe UI", sans-serif !important;
+  font-family: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif !important;
   font-weight: 500 !important;
   font-size: 1rem !important;
   border-radius: 9999px !important;

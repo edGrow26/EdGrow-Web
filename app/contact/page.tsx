@@ -7,6 +7,7 @@ import { Sparkles, Send, Mail, Phone, MapPin, CheckCircle2, User, HelpCircle } f
 import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ScrollAnimate from '../../components/ScrollAnimate';
 import { sanityClient } from '../../lib/sanity';
 
 export default function ContactPage() {
@@ -47,7 +48,7 @@ export default function ContactPage() {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-6"
           >
-            <Sparkles className="w-3.5 h-3.5 text-mint" />
+            <Sparkles className="w-3.5 h-3.5 text-mint" aria-hidden="true" />
             <span>Schedule a Complementary Engineering Consultation</span>
           </motion.div>
           
@@ -79,14 +80,9 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             
             {/* Left Column: Form Inquiry */}
-            <motion.div
-              initial={{ opacity: 0, x: -25 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="lg:col-span-7"
-            >
+            <ScrollAnimate variant="slideRight" className="lg:col-span-7">
               <div className="glass-panel p-6 sm:p-10 rounded-3xl border border-white/5 relative">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full filter blur-2xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full filter blur-2xl pointer-events-none" aria-hidden="true" />
                 
                 <h3 className="text-xl font-bold text-white mb-2">Send Us a Secure Message</h3>
                 <p className="text-xs text-gray-400 mb-8">Our architects will review your custom requests and file proposals.</p>
@@ -98,7 +94,7 @@ export default function ContactPage() {
                     className="py-12 px-6 text-center bg-accent/5 border border-accent/20 rounded-2xl flex flex-col items-center gap-4"
                   >
                     <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent">
-                      <CheckCircle2 className="w-6 h-6" />
+                      <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
                     </div>
                     <h4 className="text-lg font-extrabold text-white">Inquiry Recorded Successfully</h4>
                     <p className="text-gray-300 text-xs sm:text-sm max-w-md leading-relaxed mx-auto">
@@ -116,10 +112,11 @@ export default function ContactPage() {
                     
                     {/* Name */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-                        <User className="w-3.5 h-3.5 text-accent" /> Full Name
+                      <label htmlFor="contact-name" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+                        <User className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Full Name
                       </label>
                       <input
+                        id="contact-name"
                         type="text"
                         required
                         value={name}
@@ -131,10 +128,11 @@ export default function ContactPage() {
 
                     {/* Email */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-                        <Mail className="w-3.5 h-3.5 text-accent" /> Email Address
+                      <label htmlFor="contact-email" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+                        <Mail className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Email Address
                       </label>
                       <input
+                        id="contact-email"
                         type="email"
                         required
                         value={email}
@@ -146,10 +144,11 @@ export default function ContactPage() {
 
                     {/* Subject */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
-                        <HelpCircle className="w-3.5 h-3.5 text-accent" /> Subject of Inquiry
+                      <label htmlFor="contact-subject" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1.5">
+                        <HelpCircle className="w-3.5 h-3.5 text-accent" aria-hidden="true" /> Subject of Inquiry
                       </label>
                       <input
+                        id="contact-subject"
                         type="text"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
@@ -160,10 +159,11 @@ export default function ContactPage() {
 
                     {/* Message */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
+                      <label htmlFor="contact-message" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
                         Detailed Project Description
                       </label>
                       <textarea
+                        id="contact-message"
                         rows={5}
                         required
                         value={message}
@@ -181,11 +181,11 @@ export default function ContactPage() {
                     >
                       {submitting ? (
                         <>
-                          <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" /> Recording message...
+                          <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" aria-hidden="true" /> Recording message...
                         </>
                       ) : (
                         <>
-                          <Send className="w-4 h-4" /> Dispatch Message
+                          <Send className="w-4 h-4" aria-hidden="true" /> Dispatch Message
                         </>
                       )}
                     </button>
@@ -194,25 +194,20 @@ export default function ContactPage() {
                 )}
 
               </div>
-            </motion.div>
+            </ScrollAnimate>
 
             {/* Right Column: Address locators and Maps mockup */}
-            <motion.div
-              initial={{ opacity: 0, x: 25 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="lg:col-span-5 flex flex-col gap-8"
-            >
+            <ScrollAnimate variant="slideLeft" delay={0.15} className="lg:col-span-5 flex flex-col gap-8">
               
               {/* Dual Location Cards */}
               <div className="p-8 rounded-2xl bg-white/[0.01] border border-white/5 flex flex-col gap-8 relative overflow-hidden">
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-mint/5 rounded-full filter blur-2xl pointer-events-none" />
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-mint/5 rounded-full filter blur-2xl pointer-events-none" aria-hidden="true" />
                 
                 <h3 className="text-sm font-bold text-gray-300 uppercase tracking-widest">Our Operations Hubs</h3>
                 
                 {/* UK */}
                 <div className="flex gap-4">
-                  <MapPin className="w-6 h-6 text-accent shrink-0 mt-0.5" />
+                  <MapPin className="w-6 h-6 text-accent shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <h4 className="text-white text-sm font-bold">United Kingdom (HQ)</h4>
                     <span className="text-gray-400 text-xs block leading-relaxed mt-1">
@@ -224,7 +219,7 @@ export default function ContactPage() {
 
                 {/* Sri Lanka */}
                 <div className="flex gap-4">
-                  <MapPin className="w-6 h-6 text-mint shrink-0 mt-0.5" />
+                  <MapPin className="w-6 h-6 text-mint shrink-0 mt-0.5" aria-hidden="true" />
                   <div>
                     <h4 className="text-white text-sm font-bold">Sri Lanka Delivery Hub</h4>
                     <span className="text-gray-400 text-xs block leading-relaxed mt-1">
@@ -241,7 +236,7 @@ export default function ContactPage() {
                 {/* Custom minimalist dark map illustration */}
                 <div className="absolute inset-0 bg-black flex flex-col items-center justify-center p-6 text-center">
                   <div className="w-10 h-10 bg-accent/10 rounded-full flex items-center justify-center text-accent mb-4">
-                    <MapPin className="w-5 h-5 animate-bounce" />
+                    <MapPin className="w-5 h-5 animate-bounce" aria-hidden="true" />
                   </div>
                   <strong className="text-white text-xs block font-bold mb-1">Interactive Colombo-London Map</strong>
                   <span className="text-gray-500 text-[10px] max-w-xs leading-normal">
@@ -250,7 +245,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-            </motion.div>
+            </ScrollAnimate>
 
           </div>
         </div>

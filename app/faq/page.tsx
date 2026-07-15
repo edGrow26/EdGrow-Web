@@ -7,6 +7,7 @@ import { Sparkles, HelpCircle, ChevronDown, ChevronUp } from 'lucide-react';
 import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ScrollAnimate from '../../components/ScrollAnimate';
 import { sanityClient, FAQ } from '../../lib/sanity';
 
 export default function FAQPage() {
@@ -46,7 +47,7 @@ export default function FAQPage() {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-6"
           >
-            <Sparkles className="w-3.5 h-3.5 text-mint" />
+            <Sparkles className="w-3.5 h-3.5 text-mint" aria-hidden="true" />
             <span>Operational, Contract, & Technical Answers</span>
           </motion.div>
           
@@ -77,26 +78,25 @@ export default function FAQPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Category Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-2 mb-12"
-          >
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => { setActiveCategory(cat); setOpenFaqId(null); }}
-                className={`px-4.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  activeCategory === cat
-                    ? 'bg-gradient-to-r from-primary to-accent text-black font-extrabold shadow'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </motion.div>
+          <ScrollAnimate variant="fadeDown">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-12" role="tablist" aria-label="FAQ category filter">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => { setActiveCategory(cat); setOpenFaqId(null); }}
+                  role="tab"
+                  aria-selected={activeCategory === cat}
+                  className={`px-4.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    activeCategory === cat
+                      ? 'bg-gradient-to-r from-primary to-accent text-black font-extrabold shadow'
+                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </ScrollAnimate>
 
           {/* Accordion Wrapper */}
           <div className="flex flex-col gap-4">
@@ -104,43 +104,42 @@ export default function FAQPage() {
               {filteredFAQs.map((faq, idx) => {
                 const isOpen = openFaqId === faq.id;
                 return (
-                  <motion.div
-                    key={faq.id}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 15 }}
-                    transition={{ duration: 0.4, delay: idx * 0.04 }}
-                    className="rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] transition-colors overflow-hidden"
-                  >
-                  <button
-                    onClick={() => toggleFaq(faq.id)}
-                    className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
-                  >
-                    <span className="text-sm sm:text-base font-bold text-white tracking-tight">
-                      {faq.question}
-                    </span>
-                    <span className="text-accent shrink-0">
-                      {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                    </span>
-                  </button>
-
-                  <AnimatePresence initial={false}>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.25 }}
+                  <ScrollAnimate key={faq.id} variant="slideRight" delay={idx * 0.04}>
+                    <div className="rounded-2xl border border-white/5 bg-white/[0.01] hover:bg-white/[0.02] transition-colors overflow-hidden">
+                      <button
+                        onClick={() => toggleFaq(faq.id)}
+                        aria-expanded={isOpen}
+                        aria-controls={`faq-answer-${faq.id}`}
+                        className="w-full p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus:outline-none"
                       >
-                        <div className="px-6 pb-6 pt-2 border-t border-white/5 text-gray-300 text-xs sm:text-sm leading-relaxed">
-                          {faq.answer}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
+                        <span className="text-sm sm:text-base font-bold text-white tracking-tight">
+                          {faq.question}
+                        </span>
+                        <span className="text-accent shrink-0" aria-hidden="true">
+                          {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+                        </span>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            id={`faq-answer-${faq.id}`}
+                            role="region"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                          >
+                            <div className="px-6 pb-6 pt-2 border-t border-white/5 text-gray-300 text-xs sm:text-sm leading-relaxed">
+                              {faq.answer}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  </ScrollAnimate>
+                );
+              })}
             </AnimatePresence>
           </div>
 

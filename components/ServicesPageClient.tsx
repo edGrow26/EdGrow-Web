@@ -8,6 +8,7 @@ import { Code, Cpu, ShoppingBag, Layers, TrendingUp, Cloud, CheckSquare, Sparkle
 import BackgroundWaves from './BackgroundWaves';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import ScrollAnimate from './ScrollAnimate';
 import type { Service } from '../lib/sanity';
 
 const serviceIcons = {
@@ -34,10 +35,10 @@ export default function ServicesPageClient({ services }: { services: Service[] }
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-6"
           >
-            <Sparkles className="w-3.5 h-3.5 text-mint" />
+            <Sparkles className="w-3.5 h-3.5 text-mint" aria-hidden="true" />
             <span>Scale Your Operations Effortlessly</span>
           </motion.div>
-          
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -69,87 +70,85 @@ export default function ServicesPageClient({ services }: { services: Service[] }
               const IconComponent = serviceIcons[iconName] || Cloud;
 
               const isEven = index % 2 === 0;
+              const slideVariant = isEven ? 'slideRight' : 'slideLeft';
 
               return (
-                <motion.div
-                  key={service.id}
-                  id={service.id}
-                  initial={{ opacity: 0, y: 35 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.05 }}
-                  transition={{ duration: 0.6, delay: index * 0.05 }}
-                  className={`scroll-mt-24 p-8 sm:p-12 rounded-3xl bg-white/[0.01] border border-white/5 relative overflow-hidden flex flex-col lg:flex-row gap-12 items-stretch ${
-                    isEven ? '' : 'lg:flex-row-reverse'
-                  }`}
-                >
-                  {/* Subtle Background Glow per service card */}
-                  <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full filter blur-[100px] pointer-events-none" />
+                <ScrollAnimate key={service.id} variant={slideVariant} delay={index * 0.05}>
+                  <div
+                    id={service.id}
+                    className={`scroll-mt-24 p-8 sm:p-12 rounded-3xl bg-white/[0.01] border border-white/5 relative overflow-hidden flex flex-col lg:flex-row gap-12 items-stretch ${
+                      isEven ? '' : 'lg:flex-row-reverse'
+                    }`}
+                  >
+                    {/* Subtle Background Glow per service card */}
+                    <div className="absolute top-0 right-0 w-80 h-80 bg-primary/5 rounded-full filter blur-[100px] pointer-events-none" aria-hidden="true" />
 
-                  {/* Icon & General Details */}
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center text-accent mb-8">
-                        <IconComponent className="w-7 h-7" />
+                    {/* Icon & General Details */}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center text-accent mb-8">
+                          <IconComponent className="w-7 h-7" aria-hidden="true" />
+                        </div>
+
+                        <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-4">
+                          {service.title}
+                        </h2>
+
+                        <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-8">
+                          {service.detailedDescription}
+                        </p>
                       </div>
-                      
-                      <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-4">
-                        {service.title}
-                      </h2>
-                      
-                      <p className="text-gray-300 text-sm sm:text-base leading-relaxed mb-8">
-                        {service.detailedDescription}
-                      </p>
-                    </div>
 
-                    <div className="mt-auto">
-                      <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Tech Stack:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {service.technologies.map((tech) => (
-                          <span
-                            key={tech}
-                            className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-semibold text-gray-300"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                      <div className="mt-auto">
+                        <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Core Tech Stack:</h4>
+                        <div className="flex flex-wrap gap-2">
+                          {service.technologies.map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-semibold text-gray-300"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Vertical Divider */}
-                  <div className="hidden lg:block w-[1px] bg-white/5 self-stretch" />
+                    {/* Vertical Divider */}
+                    <div className="hidden lg:block w-[1px] bg-white/5 self-stretch" aria-hidden="true" />
 
-                  {/* Key Capabilities */}
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-sm font-bold text-accent uppercase tracking-widest mb-6">Key Deliverables</h3>
-                      <ul className="flex flex-col gap-4">
-                        {service.features.map((feat) => (
-                          <li key={feat} className="flex items-start gap-3.5 text-sm text-gray-300 leading-normal">
-                            <CheckSquare className="w-5 h-5 text-accent shrink-0 mt-0.5" />
-                            <span>{feat}</span>
-                          </li>
-                        ))}
-                      </ul>
+                    {/* Key Capabilities */}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-sm font-bold text-accent uppercase tracking-widest mb-6">Key Deliverables</h3>
+                        <ul className="flex flex-col gap-4">
+                          {service.features.map((feat) => (
+                            <li key={feat} className="flex items-start gap-3.5 text-sm text-gray-300 leading-normal">
+                              <CheckSquare className="w-5 h-5 text-accent shrink-0 mt-0.5" aria-hidden="true" />
+                              <span>{feat}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                       <div className="mt-10 lg:mt-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center gap-4">
+                        <Link
+                          href={`/pricing?service=${service.id}`}
+                          className="btn-premium-pill w-full sm:w-auto !px-6 !py-3 !text-xs text-center"
+                        >
+                          Check Estimate Pricing
+                        </Link>
+                        <Link
+                          href={`/contact?subject=Service Inquiry: ${service.title}`}
+                          className="btn-secondary-pill w-full sm:w-auto !px-6 !py-3 !text-xs text-center inline-flex items-center justify-center gap-1.5 group"
+                        >
+                          Contact Technical Consultant <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+                        </Link>
+                      </div>
                     </div>
 
-                     <div className="mt-10 lg:mt-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center gap-4">
-                      <Link
-                        href={`/pricing?service=${service.id}`}
-                        className="btn-premium-pill w-full sm:w-auto !px-6 !py-3 !text-xs text-center"
-                      >
-                        Check Estimate Pricing
-                      </Link>
-                      <Link
-                        href={`/contact?subject=Service Inquiry: ${service.title}`}
-                        className="btn-secondary-pill w-full sm:w-auto !px-6 !py-3 !text-xs text-center inline-flex items-center justify-center gap-1.5 group"
-                      >
-                        Contact Technical Consultant <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                      </Link>
-                    </div>
                   </div>
-
-                </motion.div>
+                </ScrollAnimate>
               );
             })}
           </div>

@@ -48,11 +48,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full scroll-smooth">
+    <html lang="en" className="h-full scroll-smooth" data-scroll-behavior="smooth">
+      <head>
+        {/* Preconnect to external origins for faster resource loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        {/* Load Plus Jakarta Sans with display=swap to prevent FOIT (Flash of Invisible Text) */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="font-sans h-full bg-black text-white antialiased selection:bg-primary selection:text-white">
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-accent focus:text-black focus:rounded-lg focus:font-bold focus:text-xs">
+          Skip to main content
+        </a>
         <AnimationManager />
         <ThemeToggle />
-        {children}
+        <main id="main-content">
+          {children}
+        </main>
       </body>
     </html>
   );
