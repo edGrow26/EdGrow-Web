@@ -1,10 +1,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Code, ExternalLink } from 'lucide-react';
+import { Menu, X, ExternalLink } from 'lucide-react';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -52,11 +53,17 @@ export default function Navbar() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Logo Placeholder - Designed to be beautiful before & after final asset replacement */}
             <Link href="/" className="flex items-center gap-2 group">
               <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-mint p-[1.5px] transition-transform duration-300 group-hover:scale-105">
-                <div className="w-full h-full bg-black rounded-[10px] flex items-center justify-center">
-                  <Code className="w-5 h-5 text-accent group-hover:text-mint transition-colors duration-300" />
+                <div className="w-full h-full overflow-hidden bg-white rounded-[10px] flex items-center justify-center p-1">
+                  <Image
+                    src="/EdGrow%20Logo.png"
+                    alt="Edgrow Technologies logo"
+                    width={40}
+                    height={40}
+                    priority
+                    className="h-full w-full object-contain"
+                  />
                 </div>
                 <div className="absolute inset-0 bg-primary/30 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
               </div>

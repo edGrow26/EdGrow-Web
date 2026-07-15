@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { Code, Mail, Phone, MapPin, Linkedin, Github, Twitter, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Github, Twitter, ExternalLink } from 'lucide-react';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -19,8 +20,14 @@ export default function Footer() {
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-mint p-[1.5px]">
-                <div className="w-full h-full bg-black rounded-[10px] flex items-center justify-center">
-                  <Code className="w-5 h-5 text-accent" />
+                <div className="w-full h-full overflow-hidden bg-white rounded-[10px] flex items-center justify-center p-1">
+                  <Image
+                    src="/EdGrow%20Logo.png"
+                    alt="Edgrow Technologies logo"
+                    width={40}
+                    height={40}
+                    className="h-full w-full object-contain"
+                  />
                 </div>
               </div>
               <div className="flex flex-col">

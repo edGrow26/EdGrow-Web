@@ -6,7 +6,7 @@
   --color-mint: #1DE9B6;
   --color-ink: #000000;
   --color-paper: #FFFFFF;
-  --font-sans: var(--font-montserrat), sans-serif;
+  --font-sans: "Montserrat", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 /* Theme variables */
@@ -32,7 +32,7 @@ html {
 body {
   background-color: #000000;
   color: #FFFFFF;
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: "Montserrat", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 /* Scrollbar styling */
@@ -119,8 +119,9 @@ body {
    ========================================================================== */
 
 html.light body {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background-color: #f6f8fa !important;
+  background-image: radial-gradient(circle at 80% 20%, rgba(0, 102, 214, 0.07) 0%, rgba(246, 248, 250, 1) 80%) !important;
+  color: #1e293b !important;
   transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -137,6 +138,15 @@ html.light p,
 html.light li,
 html.light label {
   color: #334155 !important;
+}
+
+/* Fix text gradients starting from white in light mode */
+html.light .from-white {
+  --tw-gradient-from: #0f172a !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+html.light .via-slate-100 {
+  --tw-gradient-via: #0066D6 !important;
 }
 
 /* Overriding white text values for accessibility and contrast in light mode */
@@ -156,12 +166,26 @@ html.light .text-gray-500 {
   color: #64748b !important;
 }
 
+/* Overrides to prevent hover:text-white from rendering text invisible */
+html.light .hover\:text-white:hover {
+  color: #0f172a !important;
+}
+html.light .hover\:text-gray-200:hover {
+  color: #1e293b !important;
+}
+html.light .hover\:text-gray-100:hover {
+  color: #0f172a !important;
+}
+html.light .group:hover .group-hover\:text-white {
+  color: #0f172a !important;
+}
+
 /* Maintain distinct accent colors so gradients and icons stand out */
 html.light .text-accent {
   color: #00BFA5 !important;
 }
 html.light .text-mint {
-  color: #1DE9B6 !important;
+  color: #18a37f !important; /* Darker mint for proper accessibility on white */
 }
 html.light .text-primary {
   color: #0066D6 !important;
@@ -180,6 +204,14 @@ html.light .bg-black\/80 {
   background-color: #ffffff !important;
 }
 
+/* Prevent black-fade gradients from being dark in light mode */
+html.light .via-black {
+  --tw-gradient-via: #ffffff !important;
+}
+html.light .to-black {
+  --tw-gradient-to: #ffffff !important;
+}
+
 html.light .bg-white\/5,
 html.light .bg-white\/10 {
   background-color: rgba(0, 102, 214, 0.04) !important;
@@ -187,22 +219,31 @@ html.light .bg-white\/10 {
 
 html.light .border-white\/5,
 html.light .border-white\/10,
-html.light .border-zinc-800 {
-  border-color: rgba(0, 102, 214, 0.08) !important;
+html.light .border-zinc-800,
+html.light .border-neutral-800 {
+  border-color: rgba(0, 102, 214, 0.07) !important;
 }
 
 html.light .glass-panel {
-  background: rgba(255, 255, 255, 0.7) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(0, 102, 214, 0.08) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important;
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(0, 102, 214, 0.06) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 102, 214, 0.04), 0 1px 3px rgba(0, 0, 0, 0.01) !important;
 }
 
 html.light .glass-panel-hover:hover {
   background: rgba(255, 255, 255, 0.95) !important;
-  border-color: rgba(0, 102, 214, 0.18) !important;
-  box-shadow: 0 10px 30px -10px rgba(0, 102, 214, 0.1) !important;
+  border-color: rgba(0, 102, 214, 0.16) !important;
+  box-shadow: 0 20px 40px -15px rgba(0, 102, 214, 0.12), 0 0 20px rgba(0, 189, 165, 0.03) !important;
+  transform: translateY(-2px) scale(1.005) !important;
+}
+
+/* Hero Badge */
+html.light .hero-badge {
+  background-color: rgba(0, 102, 214, 0.05) !important;
+  border-color: rgba(0, 102, 214, 0.1) !important;
+  color: #0066D6 !important;
 }
 
 /* Dynamic inputs */
@@ -211,7 +252,16 @@ html.light textarea,
 html.light select {
   background-color: #ffffff !important;
   color: #0f172a !important;
-  border-color: rgba(0, 102, 214, 0.15) !important;
+  border: 1px solid rgba(0, 102, 214, 0.12) !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+}
+
+html.light input:focus,
+html.light textarea:focus,
+html.light select:focus {
+  border-color: #0066D6 !important;
+  box-shadow: 0 0 0 3px rgba(0, 102, 214, 0.12) !important;
+  outline: none !important;
 }
 
 html.light input::placeholder,
@@ -223,7 +273,7 @@ html.light textarea::placeholder {
 html.light header#main-navbar {
   background-color: rgba(255, 255, 255, 0.8) !important;
   border-color: rgba(0, 102, 214, 0.06) !important;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02) !important;
 }
 
 html.light header#main-navbar span.bg-gradient-to-r {
@@ -247,8 +297,8 @@ html.light .fixed.inset-x-0.top-\[70px\] {
 
 /* Footer override */
 html.light footer#main-footer {
-  background-color: #f1f5f9 !important;
-  border-color: rgba(0, 102, 214, 0.08) !important;
+  background-color: #f8fafc !important;
+  border-color: rgba(0, 102, 214, 0.06) !important;
 }
 
 html.light footer#main-footer span.bg-gradient-to-r {
@@ -275,12 +325,24 @@ html.light footer#main-footer a.bg-white\/5:hover {
 /* Cost Calculator Cards */
 html.light #pricing-calculator-card {
   background-color: #ffffff !important;
-  border-color: rgba(0, 102, 214, 0.1) !important;
+  border-color: rgba(0, 102, 214, 0.08) !important;
+  box-shadow: 0 15px 35px -10px rgba(0, 102, 214, 0.05) !important;
+}
+
+/* Stats counter overrides */
+html.light .stats-item:nth-child(1) span {
+  background-image: linear-gradient(to right, #0f172a, #0066D6) !important;
+}
+html.light .stats-item:nth-child(2) span {
+  background-image: linear-gradient(to right, #0f172a, #00BFA5) !important;
+}
+html.light .stats-item:nth-child(3) span {
+  background-image: linear-gradient(to right, #0f172a, #18a37f) !important;
 }
 
 /* Scrollbars */
 html.light ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f8fafc;
 }
 html.light ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
@@ -299,7 +361,7 @@ html.light ::-webkit-scrollbar-thumb:hover {
   justify-content: center;
   background-color: #000000 !important;
   color: #ffffff !important;
-  font-family: var(--font-montserrat), sans-serif !important;
+  font-family: "Montserrat", "Avenir Next", "Segoe UI", sans-serif !important;
   font-weight: 600 !important;
   font-size: 1.05rem !important;
   letter-spacing: -0.01em !important;
@@ -347,7 +409,7 @@ html.light .btn-premium-pill:hover {
   justify-content: center;
   background-color: transparent !important;
   color: #ffffff !important;
-  font-family: var(--font-montserrat), sans-serif !important;
+  font-family: "Montserrat", "Avenir Next", "Segoe UI", sans-serif !important;
   font-weight: 500 !important;
   font-size: 1rem !important;
   border-radius: 9999px !important;
@@ -379,5 +441,4 @@ html.light .btn-secondary-pill:hover {
   background-color: rgba(15, 23, 42, 0.05) !important;
   border-color: #0f172a !important;
 }
-
 

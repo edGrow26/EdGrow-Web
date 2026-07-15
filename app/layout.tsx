@@ -1,14 +1,7 @@
 import type { Metadata } from 'next';
-import { Montserrat } from 'next/font/google';
 import './globals.css';
 import AnimationManager from '../components/AnimationManager';
 import ThemeToggle from '../components/ThemeToggle';
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-montserrat',
-});
 
 export const metadata: Metadata = {
   title: {
@@ -41,7 +34,12 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-  }
+  },
+  icons: {
+    icon: '/EdGrow%20Logo.png',
+    shortcut: '/EdGrow%20Logo.png',
+    apple: '/EdGrow%20Logo.png',
+  },
 };
 
 export default function RootLayout({
@@ -50,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${montserrat.variable} h-full scroll-smooth`}>
+    <html lang="en" className="h-full scroll-smooth">
       <body className="font-sans h-full bg-black text-white antialiased selection:bg-primary selection:text-white">
         <AnimationManager />
         <ThemeToggle />

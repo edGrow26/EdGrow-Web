@@ -1,91 +1,64 @@
 # Edgrow Web Application
 
-Welcome to **Edgrow**, a high-performance web application designed for elite technical architecture and digital strategy. This project is built using **Next.js** (App Router), **Tailwind CSS**, and **motion/react** for smooth, fluid page transitions and layout animations.
+Edgrow is a statically exported Next.js App Router application built with React, Tailwind CSS, GSAP, and Motion.
 
----
+## Prerequisites
 
-## 🚀 Quick Start Guide
+- Node.js 20.9 or newer (Node 22 LTS is recommended)
+- npm 10 or newer
 
-Follow these simple steps to run the application locally on your machine after cloning.
+## Install and run locally
 
-### 1. Prerequisites
-
-Ensure you have the following installed on your system:
-- **Node.js** (v18.0.0 or higher recommended)
-- **npm** (comes with Node), **yarn**, **pnpm**, or **bun**
-
----
-
-### 2. Installation
-
-1. Navigate into the cloned directory:
-   ```bash
-   cd edgrow-web
-   ```
-
-2. Install the project dependencies:
-   ```bash
-   npm install
-   # or using yarn / pnpm / bun:
-   # yarn install
-   # pnpm install
-   # bun install
-   ```
-
----
-
-### 3. Configure Environment Variables
-
-1. Duplicate the `.env.example` file and rename it to `.env` (or `.env.local`):
-   ```bash
-   cp .env.example .env
-   ```
-
-2. Open the newly created `.env` file and replace the placeholder values with your real keys:
-   - `GEMINI_API_KEY`: Your Google Gemini API Key (if using AI features).
-   - `APP_URL`: Set to `http://localhost:3000` for local development.
-
----
-
-### 4. Running the Application
-
-You can run the application in two ways depending on your needs.
-
-#### Option A: Running with standard Next.js (Recommended for local development)
-To run with hot-reloading and development tools:
 ```bash
-npx next dev
+npm ci
+npm run dev
 ```
-Then, open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
-#### Option B: Building and running the production server
-To check production performance or run the production build:
-1. Build the application:
+Open [http://localhost:3000](http://localhost:3000). No environment variables are required for the current website.
+
+If your network returns `UNABLE_TO_VERIFY_LEAF_SIGNATURE` or rejects scoped packages from the default npm registry, use the TLS-enabled mirror that was used to generate the lockfile:
+
+```bash
+npm ci --registry=https://registry.npmmirror.com
+```
+
+Do not work around certificate errors by permanently setting `strict-ssl=false`.
+
+## Connect Sanity services
+
+The Services page reads published `service` documents securely during the static website build. Until Sanity is configured or while the dataset is empty, the existing local services remain visible as fallback content.
+
+1. Create or select a project at [sanity.io/manage](https://www.sanity.io/manage).
+2. Create the local environment file:
+
    ```bash
-   npm run build
-   ```
-2. Start the built production server:
-   ```bash
-   npx next start
+   cp .env.example .env.local
    ```
 
-#### Option C: Running the static serve script (Used in cloud environment)
-This project contains a lightweight custom static serve script (`serve.js`) which runs in the cloud sandbox environment:
-1. Build the application:
-   ```bash
-   npm run build
-   ```
-2. Start the lightweight serve script:
+3. Add the website (`NEXT_PUBLIC_SANITY_*`), Studio (`SANITY_STUDIO_*`), and server-only read-token values to `.env.local`. Both applications use this single root file, but each build system requires its own variable prefix.
+4. Start the website and Studio in separate terminals:
+
    ```bash
    npm run dev
+   npm run studio
    ```
 
----
+Open the Studio directly at [http://localhost:3333](http://localhost:3333), or use the website bridge at [http://localhost:3000/studio](http://localhost:3000/studio). Then create and publish Service documents. Only published services with an Active status are displayed; `Display order` controls their order. Run `npm run build` after publishing content so the static website includes the latest services.
 
-## 🛠️ Project Structure
+## Validate and run the production export
+
+```bash
+npm run typecheck
+npm run build
+npm start
+```
+
+`npm run build` creates the static site in `dist/`. `npm start` serves that directory on port 3000. You can override the address with `HOST` and `PORT`.
+
+## Project structure
 
 - `app/` — Next.js App Router pages, global styles, and layout configuration.
 - `components/` — Reusable components (e.g. `Navbar.tsx`, `Footer.tsx`, and the custom `ThemeToggle.tsx`).
 - `public/` — Static assets (images, vectors, etc.).
 - `lib/` — Utility helper functions.
-- `serve.js` — Custom static server script.
+- `serve.js` — Lightweight server for the generated `dist/` site.

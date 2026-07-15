@@ -2,7 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 3000;
+const PORT = Number.parseInt(process.env.PORT || '3000', 10);
+const HOST = process.env.HOST || '0.0.0.0';
 const DIST_DIR = path.join(__dirname, 'dist');
 
 const MIME_TYPES = {
@@ -75,7 +76,7 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Static file server running at http://0.0.0.0:${PORT}/`);
+server.listen(PORT, HOST, () => {
+  console.log(`Static file server running at http://${HOST}:${PORT}/`);
   console.log(`Serving files from: ${DIST_DIR}`);
 });
