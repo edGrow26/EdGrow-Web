@@ -1,0 +1,13 @@
+▲ Next.js 16.2.10 (webpack)
+- Local:         http://localhost:3005
+- Network:       http://169.254.8.1:3005
+✓ Ready in 716ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          750
+- Dir:          /app/applet
+- Log:          dist/dev/logs/next-development.log
+
+Run kill 750 to stop it.
+[?25h
