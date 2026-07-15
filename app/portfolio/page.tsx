@@ -8,6 +8,7 @@ import { Sparkles, Sliders, ArrowRight, ExternalLink, RefreshCw } from 'lucide-r
 import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
+import ScrollAnimate from '../../components/ScrollAnimate';
 import { sanityClient, Project } from '../../lib/sanity';
 
 const FILTER_CATEGORIES = ['All', 'Education', 'Finance', 'Logistics'];
@@ -42,7 +43,7 @@ export default function PortfolioPage() {
             transition={{ duration: 0.5 }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-6"
           >
-            <Sparkles className="w-3.5 h-3.5 text-mint" />
+            <Sparkles className="w-3.5 h-3.5 text-mint" aria-hidden="true" />
             <span>Proven Enterprise Track Records</span>
           </motion.div>
           
@@ -73,28 +74,27 @@ export default function PortfolioPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Filters Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap items-center justify-center gap-3 mb-16"
-          >
-            <div className="p-1 bg-white/5 border border-white/5 rounded-2xl flex flex-wrap gap-2">
-              {FILTER_CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    selectedCategory === cat
-                      ? 'bg-gradient-to-r from-primary to-accent text-black shadow-md'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
+          <ScrollAnimate variant="fadeDown">
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
+              <div className="p-1 bg-white/5 border border-white/5 rounded-2xl flex flex-wrap gap-2" role="tablist" aria-label="Portfolio filter categories">
+                {FILTER_CATEGORIES.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    role="tab"
+                    aria-selected={selectedCategory === cat}
+                    className={`px-5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      selectedCategory === cat
+                        ? 'bg-gradient-to-r from-primary to-accent text-black shadow-md'
+                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
             </div>
-          </motion.div>
+          </ScrollAnimate>
 
           {/* Project Cards Grid */}
           <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -113,6 +113,10 @@ export default function PortfolioPage() {
                     <img
                       src={project.mainImage}
                       alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      width={400}
+                      height={192}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute top-4 left-4 px-2.5 py-1 bg-black/70 backdrop-blur-md rounded-md text-[10px] font-bold text-accent uppercase tracking-wide">
@@ -142,7 +146,7 @@ export default function PortfolioPage() {
                         href={`/portfolio/${project.id}`}
                         className="text-xs font-bold text-accent hover:text-mint transition-colors inline-flex items-center gap-1 group"
                       >
-                        Read study <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        Read study <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
                       </Link>
                     </div>
                   </div>
@@ -152,65 +156,61 @@ export default function PortfolioPage() {
             </AnimatePresence>
           </motion.div>
 
-          {/* Customer Review Showcase Embed (Section 3 Portfolio Requirement) */}
+          {/* Customer Review Showcase Embed */}
           <div className="mt-28 border-t border-white/5 pt-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
-              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Verified Results</span>
-              <h2 className="text-3xl font-extrabold text-white tracking-tight">Client Review & Testimonial Showcase</h2>
-            </motion.div>
+            <ScrollAnimate variant="fadeUp">
+              <div className="text-center mb-16">
+                <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Verified Results</span>
+                <h2 className="text-3xl font-extrabold text-white tracking-tight">Client Review & Testimonial Showcase</h2>
+              </div>
+            </ScrollAnimate>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {projects.map((proj, idx) => {
                 if (!proj.clientReview) return null;
                 const rev = proj.clientReview;
                 return (
-                  <motion.div
-                    key={proj.id}
-                    initial={{ opacity: 0, y: 25 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.05 }}
-                    transition={{ duration: 0.5, delay: idx * 0.1 }}
-                    className="glass-panel p-8 rounded-2xl border border-white/5 flex flex-col justify-between"
-                  >
-                    <div>
-                      {/* Rating stars */}
-                      <div className="flex items-center gap-1 text-accent mb-6">
-                        {[...Array(rev.rating)].map((_, i) => (
-                          <span key={i} className="text-sm font-bold">★</span>
-                        ))}
-                      </div>
-                      <p className="text-gray-300 text-xs leading-relaxed italic mb-8">
-                        &ldquo;{rev.quote}&rdquo;
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={rev.avatar}
-                          alt={rev.author}
-                          className="w-10 h-10 rounded-full object-cover border border-white/10"
-                        />
-                        <div>
-                          <strong className="text-white text-xs block font-bold">{rev.author}</strong>
-                          <span className="text-[10px] text-gray-400 block">{rev.role} • {rev.company}</span>
+                  <ScrollAnimate key={proj.id} variant={idx % 2 === 0 ? 'slideRight' : 'slideLeft'} delay={idx * 0.1}>
+                    <div className="glass-panel p-8 rounded-2xl border border-white/5 flex flex-col justify-between h-full">
+                      <div>
+                        {/* Rating stars */}
+                        <div className="flex items-center gap-1 text-accent mb-6" role="img" aria-label={`Rating: ${rev.rating} out of 5 stars`}>
+                          {[...Array(rev.rating)].map((_, i) => (
+                            <span key={i} className="text-sm font-bold" aria-hidden="true">★</span>
+                          ))}
                         </div>
+                        <p className="text-gray-300 text-xs leading-relaxed italic mb-8">
+                          &ldquo;{rev.quote}&rdquo;
+                        </p>
                       </div>
-                      <Link
-                        href={`/portfolio/${proj.id}`}
-                        title="Read Case Study"
-                        className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-accent hover:text-white transition-colors"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </Link>
+
+                      <div className="flex items-center justify-between pt-6 border-t border-white/5">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={rev.avatar}
+                            alt={rev.author}
+                            loading="lazy"
+                            decoding="async"
+                            width={40}
+                            height={40}
+                            className="w-10 h-10 rounded-full object-cover border border-white/10"
+                          />
+                          <div>
+                            <strong className="text-white text-xs block font-bold">{rev.author}</strong>
+                            <span className="text-[10px] text-gray-400 block">{rev.role} &bull; {rev.company}</span>
+                          </div>
+                        </div>
+                        <Link
+                          href={`/portfolio/${proj.id}`}
+                          title="Read Case Study"
+                          aria-label={`Read case study for ${proj.title}`}
+                          className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-accent hover:text-white transition-colors"
+                        >
+                          <ExternalLink className="w-4 h-4" aria-hidden="true" />
+                        </Link>
+                      </div>
                     </div>
-                  </motion.div>
+                  </ScrollAnimate>
                 );
               })}
             </div>
