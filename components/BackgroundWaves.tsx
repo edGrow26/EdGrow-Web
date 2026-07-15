@@ -28,17 +28,7 @@ export default function BackgroundWaves() {
           transition: 'background 0.4s ease'
         }}
       />
-
-      {/* Grid Overlay */}
-      <div 
-        className="absolute inset-0" 
-        style={{
-          backgroundImage: 'linear-gradient(to right, var(--grid-line-color, rgba(255, 255, 255, 0.03)) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line-color, rgba(255, 255, 255, 0.03)) 1px, transparent 1px)',
-          backgroundSize: '4rem 4rem',
-          maskImage: 'radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 60% 50% at 50% 0%, #000 70%, transparent 100%)'
-        }}
-      />
+      {/* Wave details follow */}
 
       {/* Layer 1 SVG Wave (Primary Brand Color Blue - Bottom Flow) */}
       <motion.div

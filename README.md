@@ -1,20 +1,91 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Edgrow Web Application
 
-# Run and deploy your AI Studio app
+Welcome to **Edgrow**, a high-performance web application designed for elite technical architecture and digital strategy. This project is built using **Next.js** (App Router), **Tailwind CSS**, and **motion/react** for smooth, fluid page transitions and layout animations.
 
-This contains everything you need to run your app locally.
+---
 
-View your app in AI Studio: https://ai.studio/apps/e0a4071f-a19a-4f78-97eb-4b7fa58286c9
+## 🚀 Quick Start Guide
 
-## Run Locally
+Follow these simple steps to run the application locally on your machine after cloning.
 
-**Prerequisites:**  Node.js
+### 1. Prerequisites
 
+Ensure you have the following installed on your system:
+- **Node.js** (v18.0.0 or higher recommended)
+- **npm** (comes with Node), **yarn**, **pnpm**, or **bun**
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+---
+
+### 2. Installation
+
+1. Navigate into the cloned directory:
+   ```bash
+   cd edgrow-web
+   ```
+
+2. Install the project dependencies:
+   ```bash
+   npm install
+   # or using yarn / pnpm / bun:
+   # yarn install
+   # pnpm install
+   # bun install
+   ```
+
+---
+
+### 3. Configure Environment Variables
+
+1. Duplicate the `.env.example` file and rename it to `.env` (or `.env.local`):
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Open the newly created `.env` file and replace the placeholder values with your real keys:
+   - `GEMINI_API_KEY`: Your Google Gemini API Key (if using AI features).
+   - `APP_URL`: Set to `http://localhost:3000` for local development.
+
+---
+
+### 4. Running the Application
+
+You can run the application in two ways depending on your needs.
+
+#### Option A: Running with standard Next.js (Recommended for local development)
+To run with hot-reloading and development tools:
+```bash
+npx next dev
+```
+Then, open **[http://localhost:3000](http://localhost:3000)** in your browser.
+
+#### Option B: Building and running the production server
+To check production performance or run the production build:
+1. Build the application:
+   ```bash
+   npm run build
+   ```
+2. Start the built production server:
+   ```bash
+   npx next start
+   ```
+
+#### Option C: Running the static serve script (Used in cloud environment)
+This project contains a lightweight custom static serve script (`serve.js`) which runs in the cloud sandbox environment:
+1. Build the application:
+   ```bash
+   npm run build
+   ```
+2. Start the lightweight serve script:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🛠️ Project Structure
+
+- `app/` — Next.js App Router pages, global styles, and layout configuration.
+- `components/` — Reusable components (e.g. `Navbar.tsx`, `Footer.tsx`, and the custom `ThemeToggle.tsx`).
+- `public/` — Static assets (images, vectors, etc.).
+- `lib/` — Utility helper functions.
+- `serve.js` — Custom static server script.
