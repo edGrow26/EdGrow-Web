@@ -330,14 +330,31 @@ html.light #pricing-calculator-card {
 }
 
 /* Stats counter overrides */
-html.light .stats-item:nth-child(1) span {
-  background-image: linear-gradient(to right, #0f172a, #0066D6) !important;
+html.light #stats .stats-item > span:first-child {
+  background-image: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
 }
-html.light .stats-item:nth-child(2) span {
-  background-image: linear-gradient(to right, #0f172a, #00BFA5) !important;
+
+html.light #stats .stats-item:nth-child(1) > span:first-child {
+  color: #0066D6 !important;
+  -webkit-text-fill-color: #0066D6 !important;
 }
-html.light .stats-item:nth-child(3) span {
-  background-image: linear-gradient(to right, #0f172a, #18a37f) !important;
+
+html.light #stats .stats-item:nth-child(2) > span:first-child {
+  color: #00BFA5 !important;
+  -webkit-text-fill-color: #00BFA5 !important;
+}
+
+html.light #stats .stats-item:nth-child(3) > span:first-child {
+  color: #18a37f !important;
+  -webkit-text-fill-color: #18a37f !important;
+}
+
+html.light #stats .stats-item > span:last-child {
+  color: #334155 !important;
 }
 
 /* Scrollbars */

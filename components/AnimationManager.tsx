@@ -228,6 +228,18 @@ export default function AnimationManager() {
     };
   }, [loading, pathname]);
 
+  // Re-run the hero reveal whenever the user returns to the home route.
+  useEffect(() => {
+    if (loading || pathname !== '/') return;
+
+    const frameId = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+      triggerHeroEntrance();
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, [loading, pathname]);
+
   // 3. Hero entrance choreography
   const triggerHeroEntrance = () => {
     const hero = document.querySelector('#hero');
