@@ -9,9 +9,12 @@ import { sanityClient } from '../../../lib/sanity';
 
 export async function generateStaticParams() {
   const projects = await sanityClient.getProjects();
-  return projects.map((project) => ({
-    id: project.id,
-  }));
+  // Merge Sanity project IDs with mock fallback IDs to ensure static routes
+  // are always generated even when Sanity has no projects yet.
+  const ids = new Set(projects.map((p) => p.id));
+  // Always include the three known mock IDs as a safety net
+  ['edu-platform', 'fintech-app', 'logistics-system'].forEach(id => ids.add(id));
+  return Array.from(ids).map((id) => ({ id }));
 }
 
 interface PageProps {

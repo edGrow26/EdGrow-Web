@@ -5,16 +5,20 @@ import { createClient } from '@sanity/client';
 // ─── Sanity client ────────────────────────────────────────────────────────────
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '';
 const dataset   = process.env.NEXT_PUBLIC_SANITY_DATASET   ?? 'production';
-const apiToken  = process.env.SANITY_API_READ_TOKEN;
+// SANITY_API_READ_TOKEN is server-only. NEXT_PUBLIC_SANITY_API_READ_TOKEN works in the browser too.
+const apiToken  = process.env.SANITY_API_READ_TOKEN ?? process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN;
+const formRecipient = process.env.NEXT_PUBLIC_FORM_RECIPIENT || 'edgrowproduct@gmail.com';
+const formEndpoint = `https://formsubmit.co/ajax/${formRecipient}`;
 
 export const client = createClient({
   projectId,
   dataset,
   apiVersion: '2024-01-01',
-  useCdn: true,          // CDN edge-cached for public reads
-  token: apiToken,       // Allows reading draft documents if needed
+  useCdn: false,         // Disable CDN cache so Sanity edits show immediately
+  token: apiToken,
   perspective: 'published',
 });
+
 
 // ─── Shared types ─────────────────────────────────────────────────────────────
 
@@ -85,6 +89,7 @@ export interface Job {
   description: string;
   requirements: string[];
   benefits: string[];
+  status?: string;
 }
 
 export interface Testimonial {
@@ -137,6 +142,94 @@ const SERVICES_QUERY = `
   }
 `;
 
+const PROJECTS_QUERY = `
+  *[_type == "project"] | order(displayOrder asc) {
+    "id": _id,
+    title,
+    category,
+    industry,
+    technologies,
+    "mainImage": mainImage.asset->url,
+    description,
+    challenge,
+    solution,
+    result,
+    projectLink,
+    "clientReview": clientReview {
+      rating,
+      quote,
+      author,
+      role,
+      company,
+      "avatar": avatar.asset->url
+    }
+  }
+`;
+
+const PROJECT_BY_ID_QUERY = `
+  *[_type == "project" && _id == $id][0] {
+    "id": _id,
+    title,
+    category,
+    industry,
+    technologies,
+    "mainImage": mainImage.asset->url,
+    description,
+    challenge,
+    solution,
+    result,
+    projectLink,
+    "clientReview": clientReview {
+      rating,
+      quote,
+      author,
+      role,
+      company,
+      "avatar": avatar.asset->url
+    }
+  }
+`;
+
+const TESTIMONIALS_QUERY = `
+  *[_type == "testimonial" && (!defined(status) || status == "active")] | order(displayOrder asc) {
+    name,
+    role,
+    company,
+    quote,
+    rating,
+    "avatar": avatar.asset->url
+  }
+`;
+
+async function submitEmailForm(payload: FormData | Record<string, string>): Promise<boolean> {
+  try {
+    const isMultipart = payload instanceof FormData;
+    const response = await fetch(formEndpoint, {
+      method: 'POST',
+      headers: isMultipart
+        ? { Accept: 'application/json' }
+        : { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: isMultipart ? payload : JSON.stringify(payload),
+    });
+
+    const result = await response.json().catch(() => null) as { success?: boolean | string } | null;
+    const delivered = result?.success === true || result?.success === 'true';
+    return response.ok && delivered;
+  } catch (error) {
+    console.error('[Forms] Email delivery failed.', error);
+    return false;
+  }
+}
+
+const TEAM_QUERY = `
+  *[_type == "teamMember"] | order(displayOrder asc) {
+    name,
+    role,
+    "photo": photo.asset->url,
+    socials
+  }
+`;
+
 const POSTS_QUERY = `
   *[_type == "post" && status == "published"] | order(publishedAt desc) {
     title,
@@ -173,12 +266,13 @@ const POST_BY_SLUG_QUERY = `
 `;
 
 const JOBS_QUERY = `
-  *[_type == "job" && status == "active"] | order(publishedAt desc) {
+  *[_type == "job"] | order(publishedAt desc) {
     "id": _id,
     title,
     department,
     location,
     type,
+    status,
     description,
     requirements,
     benefits
@@ -626,15 +720,21 @@ async function fetchWithFallback<T>(
   fallback: T,
 ): Promise<T> {
   // Only attempt live fetch when a project ID is configured
-  if (!projectId || projectId === 'your-project-id') return fallback;
+  if (!projectId || projectId === 'your-project-id') {
+    console.info('[Sanity] No projectId configured — using mock data');
+    return fallback;
+  }
   try {
+    console.info('[Sanity] Fetching:', query.trim().slice(0, 80));
     const result = await client.fetch<T>(query, params);
-    // If Sanity returns an empty array, use fallback so the site never shows blank
-    if (Array.isArray(result) && result.length === 0) return fallback;
+    console.info('[Sanity] Result:', Array.isArray(result) ? `${(result as unknown[]).length} items` : result);
+    // Only fall back to mock when result is null/undefined (fetch error path)
+    // If Sanity returns an empty array, return it — the user has no content yet
+    // and showing mock data would hide that fact.
     if (result === null || result === undefined) return fallback;
     return result;
   } catch (err) {
-    console.warn('[Sanity] Fetch failed, using fallback data:', err);
+    console.error('[Sanity] ❌ Fetch FAILED — check token & project ID. Falling back to mock data.', err);
     return fallback;
   }
 }
@@ -645,25 +745,40 @@ export const sanityClient = {
   getServices: (): Promise<Service[]> =>
     fetchWithFallback<Service[]>(SERVICES_QUERY, {}, initialServices),
 
-  // ── Projects (mock only — no Sanity schema yet) ─────────────────────────────
-  getProjects: async (): Promise<Project[]> => mockProjects,
-  getProjectById: async (id: string): Promise<Project | undefined> =>
-    mockProjects.find(p => p.id === id),
+  // ── Projects (live Sanity → fallback mock) ──────────────────────────────────
+  getProjects: (): Promise<Project[]> =>
+    fetchWithFallback<Project[]>(PROJECTS_QUERY, {}, mockProjects),
 
-  // ── Team (mock only) ────────────────────────────────────────────────────────
-  getTeam: async (): Promise<TeamMember[]> => mockTeam,
+  getProjectById: async (id: string): Promise<Project | undefined> => {
+    if (!projectId || projectId === 'your-project-id') {
+      return mockProjects.find(p => p.id === id);
+    }
+    try {
+      const result = await client.fetch<Project | null>(PROJECT_BY_ID_QUERY, { id });
+      return result ?? mockProjects.find(p => p.id === id);
+    } catch {
+      return mockProjects.find(p => p.id === id);
+    }
+  },
+
+  // ── Team (live Sanity → fallback mock) ──────────────────────────────────────
+  getTeam: (): Promise<TeamMember[]> =>
+    fetchWithFallback<TeamMember[]>(TEAM_QUERY, {}, mockTeam),
 
   // ── Jobs / Careers (live Sanity → fallback mock) ────────────────────────────
   getJobs: (): Promise<Job[]> =>
     fetchWithFallback<Job[]>(JOBS_QUERY, {}, mockJobs),
 
-  // ── Testimonials (mock only) ────────────────────────────────────────────────
-  getTestimonials: async (): Promise<Testimonial[]> => mockTestimonials,
+  // ── Testimonials (live Sanity → fallback mock) ───────────────────────────────
+  getTestimonials: async (): Promise<Testimonial[]> => {
+    const reviews = await fetchWithFallback<Testimonial[]>(TESTIMONIALS_QUERY, {}, mockTestimonials);
+    return reviews.length > 0 ? reviews : mockTestimonials;
+  },
 
-  // ── Pricing (mock only) ─────────────────────────────────────────────────────
+  // ── Pricing (mock only — managed in code) ───────────────────────────────────
   getPricingPlans: async (): Promise<PricingPlan[]> => mockPricingPlans,
 
-  // ── FAQs (mock only) ────────────────────────────────────────────────────────
+  // ── FAQs (mock only — managed in code) ──────────────────────────────────────
   getFAQs: async (): Promise<FAQ[]> => mockFAQs,
 
   // ── Blog Posts (live Sanity → fallback mock) ────────────────────────────────
@@ -705,27 +820,63 @@ export const sanityClient = {
     }
   },
 
-  // ── Form submissions (no Sanity write — use email / webhook in production) ──
+  // ── Form submissions (static-site compatible email delivery) ────────────────
   submitContactForm: async (data: {
     name: string;
     email: string;
     subject: string;
     message: string;
   }): Promise<boolean> => {
-    console.log('[Contact] Form submission received:', data);
-    await new Promise(resolve => setTimeout(resolve, 800));
-    return true;
+    return submitEmailForm({
+      ...data,
+      _subject: `New Edgrow contact inquiry: ${data.subject || 'General inquiry'}`,
+      _template: 'table',
+      _captcha: 'false',
+      _honey: '',
+      formType: 'Website contact form',
+    });
   },
 
   submitApplication: async (data: {
     roleId: string;
+    roleTitle: string;
     name: string;
     email: string;
     coverLetter: string;
-    resumeName: string;
+    resume: File;
   }): Promise<boolean> => {
-    console.log('[Careers] Application submission received:', data);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    return true;
+    const payload = new FormData();
+    payload.append('name', data.name);
+    payload.append('email', data.email);
+
+    // Construct a comprehensive message body so it's guaranteed to be readable in the email
+    const fullMessage = `
+=== NEW CAREER APPLICATION ===
+
+Role Applied: ${data.roleTitle}
+Applicant Name: ${data.name}
+Applicant Email: ${data.email}
+
+--- Cover Letter / Pitch ---
+${data.coverLetter || '(No cover note provided)'}
+
+--- Important ---
+The applicant has attached their resume to this email.
+    `.trim();
+
+    payload.append('message', fullMessage);
+    payload.append('role', data.roleTitle);
+
+    // Attach the resume
+    if (data.resume) {
+      payload.append('attachment', data.resume, data.resume.name);
+    }
+
+    payload.append('_subject', `New Edgrow career application: ${data.name} for ${data.roleTitle}`);
+    payload.append('_template', 'table');
+    payload.append('_captcha', 'false');
+    payload.append('_honey', '');
+
+    return submitEmailForm(payload);
   },
 };
