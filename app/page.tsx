@@ -27,6 +27,7 @@ import Footer from '../components/Footer';
 import CookieConsent from '../components/CookieConsent';
 import ScrollAnimate from '../components/ScrollAnimate';
 import AnimatedCounter from '../components/AnimatedCounter';
+import TestimonialCarousel from '../components/TestimonialCarousel';
 import { sanityClient, Service, Project, Testimonial } from '../lib/sanity';
 
 export default function Home() {
@@ -111,7 +112,7 @@ export default function Home() {
 
             <ScrollAnimate variant="fadeUp" delay={0}>
               <div className="stats-item flex flex-col gap-1.5">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white font-mono bg-gradient-to-r from-white to-primary bg-clip-text text-transparent">
+                <span className="text-4xl sm:text-5xl font-extrabold text-primary font-mono">
                   <AnimatedCounter from={0} to={8} duration={2} />+
                 </span>
                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider">Years of Engineering Excellence</span>
@@ -120,7 +121,7 @@ export default function Home() {
 
             <ScrollAnimate variant="fadeUp" delay={0.15}>
               <div className="stats-item flex flex-col gap-1.5 border-t sm:border-t-0 sm:border-x border-white/5 pt-8 sm:pt-0">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white font-mono bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
+                <span className="text-4xl sm:text-5xl font-extrabold text-accent font-mono">
                   <AnimatedCounter from={0} to={120} duration={2.5} />+
                 </span>
                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider">Custom Projects Dispatched</span>
@@ -129,7 +130,7 @@ export default function Home() {
 
             <ScrollAnimate variant="fadeUp" delay={0.3}>
               <div className="stats-item flex flex-col gap-1.5 border-t sm:border-t-0 pt-8 sm:pt-0">
-                <span className="text-4xl sm:text-5xl font-extrabold text-white font-mono bg-gradient-to-r from-white to-mint bg-clip-text text-transparent">
+                <span className="text-4xl sm:text-5xl font-extrabold text-mint font-mono">
                   <AnimatedCounter from={0} to={95} duration={2} />%
                 </span>
                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider">Client Net Promoter Score (NPS)</span>
@@ -141,50 +142,82 @@ export default function Home() {
       </section>
 
       {/* 3. SERVICES OVERVIEW */}
-      <section id="services-preview" className="py-24 relative z-10">
+      <section id="services-preview" className="py-28 relative z-10 overflow-hidden">
+        {/* Decorative background ambient glows */}
+        <div className="absolute -top-40 left-10 w-[500px] h-[500px] bg-primary/5 rounded-full filter blur-[120px] pointer-events-none" aria-hidden="true" />
+        <div className="absolute -bottom-40 right-10 w-[500px] h-[500px] bg-accent/5 rounded-full filter blur-[120px] pointer-events-none" aria-hidden="true" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <ScrollAnimate variant="slideRight">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-20">
               <div className="max-w-2xl">
                 <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Enterprise Solutions</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
                   Our Suite of Custom Software & Web Development Services
                 </h2>
               </div>
               <Link
                 href="/services"
-                className="mt-4 md:mt-0 inline-flex items-center gap-1 text-sm font-bold text-accent hover:text-mint transition-colors group"
+                className="mt-6 md:mt-0 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-accent hover:text-mint transition-colors group bg-white/5 border border-white/10 px-5 py-3 rounded-xl backdrop-blur-sm hover:border-accent/40"
               >
                 View All Services <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
             </div>
           </ScrollAnimate>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch pt-4">
             {services.map((service, index) => {
               // Icon mapping helper
               const IconComponent =
                 service.id === 'custom-web' ? Code :
-                service.id === 'enterprise-software' ? Cpu :
-                service.id === 'ecommerce-solutions' ? ShoppingBag : Code;
+                  service.id === 'enterprise-software' ? Cpu :
+                    service.id === 'ecommerce-solutions' ? ShoppingBag : Code;
 
-              const slideVariant = index % 2 === 0 ? 'slideRight' : 'slideLeft';
+              // Asymmetrical Grid styling: highlight the middle element
+              const isMiddle = index === 1;
 
               return (
-                <ScrollAnimate key={service.id} variant={slideVariant} delay={index * 0.1}>
-                  <div className="glass-panel glass-panel-hover p-8 rounded-2xl flex flex-col justify-between h-full">
-                    <div>
-                      <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center text-accent mb-6">
+                <ScrollAnimate
+                  key={service.id}
+                  variant={isMiddle ? 'scaleIn' : (index % 2 === 0 ? 'slideRight' : 'slideLeft')}
+                  delay={index * 0.12}
+                >
+                  <div
+                    className={`relative rounded-3xl p-8 sm:p-10 flex flex-col justify-between h-full transition-all duration-500 group border overflow-hidden ${isMiddle
+                        ? 'bg-gradient-to-br from-primary/10 via-accent/5 to-white/[0.01] border-accent shadow-2xl shadow-primary/5 lg:scale-[1.03] lg:-translate-y-2'
+                        : 'bg-white/[0.01] border-white/5 hover:border-white/15 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/50'
+                      }`}
+                  >
+                    {/* Background visual graphics lines */}
+                    <div className="absolute inset-0 bg-grid-line-color opacity-25 group-hover:opacity-40 transition-opacity pointer-events-none" aria-hidden="true" />
+
+                    {isMiddle && (
+                      <div className="absolute top-4 right-4 bg-accent/20 border border-accent/20 text-accent text-[9px] font-mono uppercase font-bold tracking-widest px-2.5 py-1 rounded-md z-15">
+                        Core Competency
+                      </div>
+                    )}
+
+                    <div className="relative z-10">
+                      {/* Animated circular icon wrapper */}
+                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-8 transition-transform duration-500 group-hover:rotate-12 ${isMiddle ? 'bg-accent/20 text-accent' : 'bg-primary/10 text-primary group-hover:bg-accent/15 group-hover:text-accent'
+                        }`}>
                         <IconComponent className="w-6 h-6" aria-hidden="true" />
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-3">{service.title}</h3>
-                      <p className="text-gray-400 text-xs leading-relaxed mb-6">{service.shortDescription}</p>
-                      <ul className="flex flex-col gap-2 mb-8">
+
+                      <h3 className="text-xl font-extrabold text-white mb-4 tracking-tight group-hover:text-accent transition-colors">
+                        {service.title}
+                      </h3>
+
+                      <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-8 group-hover:text-gray-300 transition-colors">
+                        {service.shortDescription}
+                      </p>
+
+                      <ul className="flex flex-col gap-3 mb-10">
                         {service.features.slice(0, 3).map((feat, i) => (
-                          <li key={i} className="flex items-center gap-2 text-xs text-gray-300 font-medium">
-                            <CheckCircle className="w-3.5 h-3.5 text-accent shrink-0" aria-hidden="true" />
-                            <span className="truncate">{feat}</span>
+                          <li key={i} className="flex items-start gap-2.5 text-xs text-gray-300 font-medium">
+                            <CheckCircle className="w-4 h-4 text-accent shrink-0 mt-0.5" aria-hidden="true" />
+                            <span className="leading-tight">{feat}</span>
                           </li>
                         ))}
                       </ul>
@@ -192,9 +225,9 @@ export default function Home() {
 
                     <Link
                       href={`/services#${service.id}`}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-accent transition-colors mt-auto group"
+                      className="relative z-10 inline-flex items-center gap-1.5 text-xs font-bold text-white group-hover:text-accent transition-colors mt-auto"
                     >
-                      Examine Service <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                      Examine Service <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     </Link>
                   </div>
                 </ScrollAnimate>
@@ -206,116 +239,133 @@ export default function Home() {
       </section>
 
       {/* 4. FEATURED PORTFOLIO */}
-      <section id="portfolio-preview" className="py-24 relative z-10 border-t border-white/5 bg-white/[0.005]">
+      <section id="portfolio-preview" data-no-scroll-animation="true" className="py-28 relative z-10 border-t border-white/5 bg-white/[0.005] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
           <ScrollAnimate variant="slideLeft">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-20">
               <div className="max-w-2xl">
                 <span className="text-xs font-bold text-mint uppercase tracking-widest block mb-3">Portfolio Showcases</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
                   Case Studies of High-Performance Systems We Built
                 </h2>
               </div>
               <Link
                 href="/portfolio"
-                className="mt-4 md:mt-0 inline-flex items-center gap-1 text-sm font-bold text-accent hover:text-mint transition-colors group"
+                className="mt-6 md:mt-0 inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-accent hover:text-mint transition-colors group bg-white/5 border border-white/10 px-5 py-3 rounded-xl backdrop-blur-sm hover:border-accent/40"
               >
                 See All Projects <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
             </div>
           </ScrollAnimate>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {projects.map((project, index) => (
-              <ScrollAnimate key={project.id} variant="scaleIn" delay={index * 0.12}>
-                <div className="glass-panel p-5 rounded-2xl flex flex-col group overflow-hidden border border-white/5 hover:border-white/10 transition-all duration-300 h-full">
-                  <div className="relative w-full h-48 rounded-xl overflow-hidden mb-5">
-                    <img
-                      src={project.mainImage}
-                      alt={project.title}
-                      loading="lazy"
-                      decoding="async"
-                      width={400}
-                      height={192}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-4 left-4 px-2.5 py-1 bg-black/70 backdrop-blur-md rounded-md text-[10px] font-bold text-accent uppercase tracking-wide">
-                      {project.category}
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">
+            {projects.map((project, index) => {
+              const isMiddle = index === 1;
+              return (
+                <ScrollAnimate
+                  key={project.id}
+                  variant={isMiddle ? 'scaleIn' : (index % 2 === 0 ? 'slideRight' : 'slideLeft')}
+                  delay={index * 0.12}
+                >
+                  <div
+                    className={`group relative rounded-3xl overflow-hidden border border-white/5 bg-black hover:border-accent/30 transition-all duration-500 shadow-2xl flex flex-col justify-between h-[450px] text-light-always ${isMiddle ? 'lg:scale-[1.03] lg:-translate-y-2 hover:border-accent' : ''
+                      }`}
+                  >
 
-                  <div className="flex flex-col flex-1 justify-between">
-                    <div>
-                      <h3 className="text-base font-extrabold text-white leading-snug mb-2 group-hover:text-accent transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 text-xs leading-relaxed line-clamp-2 mb-4">
-                        {project.description}
-                      </p>
+                    {/* Background Image zooming overlay */}
+                    <div className="absolute inset-0 z-0">
+                      <img
+                        src={project.mainImage}
+                        alt={project.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 brightness-[0.4] group-hover:brightness-[0.25]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" aria-hidden="true" />
                     </div>
 
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-white/5">
-                      <span className="text-[10px] text-gray-500 font-mono font-bold uppercase">
-                        {project.technologies.slice(0, 3).join(' • ')}
+                    {/* Top bar categories overlay */}
+                    <div className="relative z-10 p-6 flex justify-between items-start">
+                      <span className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-[9px] font-bold text-accent uppercase tracking-wide">
+                        {project.category}
                       </span>
-                      <Link
-                        href={`/portfolio/${project.id}`}
-                        className="text-xs font-bold text-accent hover:text-mint transition-colors inline-flex items-center gap-1 group"
-                      >
-                        Case study <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
-                      </Link>
                     </div>
+
+                    {/* Bottom details revealing panel */}
+                    <div className="relative z-10 p-6 sm:p-8 flex flex-col gap-4 mt-auto transition-transform duration-300">
+                      <div>
+                        <h3 className="text-xl font-extrabold text-white leading-snug group-hover:text-accent transition-colors duration-300 mb-2">
+                          {project.title}
+                        </h3>
+
+                        {/* Expandable/visible description */}
+                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-3 transition-opacity duration-300">
+                          {project.description}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-wrap gap-1.5 pt-2">
+                        {project.technologies.slice(0, 3).map((tech) => (
+                          <span key={tech} className="text-[9px] font-mono font-bold bg-white/10 text-gray-300 border border-white/5 px-2 py-0.5 rounded">
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-2">
+                        <span className="text-[10px] text-gray-500 font-mono font-bold uppercase tracking-wider">
+                          {project.industry}
+                        </span>
+
+                        <Link
+                          href={`/portfolio/${project.id}`}
+                          className="text-xs font-black text-accent hover:text-white transition-colors inline-flex items-center gap-1 group/btn"
+                        >
+                          Case Study <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" aria-hidden="true" />
+                        </Link>
+                      </div>
+                    </div>
+
                   </div>
-                </div>
-              </ScrollAnimate>
-            ))}
+                </ScrollAnimate>
+              );
+            })}
           </div>
 
         </div>
       </section>
 
       {/* 5. TESTIMONIALS & TRUST */}
-      <section id="testimonials" className="py-24 relative z-10 border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollAnimate variant="fadeUp">
-            <div className="text-center max-w-2xl mx-auto mb-16">
-              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Client Trust</span>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-                What Global Enterprise Leaders Say
-              </h2>
-            </div>
-          </ScrollAnimate>
+      <section id="testimonials" data-no-scroll-animation="true" className="py-32 relative z-10 bg-[#0b5a4b] text-white overflow-hidden">
+        {/* Top wave background vector design flipped to create wave entry */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none rotate-180 -translate-y-1 z-20" aria-hidden="true">
+          <svg className="relative block w-full h-[60px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="html-light-fill-white"></path>
+          </svg>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {testimonials.map((test, idx) => (
-              <ScrollAnimate key={idx} variant={idx % 2 === 0 ? 'slideRight' : 'slideLeft'} delay={idx * 0.12}>
-                <div className="glass-panel p-8 sm:p-10 rounded-2xl border border-white/5 relative h-full">
-                  <div className="absolute top-8 right-8 text-white/5 text-8xl font-serif pointer-events-none select-none" aria-hidden="true">&ldquo;</div>
-
-                  <p className="text-gray-300 text-sm leading-relaxed mb-8 relative z-10 italic">
-                    &ldquo;{test.quote}&rdquo;
-                  </p>
-
-                  <div className="flex items-center gap-4 relative z-10">
-                    <img
-                      src={test.avatar}
-                      alt={test.name}
-                      loading="lazy"
-                      decoding="async"
-                      width={48}
-                      height={48}
-                      className="w-12 h-12 rounded-full object-cover border border-white/10"
-                    />
-                    <div>
-                      <strong className="text-white text-sm block font-bold">{test.name}</strong>
-                      <span className="text-gray-400 text-xs block">{test.role} &bull; {test.company}</span>
-                    </div>
-                  </div>
-                </div>
-              </ScrollAnimate>
-            ))}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-25 pb-12 pt-8">
+          <div className="text-center max-w-3xl mx-auto mb-20">
+            <span className="text-xs font-mono font-bold text-white/60 uppercase tracking-[0.25em] block mb-4">
+              // CLIENT SUCCESS & TRUST
+            </span>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-none uppercase font-sans">
+              What Our{' '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-mint">
+                Clients Say
+              </span>
+            </h2>
           </div>
+
+          <TestimonialCarousel testimonials={testimonials} />
+        </div>
+
+        {/* Bottom wave background vector design to match white layout transition */}
+        <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none translate-y-1 z-20" aria-hidden="true">
+          <svg className="relative block w-full h-[60px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" className="html-light-fill-white"></path>
+          </svg>
         </div>
       </section>
 

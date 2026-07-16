@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Briefcase, FileText, Send, Sparkles, CheckCircle2, User, Mail, Link as LinkIcon, Upload } from 'lucide-react';
+import { Send, Sparkles, CheckCircle2, User, Mail, Upload } from 'lucide-react';
 
 import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
@@ -14,35 +14,47 @@ export default function CareersPage() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [activeTab, setActiveTab] = useState<'positions' | 'internship'>('positions');
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [applicationRoleId, setApplicationRoleId] = useState('internship');
 
   // Form states
   const [formName, setFormName] = useState('');
   const [formEmail, setFormEmail] = useState('');
   const [formCover, setFormCover] = useState('');
-  const [formResume, setFormResume] = useState('');
-  const [roleInterest, setRoleInterest] = useState('Full-Stack Web Development');
+  const [formResume, setFormResume] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const resumeInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
       const data = await sanityClient.getJobs();
-      setJobs(data);
+      // Show all jobs, or if status field is present, only show active ones
+      const activeJobs = data.filter(j => !j.status || j.status === 'active');
+      setJobs(activeJobs);
     };
     fetchJobs();
   }, []);
 
   const handleApplySubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formName || !formEmail) return;
+    if (!formName || !formEmail || !formResume) {
+      setSubmitError('Please complete your name, email address, and attach your PDF resume.');
+      return;
+    }
+
+    const applicationJob = jobs.find((job) => job.id === applicationRoleId);
+    const roleTitle = applicationJob?.title || 'Internship Program';
 
     setIsSubmitting(true);
+    setSubmitError('');
     const success = await sanityClient.submitApplication({
-      roleId: selectedJobId || 'internship',
+      roleId: applicationRoleId,
+      roleTitle,
       name: formName,
       email: formEmail,
       coverLetter: formCover,
-      resumeName: formResume || 'Resume.pdf',
+      resume: formResume,
     });
 
     if (success) {
@@ -51,13 +63,44 @@ export default function CareersPage() {
       setFormName('');
       setFormEmail('');
       setFormCover('');
-      setFormResume('');
+      setFormResume(null);
+      if (resumeInputRef.current) resumeInputRef.current.value = '';
+    } else {
+      setSubmitError('Your application could not be delivered. Please try again or email your resume to edgrowproduct@gmail.com.');
     }
     setIsSubmitting(false);
   };
 
+  const handleResumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    setSubmitError('');
+
+    if (!file) {
+      setFormResume(null);
+      return;
+    }
+
+    const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    if (!isPdf) {
+      event.target.value = '';
+      setFormResume(null);
+      setSubmitError('Resume must be uploaded as a PDF file.');
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      event.target.value = '';
+      setFormResume(null);
+      setSubmitError('Resume file must be 5 MB or smaller.');
+      return;
+    }
+
+    setFormResume(file);
+  };
+
   const handleApplyClick = (jobId: string) => {
     setSelectedJobId(jobId);
+    setApplicationRoleId(jobId);
     setSubmitted(false);
     // Smooth scroll to application form
     const formSection = document.getElementById('application-flow-section');
@@ -118,23 +161,26 @@ export default function CareersPage() {
                   onClick={() => { setActiveTab('positions'); setSelectedJobId(null); setSubmitted(false); }}
                   role="tab"
                   aria-selected={activeTab === 'positions'}
-                  className={`px-6 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    activeTab === 'positions'
+                  className={`px-6 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'positions'
                       ? 'bg-gradient-to-r from-primary to-accent text-black shadow'
                       : 'text-gray-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   Open Positions ({jobs.length})
                 </button>
                 <button
-                  onClick={() => { setActiveTab('internship'); setSelectedJobId(null); setSubmitted(false); }}
+                  onClick={() => {
+                    setActiveTab('internship');
+                    setSelectedJobId(null);
+                    setApplicationRoleId('internship');
+                    setSubmitted(false);
+                  }}
                   role="tab"
                   aria-selected={activeTab === 'internship'}
-                  className={`px-6 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    activeTab === 'internship'
+                  className={`px-6 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'internship'
                       ? 'bg-gradient-to-r from-primary to-accent text-black shadow'
                       : 'text-gray-400 hover:text-white'
-                  }`}
+                    }`}
                 >
                   Internship Program (Always Open)
                 </button>
@@ -158,11 +204,10 @@ export default function CareersPage() {
                     {jobs.map((job, idx) => (
                       <ScrollAnimate key={job.id} variant="slideRight" delay={idx * 0.1}>
                         <div
-                          className={`p-6 sm:p-8 rounded-2xl border transition-all ${
-                            selectedJobId === job.id
+                          className={`p-6 sm:p-8 rounded-2xl border transition-all ${selectedJobId === job.id
                               ? 'bg-primary/5 border-accent'
                               : 'bg-white/[0.01] border-white/5 hover:border-white/10'
-                          }`}
+                            }`}
                         >
                           <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
                             <div>
@@ -268,9 +313,7 @@ export default function CareersPage() {
                   {activeTab === 'internship' ? 'Academy Application Portal' : 'Candidate Application Form'}
                 </h3>
                 <p className="text-xs text-gray-400 mb-6">
-                  {selectedJobId
-                    ? `Applying for: ${jobs.find(j => j.id === selectedJobId)?.title}`
-                    : 'Submit your candidate credentials for review.'}
+                  Applying for: {jobs.find((job) => job.id === applicationRoleId)?.title || 'Internship Program'}
                 </p>
 
                 {submitted ? (
@@ -294,7 +337,13 @@ export default function CareersPage() {
                     </button>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleApplySubmit} className="flex flex-col gap-4">
+                  <form
+                    action="https://formsubmit.co/edgrowproduct@gmail.com"
+                    method="POST"
+                    encType="multipart/form-data"
+                    onSubmit={handleApplySubmit}
+                    className="flex flex-col gap-4"
+                  >
 
                     {/* Full Name */}
                     <div className="flex flex-col gap-1.5">
@@ -303,6 +352,7 @@ export default function CareersPage() {
                       </label>
                       <input
                         id="career-name"
+                        name="name"
                         type="text"
                         required
                         value={formName}
@@ -319,6 +369,7 @@ export default function CareersPage() {
                       </label>
                       <input
                         id="career-email"
+                        name="email"
                         type="email"
                         required
                         value={formEmail}
@@ -328,25 +379,30 @@ export default function CareersPage() {
                       />
                     </div>
 
-                    {/* Role Selection (Only shown for General Internship) */}
-                    {!selectedJobId && (
-                      <div className="flex flex-col gap-1.5">
-                        <label htmlFor="career-role" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
-                          Role of Interest
-                        </label>
-                        <select
-                          id="career-role"
-                          value={roleInterest}
-                          onChange={(e) => setRoleInterest(e.target.value)}
-                          className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-accent text-white"
-                        >
-                          <option>Full-Stack Web Development</option>
-                          <option>Mobile App Engineering (React Native)</option>
-                          <option>UI/UX Usability Design</option>
-                          <option>SEO & Technical Copywriting</option>
-                        </select>
-                      </div>
-                    )}
+                    {/* Active Sanity positions plus the always-open internship. */}
+                    <div className="flex flex-col gap-1.5">
+                      <label htmlFor="career-role" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
+                        Role of Interest
+                      </label>
+                      <select
+                        id="career-role"
+                        name="role"
+                        required
+                        value={applicationRoleId}
+                        onChange={(event) => {
+                          const roleId = event.target.value;
+                          setApplicationRoleId(roleId);
+                          setSelectedJobId(roleId === 'internship' ? null : roleId);
+                          setActiveTab(roleId === 'internship' ? 'internship' : 'positions');
+                        }}
+                        className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-accent text-white"
+                      >
+                        <option value="internship">Internship Program</option>
+                        {jobs.map((job) => (
+                          <option key={job.id} value={job.id}>{job.title}</option>
+                        ))}
+                      </select>
+                    </div>
 
                     {/* Cover Note */}
                     <div className="flex flex-col gap-1.5">
@@ -355,6 +411,7 @@ export default function CareersPage() {
                       </label>
                       <textarea
                         id="career-cover"
+                        name="coverLetter"
                         rows={4}
                         value={formCover}
                         onChange={(e) => setFormCover(e.target.value)}
@@ -368,23 +425,33 @@ export default function CareersPage() {
                       <label htmlFor="career-resume" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
                         Resume File Selection (PDF)
                       </label>
-                      <div className="border border-dashed border-white/10 hover:border-accent/40 rounded-xl p-6 text-center cursor-pointer bg-white/[0.005] hover:bg-white/[0.02] transition-all flex flex-col items-center gap-2">
+                      <label htmlFor="career-resume" className="border border-dashed border-white/10 hover:border-accent/40 rounded-xl p-6 text-center cursor-pointer bg-white/[0.005] hover:bg-white/[0.02] transition-all flex flex-col items-center gap-2">
                         <Upload className="w-6 h-6 text-accent" aria-hidden="true" />
-                        <span className="text-xs text-gray-300">Drag & drop your CV files here or click to browse</span>
+                        <span className="text-xs text-gray-300">
+                          {formResume ? formResume.name : 'Click to select your PDF resume'}
+                        </span>
                         <span className="text-[10px] text-gray-500 font-mono">Max size: 5MB</span>
 
                         <input
                           id="career-resume"
-                          type="text"
-                          value={formResume}
-                          onChange={(e) => setFormResume(e.target.value)}
-                          placeholder="Or type file name (e.g. Dilshan_CV.pdf)"
-                          className="mt-2 w-full max-w-xs bg-black/60 border border-white/10 rounded-lg px-3 py-1.5 text-center text-[10px] text-white focus:outline-none focus:border-accent"
+                          name="attachment"
+                          type="file"
+                          ref={resumeInputRef}
+                          required
+                          accept="application/pdf,.pdf"
+                          onChange={handleResumeChange}
+                          className="sr-only"
                         />
-                      </div>
+                      </label>
                     </div>
 
                     {/* Submit Button */}
+                    {submitError && (
+                      <p className="text-sm text-red-300 bg-red-500/10 border border-red-400/20 rounded-xl px-4 py-3" role="alert">
+                        {submitError}
+                      </p>
+                    )}
+
                     <button
                       type="submit"
                       disabled={isSubmitting}

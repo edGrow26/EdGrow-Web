@@ -9,9 +9,10 @@ import { sanityClient } from '../../../lib/sanity';
 
 export async function generateStaticParams() {
   const posts = await sanityClient.getBlogPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  const slugs = new Set(posts.map((p) => p.slug));
+  // Always include the two known mock slugs as a safety net
+  ['why-nextjs-sanity-beats-wordpress', 'ultimate-guide-technical-seo-core-web-vitals'].forEach(s => slugs.add(s));
+  return Array.from(slugs).map((slug) => ({ slug }));
 }
 
 interface PageProps {

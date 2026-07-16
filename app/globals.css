@@ -329,33 +329,7 @@ html.light #pricing-calculator-card {
   box-shadow: 0 15px 35px -10px rgba(0, 102, 214, 0.05) !important;
 }
 
-/* Stats counter overrides */
-html.light #stats .stats-item > span:first-child {
-  background-image: none !important;
-  -webkit-background-clip: initial !important;
-  background-clip: initial !important;
-  color: #0f172a !important;
-  -webkit-text-fill-color: #0f172a !important;
-}
 
-html.light #stats .stats-item:nth-child(1) > span:first-child {
-  color: #0066D6 !important;
-  -webkit-text-fill-color: #0066D6 !important;
-}
-
-html.light #stats .stats-item:nth-child(2) > span:first-child {
-  color: #00BFA5 !important;
-  -webkit-text-fill-color: #00BFA5 !important;
-}
-
-html.light #stats .stats-item:nth-child(3) > span:first-child {
-  color: #18a37f !important;
-  -webkit-text-fill-color: #18a37f !important;
-}
-
-html.light #stats .stats-item > span:last-child {
-  color: #334155 !important;
-}
 
 /* Scrollbars */
 html.light ::-webkit-scrollbar-track {
@@ -458,4 +432,63 @@ html.light .btn-secondary-pill:hover {
   background-color: rgba(15, 23, 42, 0.05) !important;
   border-color: #0f172a !important;
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+.html-light-fill-white {
+  fill: #000000;
+}
+
+html.light .html-light-fill-white {
+  fill: #ffffff !important;
+}
+
+/* Keep portfolio text white/readable in light mode */
+.text-light-always h3:not(.text-accent):not(.text-mint),
+.text-light-always p,
+.text-light-always span:not(.text-accent):not(.text-mint),
+.text-light-always a:not(.text-accent):not(.text-mint) {
+  color: #ffffff !important;
+}
+
+.text-light-always .text-gray-300 {
+  color: #d1d5db !important;
+}
+
+.text-light-always .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.text-light-always .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+.text-light-always .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.text-light-always .border-white\/5 {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.text-light-always .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+
+
+
 
