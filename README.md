@@ -45,6 +45,13 @@ The Services page reads published `service` documents securely during the static
 
 Open the Studio directly at [http://localhost:3333](http://localhost:3333), or use the website bridge at [http://localhost:3000/studio](http://localhost:3000/studio). Then create and publish Service documents. Only published services with an Active status are displayed; `Display order` controls their order. Run `npm run build` after publishing content so the static website includes the latest services.
 
+## Contact, careers, and client reviews
+
+- Contact messages and career applications are delivered to `NEXT_PUBLIC_FORM_RECIPIENT` through FormSubmit. It defaults to `edgrowproduct@gmail.com`.
+- The first real submission sends an activation email to the recipient address. Open that email and confirm the form once; later submissions are delivered automatically.
+- Career resumes must be PDF files no larger than 5 MB and are attached to the application email.
+- Homepage reviews are managed in Sanity Studio under **Client Review**. Set the review to **Active** and publish it; `Display Order` controls its carousel position.
+
 ## Validate and run the production export
 
 ```bash

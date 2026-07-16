@@ -17,12 +17,14 @@ export default function ContactPage() {
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email) return;
 
     setSubmitting(true);
+    setSubmitError('');
     const sent = await sanityClient.submitContactForm({ name, email, subject, message });
     if (sent) {
       setSuccess(true);
@@ -30,6 +32,8 @@ export default function ContactPage() {
       setEmail('');
       setSubject('');
       setMessage('');
+    } else {
+      setSubmitError('Your message could not be delivered. Please try again or email edgrowproduct@gmail.com directly.');
     }
     setSubmitting(false);
   };
@@ -108,7 +112,12 @@ export default function ContactPage() {
                     </button>
                   </motion.div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                  <form
+                    action="https://formsubmit.co/edgrowproduct@gmail.com"
+                    method="POST"
+                    onSubmit={handleSubmit}
+                    className="flex flex-col gap-5"
+                  >
                     
                     {/* Name */}
                     <div className="flex flex-col gap-1.5">
@@ -117,6 +126,7 @@ export default function ContactPage() {
                       </label>
                       <input
                         id="contact-name"
+                        name="name"
                         type="text"
                         required
                         value={name}
@@ -133,6 +143,7 @@ export default function ContactPage() {
                       </label>
                       <input
                         id="contact-email"
+                        name="email"
                         type="email"
                         required
                         value={email}
@@ -149,6 +160,7 @@ export default function ContactPage() {
                       </label>
                       <input
                         id="contact-subject"
+                        name="subject"
                         type="text"
                         value={subject}
                         onChange={(e) => setSubject(e.target.value)}
@@ -164,6 +176,7 @@ export default function ContactPage() {
                       </label>
                       <textarea
                         id="contact-message"
+                        name="message"
                         rows={5}
                         required
                         value={message}
@@ -174,6 +187,12 @@ export default function ContactPage() {
                     </div>
 
                     {/* Submit Button */}
+                    {submitError && (
+                      <p className="text-sm text-red-300 bg-red-500/10 border border-red-400/20 rounded-xl px-4 py-3" role="alert">
+                        {submitError}
+                      </p>
+                    )}
+
                     <button
                       type="submit"
                       disabled={submitting}

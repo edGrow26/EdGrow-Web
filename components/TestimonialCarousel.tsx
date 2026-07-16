@@ -2,10 +2,38 @@
 
 import React from 'react';
 import Image from 'next/image';
+import { Star } from 'lucide-react';
 import { Testimonial } from '../lib/sanity';
 
 interface TestimonialCarouselProps {
   testimonials: Testimonial[];
+}
+
+function RatingStars({ rating }: { rating: number }) {
+  const normalizedRating = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+
+  return (
+    <div
+      className="flex items-center gap-1.5 justify-center mb-4 text-[#f5b301]"
+      role="img"
+      aria-label={`Rating: ${normalizedRating} out of 5 stars`}
+    >
+      {[...Array(5)].map((_, index) => {
+        const filled = index < normalizedRating;
+
+        return (
+          <Star
+            key={index}
+            className="w-6 h-6"
+            fill={filled ? 'currentColor' : 'none'}
+            stroke="currentColor"
+            strokeWidth={2.25}
+            aria-hidden="true"
+          />
+        );
+      })}
+    </div>
+  );
 }
 
 export default function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
@@ -40,18 +68,8 @@ export default function TestimonialCarousel({ testimonials }: TestimonialCarouse
                   </span>
                 </div>
 
-                {/* Rating Stars Grid */}
-                <div className="flex items-center gap-1 justify-center mb-4" role="img" aria-label={`Rating: ${test.rating} out of 5 stars`}>
-                  {[...Array(5)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="w-5 h-5 bg-[#00b67a] flex items-center justify-center text-white text-xs font-bold rounded-sm shadow-sm"
-                      aria-hidden="true"
-                    >
-                      ★
-                    </div>
-                  ))}
-                </div>
+                {/* Dynamic rating: filled stars match the Sanity rating. */}
+                <RatingStars rating={test.rating} />
 
                 {/* Author Name */}
                 <h4 className="text-gray-900 text-sm sm:text-base font-extrabold tracking-wide mb-3 font-sans">
