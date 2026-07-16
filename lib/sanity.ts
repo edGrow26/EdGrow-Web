@@ -27,6 +27,8 @@ export interface TeamMember {
   name: string;
   role: string;
   photo: string;
+  bio?: string;
+  skills?: string[];
   socials: {
     linkedin?: string;
     twitter?: string;

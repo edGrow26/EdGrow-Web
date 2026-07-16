@@ -3,8 +3,8 @@ import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './schemaTypes';
 
-const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID;
-const dataset = import.meta.env.SANITY_STUDIO_DATASET || 'production';
+const projectId = process.env.SANITY_STUDIO_PROJECT_ID;
+const dataset = process.env.SANITY_STUDIO_DATASET || 'production';
 
 if (!projectId || projectId === 'your-project-id') {
   throw new Error(
