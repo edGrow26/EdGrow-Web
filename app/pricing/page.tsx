@@ -122,28 +122,17 @@ export default function PricingPage() {
 
           {/* Embedded Interactive Cost Calculator Widget */}
           <div className="border-t border-white/5 pt-20">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.6 }}
-              className="text-center mb-16"
-            >
+            <div className="text-center mb-16">
               <span className="text-xs font-bold text-mint uppercase tracking-widest block mb-3">Modular Budget Estimation</span>
               <h2 className="text-3xl font-extrabold text-white tracking-tight">Interactive Timeline & Cost Calculator</h2>
               <p className="text-gray-400 text-sm max-w-xl mx-auto mt-3">
                 Adjust sliders to customize page outputs, timeline pacing, and integrations to calculate an instantaneous price range.
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.05 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-            >
+            <div>
               <InteractiveCostCalculator />
-            </motion.div>
+            </div>
           </div>
 
         </div>

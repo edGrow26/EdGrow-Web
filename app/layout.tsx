@@ -56,7 +56,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://images.unsplash.com" />
         {/* Load Plus Jakarta Sans with display=swap to prevent FOIT (Flash of Invisible Text) */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playball&display=swap"
           rel="stylesheet"
         />
       </head>
