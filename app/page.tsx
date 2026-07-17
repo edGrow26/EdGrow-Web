@@ -60,7 +60,7 @@ export default function Home() {
 
             {/* Glow badge */}
             <div
-              className="hero-badge opacity-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-8"
+              className="hero-badge inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-8"
             >
               <Sparkles className="w-3.5 h-3.5 animate-pulse text-mint" aria-hidden="true" />
               <span>Sri Lanka + UK Dual-Region Delivery Network</span>
@@ -68,7 +68,7 @@ export default function Home() {
 
             {/* Headline */}
             <h1
-              className="hero-title opacity-0 text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6"
+              className="hero-title text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6"
             >
               We Engineer High-Performance{' '}
               <span className="bg-gradient-to-r from-primary via-accent to-mint bg-clip-text text-transparent">
@@ -78,14 +78,14 @@ export default function Home() {
 
             {/* Subheading with naturally placed SEO keywords */}
             <p
-              className="hero-text opacity-0 text-gray-400 text-lg sm:text-xl max-w-2xl leading-relaxed mb-10"
+              className="hero-text text-gray-400 text-lg sm:text-xl max-w-2xl leading-relaxed mb-10"
             >
               Edgrow Technologies delivers world-class custom software development, high-speed Next.js web applications, and SEO services for Sri Lanka, the UK, and global enterprises.
             </p>
 
             {/* CTA Buttons */}
             <div
-              className="hero-ctas opacity-0 flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto"
+              className="hero-ctas flex flex-col sm:flex-row items-center justify-center gap-6 w-full sm:w-auto"
             >
               <Link
                 href="/contact"
@@ -347,7 +347,7 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-25 pb-12 pt-8">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-xs font-mono font-bold text-white/60 uppercase tracking-[0.25em] block mb-4">
+            <span className="text-xs font-mono font-bold text-white/80 uppercase tracking-[0.25em] block mb-4">
               // CLIENT SUCCESS & TRUST
             </span>
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-none uppercase font-sans">

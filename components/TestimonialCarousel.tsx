@@ -72,9 +72,9 @@ export default function TestimonialCarousel({ testimonials }: TestimonialCarouse
                 <RatingStars rating={test.rating} />
 
                 {/* Author Name */}
-                <h4 className="text-gray-900 text-sm sm:text-base font-extrabold tracking-wide mb-3 font-sans">
+                <h3 className="text-gray-900 text-sm sm:text-base font-extrabold tracking-wide mb-3 font-sans">
                   ~{test.name}~
-                </h4>
+                </h3>
 
                 {/* Quote Text */}
                 <blockquote className="text-gray-600 text-xs sm:text-sm leading-relaxed italic px-2 mb-10 font-sans">

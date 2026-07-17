@@ -21,16 +21,15 @@ export default function Footer() {
           <ScrollAnimate variant="fadeUp" delay={0}>
             <div className="flex flex-col gap-6">
               <Link href="/" className="flex items-center gap-2 group">
-                <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-mint p-[1.5px]">
-                  <div className="w-full h-full overflow-hidden bg-white rounded-[10px] flex items-center justify-center p-1">
-                    <Image
-                      src="/EdGrow%20Logo.png"
-                      alt="Edgrow Technologies logo"
-                      width={40}
-                      height={40}
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
+                <div className="relative w-11 h-11 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3">
+                  <div className="absolute inset-1 bg-gradient-to-br from-primary/40 to-mint/30 rounded-full blur-md opacity-60" aria-hidden="true" />
+                  <Image
+                    src="/EdGrow%20Mark.png"
+                    alt="Edgrow Technologies logo"
+                    width={44}
+                    height={44}
+                    className="relative h-full w-full object-contain drop-shadow-[0_0_8px_rgba(0,191,165,0.35)]"
+                  />
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white to-accent bg-clip-text text-transparent">
@@ -63,7 +62,7 @@ export default function Footer() {
           {/* Column 2: Quick Links */}
           <ScrollAnimate variant="fadeUp" delay={0.1}>
             <div className="flex flex-col gap-5">
-              <h4 className="text-white text-sm font-bold uppercase tracking-wider">Solutions</h4>
+              <h2 className="text-white text-sm font-bold uppercase tracking-wider">Solutions</h2>
               <nav aria-label="Footer solutions links">
                 <ul className="flex flex-col gap-3">
                   <li>
@@ -99,7 +98,7 @@ export default function Footer() {
           {/* Column 3: Corporate Locations */}
           <ScrollAnimate variant="fadeUp" delay={0.2}>
             <div className="flex flex-col gap-5">
-              <h4 className="text-white text-sm font-bold uppercase tracking-wider">Our Offices</h4>
+              <h2 className="text-white text-sm font-bold uppercase tracking-wider">Our Offices</h2>
               <div className="flex flex-col gap-4 text-sm text-gray-400">
 
                 {/* United Kingdom */}
@@ -127,7 +126,7 @@ export default function Footer() {
           {/* Column 4: Newsletter Sign Up */}
           <ScrollAnimate variant="fadeUp" delay={0.3}>
             <div className="flex flex-col gap-5">
-              <h4 className="text-white text-sm font-bold uppercase tracking-wider">Stay Updated</h4>
+              <h2 className="text-white text-sm font-bold uppercase tracking-wider">Stay Updated</h2>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Subscribe to receive technical guides, web development secrets, and business insights.
               </p>
