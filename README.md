@@ -1,6 +1,6 @@
 # Edgrow Web Application
 
-Edgrow is a Next.js App Router application built with React, Tailwind CSS, GSAP, Motion, and Sanity.
+Edgrow is a statically exported Next.js App Router application built with React, Tailwind CSS, GSAP, and Motion.
 
 ## Prerequisites
 
@@ -26,7 +26,7 @@ Do not work around certificate errors by permanently setting `strict-ssl=false`.
 
 ## Connect Sanity services
 
-The Services page reads published `service` documents from Sanity. Until Sanity is configured or while the dataset is empty, the existing local services remain visible as fallback content.
+The Services page reads published `service` documents securely during the static website build. Until Sanity is configured or while the dataset is empty, the existing local services remain visible as fallback content.
 
 1. Create or select a project at [sanity.io/manage](https://www.sanity.io/manage).
 2. Create the local environment file:
@@ -35,7 +35,7 @@ The Services page reads published `service` documents from Sanity. Until Sanity 
    cp .env.example .env.local
    ```
 
-3. Add the website (`NEXT_PUBLIC_SANITY_*`), Studio (`SANITY_STUDIO_*`), and server-only token values to `.env.local`. `SANITY_API_WRITE_TOKEN` needs permission to create documents and upload assets for career applications.
+3. Add the website (`NEXT_PUBLIC_SANITY_*`), Studio (`SANITY_STUDIO_*`), and server-only read-token values to `.env.local`. Both applications use this single root file, but each build system requires its own variable prefix.
 4. Start the website and Studio in separate terminals:
 
    ```bash
@@ -43,15 +43,16 @@ The Services page reads published `service` documents from Sanity. Until Sanity 
    npm run studio
    ```
 
-Open the Studio directly at [http://localhost:3333](http://localhost:3333), or use the website bridge at [http://localhost:3000/studio](http://localhost:3000/studio). Then create and publish Service documents. Only published services with an Active status are displayed; `Display order` controls their order.
+Open the Studio directly at [http://localhost:3333](http://localhost:3333), or use the website bridge at [http://localhost:3000/studio](http://localhost:3000/studio). Then create and publish Service documents. Only published services with an Active status are displayed; `Display order` controls their order. Run `npm run build` after publishing content so the static website includes the latest services.
 
 ## Contact, careers, and client reviews
 
-- Contact messages are delivered to `NEXT_PUBLIC_FORM_RECIPIENT` through FormSubmit. It defaults to `edgrowproduct@gmail.com`.
-- Career applications are stored in Sanity Studio under **Job Application**. PDF resumes up to 5 MB are uploaded as Sanity file assets and linked to each application.
+- Contact messages and career applications are delivered to `NEXT_PUBLIC_FORM_RECIPIENT` through FormSubmit. It defaults to `edgrowproduct@gmail.com`.
+- The first real submission sends an activation email to the recipient address. Open that email and confirm the form once; later submissions are delivered automatically.
+- Career resumes must be PDF files no larger than 5 MB and are attached to the application email.
 - Homepage reviews are managed in Sanity Studio under **Client Review**. Set the review to **Active** and publish it; `Display Order` controls its carousel position.
 
-## Validate and run production
+## Validate and run the production export
 
 ```bash
 npm run typecheck
@@ -59,7 +60,7 @@ npm run build
 npm start
 ```
 
-`npm run build` creates the production Next.js application. `npm start` serves it on port 3000.
+`npm run build` creates the static site in `dist/`. `npm start` serves that directory on port 3000. You can override the address with `HOST` and `PORT`.
 
 ## Project structure
 
@@ -67,4 +68,4 @@ npm start
 - `components/` — Reusable components (e.g. `Navbar.tsx`, `Footer.tsx`, and the custom `ThemeToggle.tsx`).
 - `public/` — Static assets (images, vectors, etc.).
 - `lib/` — Utility helper functions.
-- `app/api/applications/` — Server-only Sanity application and resume upload endpoint.
+- `serve.js` — Lightweight server for the generated `dist/` site.

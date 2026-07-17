@@ -6,9 +6,7 @@
   --color-mint: #1DE9B6;
   --color-ink: #000000;
   --color-paper: #FFFFFF;
-  --font-sans: var(--font-sans), "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
-  --font-dancing: var(--font-dancing), cursive;
-  --font-playball: var(--font-playball), cursive;
+  --font-sans: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 /* Theme variables */
@@ -34,7 +32,7 @@ html {
 body {
   background-color: #000000;
   color: #FFFFFF;
-  font-family: var(--font-sans), "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
+  font-family: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif;
 }
 
 /* Scrollbar styling */

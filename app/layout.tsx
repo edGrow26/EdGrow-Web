@@ -36,33 +36,11 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: '/EdGrow%20Favicon.png',
-    shortcut: '/EdGrow%20Favicon.png',
-    apple: '/EdGrow%20Favicon.png',
+    icon: '/EdGrow%20Logo.png',
+    shortcut: '/EdGrow%20Logo.png',
+    apple: '/EdGrow%20Logo.png',
   },
 };
-
-import { Plus_Jakarta_Sans, Dancing_Script, Playball } from 'next/font/google';
-
-const plusJakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-sans',
-});
-
-const dancingScript = Dancing_Script({
-  subsets: ['latin'],
-  weight: ['600', '700'],
-  display: 'swap',
-  variable: '--font-dancing',
-});
-
-const playball = Playball({
-  subsets: ['latin'],
-  weight: '400',
-  display: 'swap',
-  variable: '--font-playball',
-});
 
 export default function RootLayout({
   children,
@@ -73,9 +51,16 @@ export default function RootLayout({
     <html lang="en" className="h-full scroll-smooth" data-scroll-behavior="smooth">
       <head>
         {/* Preconnect to external origins for faster resource loading */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://images.unsplash.com" />
+        {/* Load Plus Jakarta Sans with display=swap to prevent FOIT (Flash of Invisible Text) */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Dancing+Script:wght@600;700&family=Playball&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body className={`${plusJakartaSans.variable} ${dancingScript.variable} ${playball.variable} font-sans h-full bg-black text-white antialiased selection:bg-primary selection:text-white`}>
+      <body className="font-sans h-full bg-black text-white antialiased selection:bg-primary selection:text-white">
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-accent focus:text-black focus:rounded-lg focus:font-bold focus:text-xs">
           Skip to main content
         </a>
