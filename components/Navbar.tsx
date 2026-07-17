@@ -45,27 +45,24 @@ export default function Navbar() {
     <>
       <header
         id="main-navbar"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
             ? 'py-3 bg-black/80 backdrop-blur-xl border-b border-white/5 shadow-lg shadow-black/20'
             : 'py-5 bg-transparent'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2 group">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-mint p-[1.5px] transition-transform duration-300 group-hover:scale-105">
-                <div className="w-full h-full overflow-hidden bg-white rounded-[10px] flex items-center justify-center p-1">
-                  <Image
-                    src="/EdGrow%20Logo.png"
-                    alt="Edgrow Technologies logo"
-                    width={40}
-                    height={40}
-                    priority
-                    className="h-full w-full object-contain"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-primary/30 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10" />
+              <div className="relative w-11 h-11 transition-all duration-300 group-hover:scale-110 group-hover:-rotate-3">
+                <div className="absolute inset-1 bg-gradient-to-br from-primary/50 to-mint/40 rounded-full blur-md opacity-50 group-hover:opacity-90 transition-opacity" aria-hidden="true" />
+                <Image
+                  src="/EdGrow%20Mark.png"
+                  alt="Edgrow Technologies logo"
+                  width={44}
+                  height={44}
+                  priority
+                  className="relative h-full w-full object-contain drop-shadow-[0_0_8px_rgba(0,191,165,0.35)]"
+                />
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-white via-slate-100 to-accent bg-clip-text text-transparent">
@@ -85,9 +82,8 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative px-3.5 py-1.5 text-sm font-medium tracking-wide transition-colors duration-200 rounded-lg hover:text-white ${
-                      isActive ? 'text-accent' : 'text-gray-400'
-                    }`}
+                    className={`relative px-3.5 py-1.5 text-sm font-medium tracking-wide transition-colors duration-200 rounded-lg hover:text-white ${isActive ? 'text-accent' : 'text-gray-400'
+                      }`}
                   >
                     {isActive && (
                       <motion.span
@@ -141,9 +137,8 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-4 py-3 text-base font-medium rounded-xl transition-colors ${
-                      isActive ? 'bg-primary/20 text-white border-l-2 border-accent' : 'text-gray-400 hover:bg-white/5'
-                    }`}
+                    className={`px-4 py-3 text-base font-medium rounded-xl transition-colors ${isActive ? 'bg-primary/20 text-white border-l-2 border-accent' : 'text-gray-400 hover:bg-white/5'
+                      }`}
                   >
                     {link.label}
                   </Link>

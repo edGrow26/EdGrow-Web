@@ -66,7 +66,7 @@ export default function CareersPage() {
       setFormResume(null);
       if (resumeInputRef.current) resumeInputRef.current.value = '';
     } else {
-      setSubmitError('Your application could not be delivered. Please try again or email your resume to edgrowproduct@gmail.com.');
+      setSubmitError('Your application could not be saved in Sanity. Please try again.');
     }
     setIsSubmitting(false);
   };
@@ -327,7 +327,7 @@ export default function CareersPage() {
                     </div>
                     <h4 className="text-base font-extrabold text-white">Application Recorded Successfully</h4>
                     <p className="text-gray-300 text-xs leading-relaxed">
-                      Thank you for applying. Our talent recruitment team in Colombo or London will review your portfolio files and connect via email within 48 hours.
+                      Thank you for applying. Your details and resume are now securely stored in our Sanity recruitment workspace for review.
                     </p>
                     <button
                       onClick={() => setSubmitted(false)}
@@ -338,7 +338,7 @@ export default function CareersPage() {
                   </motion.div>
                 ) : (
                   <form
-                    action="https://formsubmit.co/edgrowproduct@gmail.com"
+                    action="/api/applications"
                     method="POST"
                     encType="multipart/form-data"
                     onSubmit={handleApplySubmit}
@@ -386,7 +386,7 @@ export default function CareersPage() {
                       </label>
                       <select
                         id="career-role"
-                        name="role"
+                        name="roleId"
                         required
                         value={applicationRoleId}
                         onChange={(event) => {
@@ -434,7 +434,7 @@ export default function CareersPage() {
 
                         <input
                           id="career-resume"
-                          name="attachment"
+                          name="resume"
                           type="file"
                           ref={resumeInputRef}
                           required
@@ -444,6 +444,8 @@ export default function CareersPage() {
                         />
                       </label>
                     </div>
+
+                    <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
                     {/* Submit Button */}
                     {submitError && (

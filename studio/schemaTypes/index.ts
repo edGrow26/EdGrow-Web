@@ -1,10 +1,11 @@
-import { serviceType }     from './serviceType';
-import { postType }        from './postType';
-import { jobType }         from './jobType';
-import { authorType }      from './authorType';
-import { projectType }     from './projectType';
+import { serviceType } from './serviceType';
+import { postType } from './postType';
+import { jobType } from './jobType';
+import { authorType } from './authorType';
+import { projectType } from './projectType';
 import { testimonialType } from './testimonialType';
-import { teamMemberType }  from './teamMemberType';
+import { teamMemberType } from './teamMemberType';
+import { jobApplicationType } from './jobApplicationType';
 
 export const schemaTypes = [
   authorType,
@@ -14,4 +15,5 @@ export const schemaTypes = [
   projectType,
   testimonialType,
   teamMemberType,
+  jobApplicationType,
 ];

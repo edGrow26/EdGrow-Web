@@ -4,9 +4,9 @@ import { createClient } from '@sanity/client';
 
 // ─── Sanity client ────────────────────────────────────────────────────────────
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '';
-const dataset   = process.env.NEXT_PUBLIC_SANITY_DATASET   ?? 'production';
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
 // SANITY_API_READ_TOKEN is server-only. NEXT_PUBLIC_SANITY_API_READ_TOKEN works in the browser too.
-const apiToken  = process.env.SANITY_API_READ_TOKEN ?? process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN;
+const apiToken = process.env.SANITY_API_READ_TOKEN ?? process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN;
 const formRecipient = process.env.NEXT_PUBLIC_FORM_RECIPIENT || 'edgrowproduct@gmail.com';
 const formEndpoint = `https://formsubmit.co/ajax/${formRecipient}`;
 
@@ -289,8 +289,8 @@ function blocksToHtml(blocks: unknown[]): string {
         .map(child => {
           let t = child.text ?? '';
           if (child.marks?.includes('strong')) t = `<strong>${t}</strong>`;
-          if (child.marks?.includes('em'))     t = `<em>${t}</em>`;
-          if (child.marks?.includes('code'))   t = `<code>${t}</code>`;
+          if (child.marks?.includes('em')) t = `<em>${t}</em>`;
+          if (child.marks?.includes('code')) t = `<code>${t}</code>`;
           return t;
         })
         .join('');
@@ -848,35 +848,19 @@ export const sanityClient = {
     const payload = new FormData();
     payload.append('name', data.name);
     payload.append('email', data.email);
+    payload.append('roleId', data.roleId);
+    payload.append('roleTitle', data.roleTitle);
+    payload.append('coverLetter', data.coverLetter);
+    payload.append('resume', data.resume, data.resume.name);
+    payload.append('website', '');
 
-    // Construct a comprehensive message body so it's guaranteed to be readable in the email
-    const fullMessage = `
-=== NEW CAREER APPLICATION ===
-
-Role Applied: ${data.roleTitle}
-Applicant Name: ${data.name}
-Applicant Email: ${data.email}
-
---- Cover Letter / Pitch ---
-${data.coverLetter || '(No cover note provided)'}
-
---- Important ---
-The applicant has attached their resume to this email.
-    `.trim();
-
-    payload.append('message', fullMessage);
-    payload.append('role', data.roleTitle);
-
-    // Attach the resume
-    if (data.resume) {
-      payload.append('attachment', data.resume, data.resume.name);
+    try {
+      const response = await fetch('/api/applications', { method: 'POST', body: payload });
+      const result = await response.json().catch(() => null) as { success?: boolean } | null;
+      return response.ok && result?.success === true;
+    } catch (error) {
+      console.error('[Careers] Sanity application submission failed.', error);
+      return false;
     }
-
-    payload.append('_subject', `New Edgrow career application: ${data.name} for ${data.roleTitle}`);
-    payload.append('_template', 'table');
-    payload.append('_captcha', 'false');
-    payload.append('_honey', '');
-
-    return submitEmailForm(payload);
   },
 };
