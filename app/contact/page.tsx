@@ -8,7 +8,6 @@ import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import ScrollAnimate from '../../components/ScrollAnimate';
-import { sanityClient } from '../../lib/sanity';
 
 export default function ContactPage() {
   const [name, setName] = useState('');
@@ -21,21 +20,41 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email) return;
+    if (!name || !email || !message) return;
 
     setSubmitting(true);
     setSubmitError('');
-    const sent = await sanityClient.submitContactForm({ name, email, subject, message });
-    if (sent) {
-      setSuccess(true);
-      setName('');
-      setEmail('');
-      setSubject('');
-      setMessage('');
-    } else {
-      setSubmitError('Your message could not be delivered. Please try again or email edgrowproduct@gmail.com directly.');
+
+    try {
+      // ── Primary: save to Sanity via the API route ────────────────────────────
+      const res = await fetch('/api/hire-inquiry', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, subject, message }),
+      });
+
+      const result = await res.json() as { success: boolean; message?: string };
+
+      if (res.ok && result.success) {
+        setSuccess(true);
+        setName('');
+        setEmail('');
+        setSubject('');
+        setMessage('');
+      } else {
+        // Surface the API error message or a generic fallback
+        setSubmitError(
+          result.message ??
+          'Your message could not be delivered. Please try again or email edgrowproduct@gmail.com directly.',
+        );
+      }
+    } catch {
+      setSubmitError(
+        'Your message could not be delivered. Please try again or email edgrowproduct@gmail.com directly.',
+      );
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitting(false);
   };
 
   return (
@@ -113,8 +132,6 @@ export default function ContactPage() {
                   </motion.div>
                 ) : (
                   <form
-                    action="https://formsubmit.co/edgrowproduct@gmail.com"
-                    method="POST"
                     onSubmit={handleSubmit}
                     className="flex flex-col gap-5"
                   >
