@@ -15,7 +15,7 @@ export default function AnimationManager() {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
   const [logText, setLogText] = useState('INITIALIZING ARCHITECTURES...');
-  
+
   const loaderRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLDivElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
@@ -39,7 +39,7 @@ export default function AnimationManager() {
 
       const elapsed = Date.now() - start;
       const percent = Math.min(Math.round((elapsed / duration) * 100), 100);
-      
+
       setProgress(percent);
 
       // Webflow dynamic status text
@@ -76,7 +76,7 @@ export default function AnimationManager() {
               document.body.style.overflow = '';
               // Refresh scrolltrigger after page content layout settles
               ScrollTrigger.refresh();
-              
+
             }
           });
 
@@ -191,7 +191,7 @@ export default function AnimationManager() {
           const rect = (btn as HTMLElement).getBoundingClientRect();
           const x = mouseEvent.clientX - rect.left - rect.width / 2;
           const y = mouseEvent.clientY - rect.top - rect.height / 2;
-          
+
           gsap.to(btn, {
             x: x * 0.25,
             y: y * 0.25,
@@ -247,7 +247,7 @@ export default function AnimationManager() {
     const tl = gsap.timeline();
 
     // Stagger hero badge, main heading split words, and sub-paragraphs
-    tl.fromTo('#hero div[class*="inline-flex"]', 
+    tl.fromTo('#hero div[class*="inline-flex"]',
       { opacity: 0, y: 25 },
       { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }
     );

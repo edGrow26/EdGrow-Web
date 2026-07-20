@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import AnimationManager from '../components/AnimationManager';
+import PageTransitionLoader from '../components/PageTransitionLoader';
 import ThemeToggle from '../components/ThemeToggle';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -65,6 +66,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <AnimationManager />
+        <PageTransitionLoader />
         <ThemeToggle />
         <main id="main-content">
           {children}

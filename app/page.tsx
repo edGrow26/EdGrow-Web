@@ -259,7 +259,7 @@ export default function Home() {
             </div>
           </ScrollAnimate>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pt-4">
             {projects.map((project, index) => {
               const isMiddle = index === 1;
               return (
@@ -268,66 +268,62 @@ export default function Home() {
                   variant={isMiddle ? 'scaleIn' : (index % 2 === 0 ? 'slideRight' : 'slideLeft')}
                   delay={index * 0.12}
                 >
-                  <div
-                    className={`group relative rounded-3xl overflow-hidden border border-white/5 bg-black hover:border-accent/30 transition-all duration-500 shadow-2xl flex flex-col justify-between h-[450px] text-light-always ${isMiddle ? 'lg:scale-[1.03] lg:-translate-y-2 hover:border-accent' : ''
+                  <Link
+                    href={`/portfolio/${project.id}`}
+                    aria-label={`View case study: ${project.title}`}
+                    className={`portfolio-showcase-card group relative block h-full min-h-[520px] overflow-hidden rounded-[28px] border border-slate-700/70 bg-[#07111f] shadow-[0_24px_70px_rgba(2,8,23,0.28)] transition-all duration-500 hover:-translate-y-2 hover:border-accent/70 hover:shadow-[0_28px_80px_rgba(0,121,107,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-black ${isMiddle ? 'xl:-translate-y-3 xl:hover:-translate-y-5' : ''
                       }`}
                   >
-
-                    {/* Background Image zooming overlay */}
-                    <div className="absolute inset-0 z-0">
+                    {/* Dedicated image preview keeps artwork separate from copy. */}
+                    <div className="relative h-56 overflow-hidden sm:h-64">
                       <img
                         src={project.mainImage}
                         alt={project.title}
                         loading="lazy"
                         decoding="async"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 brightness-[0.4] group-hover:brightness-[0.25]"
+                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" aria-hidden="true" />
-                    </div>
-
-                    {/* Top bar categories overlay */}
-                    <div className="relative z-10 p-6 flex justify-between items-start">
-                      <span className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full text-[9px] font-bold text-accent uppercase tracking-wide">
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#07111f] via-transparent to-black/10" aria-hidden="true" />
+                      <span className="absolute left-5 top-5 rounded-full border border-accent/30 bg-[#03120f]/90 px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#5fffe0] shadow-lg backdrop-blur-md">
                         {project.category}
+                      </span>
+                      <span className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/60 font-mono text-xs font-black text-white backdrop-blur-md" aria-hidden="true">
+                        {String(index + 1).padStart(2, '0')}
                       </span>
                     </div>
 
-                    {/* Bottom details revealing panel */}
-                    <div className="relative z-10 p-6 sm:p-8 flex flex-col gap-4 mt-auto transition-transform duration-300">
+                    {/* Opaque content panel guarantees readable copy in both themes. */}
+                    <div className="flex min-h-[260px] flex-col gap-5 px-6 pb-7 pt-5 sm:px-7">
                       <div>
-                        <h3 className="text-xl font-extrabold text-white leading-snug group-hover:text-accent transition-colors duration-300 mb-2">
+                        <span className="portfolio-card-meta mb-2 block text-[11px] font-bold uppercase tracking-[0.16em]">
+                          {project.industry}
+                        </span>
+                        <h3 className="portfolio-card-title mb-3 text-xl font-extrabold leading-snug transition-colors duration-300 group-hover:text-[#5fffe0] sm:text-2xl">
                           {project.title}
                         </h3>
-
-                        {/* Expandable/visible description */}
-                        <p className="text-gray-300 text-xs sm:text-sm leading-relaxed line-clamp-3 transition-opacity duration-300">
+                        <p className="portfolio-card-copy line-clamp-3 text-sm leading-6">
                           {project.description}
                         </p>
                       </div>
 
-                      <div className="flex flex-wrap gap-1.5 pt-2">
+                      <div className="flex flex-wrap gap-2">
                         {project.technologies.slice(0, 3).map((tech) => (
-                          <span key={tech} className="text-[9px] font-mono font-bold bg-white/10 text-gray-300 border border-white/5 px-2 py-0.5 rounded">
+                          <span key={tech} className="portfolio-card-chip rounded-lg border border-slate-600/60 bg-slate-800/80 px-2.5 py-1.5 font-mono text-[11px] font-bold">
                             {tech}
                           </span>
                         ))}
                       </div>
 
-                      <div className="flex items-center justify-between pt-4 border-t border-white/10 mt-2">
-                        <span className="text-[10px] text-gray-500 font-mono font-bold uppercase tracking-wider">
-                          {project.industry}
+                      <div className="mt-auto flex items-center justify-between border-t border-slate-700/70 pt-5">
+                        <span className="portfolio-card-meta text-xs font-bold uppercase tracking-wider">
+                          Case study
                         </span>
-
-                        <Link
-                          href={`/portfolio/${project.id}`}
-                          className="text-xs font-black text-accent hover:text-white transition-colors inline-flex items-center gap-1 group/btn"
-                        >
-                          Case Study <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" aria-hidden="true" />
-                        </Link>
+                        <span className="portfolio-card-action inline-flex items-center gap-2 text-sm font-black transition-colors">
+                          View project <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                        </span>
                       </div>
                     </div>
-
-                  </div>
+                  </Link>
                 </ScrollAnimate>
               );
             })}
