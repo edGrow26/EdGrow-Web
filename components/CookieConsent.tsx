@@ -53,7 +53,7 @@ export default function CookieConsent() {
                 <Shield className="w-5 h-5" />
               </div>
               <div className="flex flex-col gap-1">
-                <h4 className="text-white text-sm font-bold">Cookie Consent</h4>
+                <h2 className="text-white text-sm font-bold">Cookie Consent</h2>
                 <p className="text-gray-400 text-xs leading-relaxed">
                   We use cookies to measure technical performance, optimize loading speed, and provide tailored service recommendations. Read our{' '}
                   <Link href="/legal/cookies" className="text-accent hover:underline">

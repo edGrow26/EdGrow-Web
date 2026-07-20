@@ -279,6 +279,7 @@ export default function Home() {
                       <img
                         src={project.mainImage}
                         alt={project.title}
+                        crossOrigin="anonymous"
                         loading="lazy"
                         decoding="async"
                         className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"

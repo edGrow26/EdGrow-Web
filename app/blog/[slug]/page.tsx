@@ -78,6 +78,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
           <img
             src={post.author.avatar}
             alt={post.author.name}
+            crossOrigin="anonymous"
             className="w-11 h-11 rounded-full object-cover border border-white/10"
           />
           <div>
@@ -94,6 +95,7 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
           <img
             src={post.mainImage}
             alt={post.title}
+            crossOrigin="anonymous"
             className="w-full h-full object-cover"
           />
         </div>

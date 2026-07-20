@@ -332,17 +332,17 @@ export default function AnimationManager() {
       role="status"
       aria-live="polite"
       aria-label={`Loading Edgrow Technologies, ${progress}% complete`}
-      className="fixed inset-0 z-[9999] flex min-h-dvh select-none flex-col overflow-hidden bg-[#02070d] text-white"
+      className="edgrow-preloader fixed inset-0 z-[9999] flex min-h-dvh select-none flex-col overflow-hidden bg-[#02070d] text-white"
     >
       {/* Architectural backdrop */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
+        <div className="preloader-grid absolute inset-0 opacity-40 [background-image:linear-gradient(rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.025)_1px,transparent_1px)] [background-size:72px_72px] [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
         <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(0,191,165,0.11),rgba(0,102,214,0.035)_42%,transparent_70%)] blur-2xl" />
         <div className="absolute left-[8%] top-0 h-px w-[34%] bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
         <div className="absolute bottom-0 right-[8%] h-px w-[34%] bg-gradient-to-r from-transparent via-accent/70 to-transparent" />
       </div>
 
-      <div className="relative z-10 flex w-full items-center justify-between px-6 py-6 font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500 sm:px-10 sm:py-8">
+      <div className="preloader-muted relative z-10 flex w-full items-center justify-between px-6 py-6 font-mono text-[10px] uppercase tracking-[0.22em] text-slate-500 sm:px-10 sm:py-8">
         <span className="inline-flex items-center gap-2.5">
           <span className="h-1.5 w-1.5 rounded-full bg-mint shadow-[0_0_12px_rgba(29,233,182,0.8)]" />
           Digital systems online
@@ -367,15 +367,15 @@ export default function AnimationManager() {
           </div>
 
           <div className="relative flex items-center gap-4 sm:gap-6">
-            <div ref={badgeRef} className="relative flex h-[88px] w-[88px] shrink-0 items-center justify-center rounded-[32%] border border-white/15 bg-[#050d16]/90 shadow-[0_18px_60px_rgba(0,102,214,0.16)] backdrop-blur-xl sm:h-24 sm:w-24">
-              <div className="absolute inset-2 rounded-[30%] border border-accent/20" aria-hidden="true" />
-              <span className="bg-gradient-to-br from-white via-mint to-accent bg-clip-text text-3xl font-black tracking-[-0.12em] text-transparent sm:text-4xl">
+            <div ref={badgeRef} className="preloader-badge relative flex h-[88px] w-[88px] shrink-0 items-center justify-center rounded-[32%] border border-white/15 bg-[#050d16]/90 shadow-[0_18px_60px_rgba(0,102,214,0.16)] backdrop-blur-xl sm:h-24 sm:w-24">
+              <div className="preloader-badge-inset absolute inset-2 rounded-[30%] border border-accent/20" aria-hidden="true" />
+              <span className="preloader-monogram bg-gradient-to-br from-white via-mint to-accent bg-clip-text text-3xl font-black tracking-[-0.12em] text-transparent sm:text-4xl">
                 eg
               </span>
             </div>
 
-            <div ref={wordmarkRef} className="min-w-0 border-l border-white/10 pl-4 sm:pl-6">
-              <p className="text-xl font-black leading-none tracking-[-0.04em] text-white sm:text-3xl">Edgrow</p>
+            <div ref={wordmarkRef} className="preloader-wordmark min-w-0 border-l border-white/10 pl-4 sm:pl-6">
+              <p className="preloader-title text-xl font-black leading-none tracking-[-0.04em] text-white sm:text-3xl">Edgrow</p>
               <p className="mt-2 bg-gradient-to-r from-primary via-accent to-mint bg-clip-text text-[9px] font-extrabold uppercase tracking-[0.25em] text-transparent sm:text-[11px]">
                 Technologies
               </p>
@@ -385,17 +385,17 @@ export default function AnimationManager() {
 
         <div className="mt-2 w-full max-w-sm sm:mt-5">
           <div className="mb-3 flex items-end justify-between font-mono">
-            <span ref={logsRef} className="text-[10px] uppercase tracking-[0.16em] text-slate-400">{logText}</span>
-            <span className="text-sm font-bold tabular-nums text-white">{String(progress).padStart(3, '0')}%</span>
+            <span ref={logsRef} className="preloader-status text-[10px] uppercase tracking-[0.16em] text-slate-400">{logText}</span>
+            <span className="preloader-percentage text-sm font-bold tabular-nums text-white">{String(progress).padStart(3, '0')}%</span>
           </div>
-          <div className="h-px w-full overflow-hidden bg-white/10">
+          <div className="preloader-progress-track h-px w-full overflow-hidden bg-white/10">
             <div
               ref={lineRef}
               className="h-full bg-gradient-to-r from-primary via-accent to-mint shadow-[0_0_14px_rgba(0,191,165,0.75)]"
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="mt-3 flex justify-between font-mono text-[8px] uppercase tracking-[0.18em] text-slate-600" aria-hidden="true">
+          <div className="preloader-stage-label mt-3 flex justify-between font-mono text-[8px] uppercase tracking-[0.18em] text-slate-600" aria-hidden="true">
             <span>Reveal</span>
             <span>Morph</span>
             <span>Launch</span>
@@ -403,7 +403,7 @@ export default function AnimationManager() {
         </div>
       </div>
 
-      <div className="relative z-10 flex w-full items-center justify-between px-6 py-6 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-600 sm:px-10 sm:py-8">
+      <div className="preloader-footer relative z-10 flex w-full items-center justify-between px-6 py-6 font-mono text-[9px] uppercase tracking-[0.18em] text-slate-600 sm:px-10 sm:py-8">
         <span>Edgrow © {new Date().getFullYear()}</span>
         <span>Engineering digital growth</span>
       </div>

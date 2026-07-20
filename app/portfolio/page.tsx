@@ -110,6 +110,7 @@ export default function PortfolioPage() {
                     <img
                       src={project.mainImage}
                       alt={project.title}
+                      crossOrigin="anonymous"
                       loading="lazy"
                       decoding="async"
                       width={400}
@@ -182,6 +183,7 @@ export default function PortfolioPage() {
                           <img
                             src={rev.avatar}
                             alt={rev.author}
+                            crossOrigin="anonymous"
                             loading="lazy"
                             decoding="async"
                             width={40}

@@ -63,7 +63,7 @@ export default function Footer() {
           {/* Column 2: Quick Links */}
           <ScrollAnimate variant="fadeUp" delay={0.1}>
             <div className="flex flex-col gap-5">
-              <h4 className="text-white text-sm font-bold uppercase tracking-wider">Solutions</h4>
+              <h2 className="text-white text-sm font-bold uppercase tracking-wider">Solutions</h2>
               <nav aria-label="Footer solutions links">
                 <ul className="flex flex-col gap-3">
                   <li>
@@ -99,7 +99,7 @@ export default function Footer() {
           {/* Column 3: Corporate Locations */}
           <ScrollAnimate variant="fadeUp" delay={0.2}>
             <div className="flex flex-col gap-5">
-              <h4 className="text-white text-sm font-bold uppercase tracking-wider">Our Offices</h4>
+              <h2 className="text-white text-sm font-bold uppercase tracking-wider">Our Offices</h2>
               <div className="flex flex-col gap-4 text-sm text-gray-400">
 
                 {/* United Kingdom */}
@@ -127,7 +127,7 @@ export default function Footer() {
           {/* Column 4: Newsletter Sign Up */}
           <ScrollAnimate variant="fadeUp" delay={0.3}>
             <div className="flex flex-col gap-5">
-              <h4 className="text-white text-sm font-bold uppercase tracking-wider">Stay Updated</h4>
+              <h2 className="text-white text-sm font-bold uppercase tracking-wider">Stay Updated</h2>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Subscribe to receive technical guides, web development secrets, and business insights.
               </p>

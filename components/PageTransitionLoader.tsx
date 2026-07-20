@@ -77,12 +77,12 @@ export default function PageTransitionLoader() {
           animate={{ opacity: 1 }}
           exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -12 }}
           transition={{ duration: shouldReduceMotion ? 0.01 : 0.22, ease: 'easeOut' }}
-          className="fixed inset-0 z-[9998] flex items-center justify-center bg-black/95 backdrop-blur-xl"
+          className="page-transition-loader fixed inset-0 z-[9998] flex items-center justify-center bg-black/95 backdrop-blur-xl"
         >
           <div className="relative flex flex-col items-center gap-6 px-8 text-center">
             <div className="relative flex h-24 w-24 items-center justify-center">
               <div
-                className={`absolute inset-0 rounded-full border-2 border-white/10 border-t-accent border-r-primary ${
+                className={`page-loader-ring absolute inset-0 rounded-full border-2 border-white/10 border-t-accent border-r-primary ${
                   shouldReduceMotion ? '' : 'animate-spin'
                 }`}
                 aria-hidden="true"
@@ -99,13 +99,13 @@ export default function PageTransitionLoader() {
             </div>
 
             <div className="flex flex-col items-center gap-2">
-              <span className="text-sm font-bold tracking-[0.2em] text-white uppercase">
+              <span className="page-loader-title text-sm font-bold tracking-[0.2em] text-white uppercase">
                 Loading ...
               </span>
-              <span className="text-xs text-gray-400">Preparing the next Edgrow experience…</span>
+              <span className="page-loader-copy text-xs text-gray-400">Preparing the next Edgrow experience…</span>
             </div>
 
-            <div className="h-1 w-44 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
+            <div className="page-loader-track h-1 w-44 overflow-hidden rounded-full bg-white/10" aria-hidden="true">
               <motion.div
                 className="h-full rounded-full bg-gradient-to-r from-primary via-accent to-mint"
                 initial={{ x: '-100%' }}

@@ -65,6 +65,7 @@ export default function TeamPageClient({ team }: { team: TeamMember[] }) {
                       <img
                         src={member.photo}
                         alt={member.name}
+                        crossOrigin="anonymous"
                         loading="lazy"
                         decoding="async"
                         width={300}

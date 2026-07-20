@@ -78,6 +78,7 @@ export default function BlogListingPage() {
                     <img
                       src={post.mainImage}
                       alt={post.title}
+                      crossOrigin="anonymous"
                       loading="lazy"
                       decoding="async"
                       width={600}
@@ -122,6 +123,7 @@ export default function BlogListingPage() {
                       <img
                         src={post.author.avatar}
                         alt={post.author.name}
+                        crossOrigin="anonymous"
                         loading="lazy"
                         decoding="async"
                         width={36}
