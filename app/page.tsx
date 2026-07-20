@@ -347,12 +347,12 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-25 pb-12 pt-8">
           <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="text-xs font-mono font-bold text-white/60 uppercase tracking-[0.25em] block mb-4">
+            <span className="theme-on-dark-text text-xs font-mono font-bold uppercase tracking-[0.25em] block mb-4">
               // CLIENT SUCCESS & TRUST
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight leading-none uppercase font-sans">
+            <h2 className="theme-on-dark-text text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none uppercase font-sans">
               What Our{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-mint">
+              <span className="theme-on-dark-text underline decoration-[#5fffe0] decoration-4 underline-offset-8">
                 Clients Say
               </span>
             </h2>

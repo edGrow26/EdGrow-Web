@@ -42,7 +42,7 @@ export default function ThemeToggle() {
   return (
     <div className="fixed right-6 bottom-24 md:bottom-8 z-50 flex flex-col items-center gap-3">
       {/* Decorative tooltip showing on hover */}
-      <div className="absolute right-14 bg-black/90 text-white text-[10px] tracking-wider uppercase px-2.5 py-1.5 rounded-lg border border-white/10 opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 transform translate-x-2 whitespace-nowrap shadow-xl">
+      <div className="theme-toggle-tooltip absolute right-14 text-[11px] tracking-wider uppercase px-2.5 py-1.5 rounded-lg border opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 transform translate-x-2 whitespace-nowrap shadow-xl">
         Toggle Theme
       </div>
 
@@ -96,7 +96,7 @@ export default function ThemeToggle() {
         </AnimatePresence>
 
         {/* Small floating helper text / tooltip on hover */}
-        <div className="absolute right-14 bg-black/90 text-white text-[10px] font-mono tracking-widest px-2 py-1 rounded-md border border-white/15 opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 pointer-events-none transition-all duration-200 shadow-lg whitespace-nowrap">
+        <div className="theme-toggle-tooltip absolute right-14 text-[11px] font-mono tracking-widest px-2 py-1 rounded-md border opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 pointer-events-none transition-all duration-200 shadow-lg whitespace-nowrap">
           {theme === 'dark' ? 'LIGHT THEME' : 'DARK THEME'}
         </div>
       </motion.button>

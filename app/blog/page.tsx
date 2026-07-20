@@ -8,7 +8,6 @@ import { Sparkles, Calendar, User, Clock, ArrowRight } from 'lucide-react';
 import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
-import ScrollAnimate from '../../components/ScrollAnimate';
 import { sanityClient, Post } from '../../lib/sanity';
 
 export default function BlogListingPage() {
@@ -66,9 +65,14 @@ export default function BlogListingPage() {
       <section className="pb-32 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {posts.map((post, idx) => (
-              <ScrollAnimate key={post.slug} variant={idx % 2 === 0 ? 'slideRight' : 'slideLeft'} delay={idx * 0.08}>
-                <article className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/5 flex flex-col group hover:border-white/10 transition-all duration-300 h-full">
+            {posts.map((post) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                aria-label={`Read ${post.title}`}
+                className="block h-full rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-black"
+              >
+                <article className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/5 flex flex-col group hover:border-accent/40 transition-all duration-300 h-full cursor-pointer">
                   {/* Main Article Image */}
                   <div className="relative w-full h-52 rounded-xl overflow-hidden mb-6">
                     <img
@@ -130,16 +134,13 @@ export default function BlogListingPage() {
                       </div>
                     </div>
 
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="text-xs font-bold text-accent hover:text-mint transition-colors inline-flex items-center gap-1 group"
-                    >
+                    <span className="text-xs font-bold text-accent group-hover:text-mint transition-colors inline-flex items-center gap-1">
                       Read article <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
-                    </Link>
+                    </span>
                   </div>
 
                 </article>
-              </ScrollAnimate>
+              </Link>
             ))}
           </div>
         </div>

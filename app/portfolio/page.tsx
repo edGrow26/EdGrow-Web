@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { Sparkles, Sliders, ArrowRight, ExternalLink, RefreshCw } from 'lucide-react';
 
 import BackgroundWaves from '../../components/BackgroundWaves';
@@ -98,14 +98,11 @@ export default function PortfolioPage() {
 
           {/* Project Cards Grid */}
           <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, index) => (
+              {filteredProjects.map((project) => (
                 <motion.div
                   layout
-                  initial={{ opacity: 0, scale: 0.9, y: 15 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9, y: 15 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  initial={false}
+                  transition={{ duration: 0.25 }}
                   key={project.id}
                   className="glass-panel p-5 rounded-2xl border border-white/5 flex flex-col group hover:border-white/10 transition-all duration-300"
                 >
@@ -153,25 +150,21 @@ export default function PortfolioPage() {
 
                 </motion.div>
               ))}
-            </AnimatePresence>
           </motion.div>
 
           {/* Customer Review Showcase Embed */}
-          <div className="mt-28 border-t border-white/5 pt-20">
-            <ScrollAnimate variant="fadeUp">
-              <div className="text-center mb-16">
-                <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Verified Results</span>
-                <h2 className="text-3xl font-extrabold text-white tracking-tight">Client Review & Testimonial Showcase</h2>
-              </div>
-            </ScrollAnimate>
+          <div className="mt-28 border-t border-white/5 pt-20" data-no-scroll-animation="true">
+            <div className="text-center mb-16">
+              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Verified Results</span>
+              <h2 className="text-3xl font-extrabold text-white tracking-tight">Client Review & Testimonial Showcase</h2>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {projects.map((proj, idx) => {
+              {projects.map((proj) => {
                 if (!proj.clientReview) return null;
                 const rev = proj.clientReview;
                 return (
-                  <ScrollAnimate key={proj.id} variant={idx % 2 === 0 ? 'slideRight' : 'slideLeft'} delay={idx * 0.1}>
-                    <div className="glass-panel p-8 rounded-2xl border border-white/5 flex flex-col justify-between h-full">
+                  <div key={proj.id} className="glass-panel p-8 rounded-2xl border border-white/5 flex flex-col justify-between h-full">
                       <div>
                         {/* Rating stars */}
                         <div className="flex items-center gap-1 text-accent mb-6" role="img" aria-label={`Rating: ${rev.rating} out of 5 stars`}>
@@ -209,8 +202,7 @@ export default function PortfolioPage() {
                           <ExternalLink className="w-4 h-4" aria-hidden="true" />
                         </Link>
                       </div>
-                    </div>
-                  </ScrollAnimate>
+                  </div>
                 );
               })}
             </div>

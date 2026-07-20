@@ -211,11 +211,11 @@ export default function CareersPage() {
                         >
                           <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
                             <div>
-                              <span className="text-[10px] bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-md uppercase tracking-wider block w-fit mb-2">
+                              <span className="text-[11px] bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-md uppercase tracking-wider block w-fit mb-2">
                                 {job.department}
                               </span>
                               <h3 className="text-lg font-bold text-white">{job.title}</h3>
-                              <p className="text-gray-400 text-xs font-medium mt-1">{job.location} &bull; {job.type}</p>
+                              <p className="text-gray-400 text-[13px] font-medium mt-1">{job.location} &bull; {job.type}</p>
                             </div>
 
                             <button
@@ -226,14 +226,14 @@ export default function CareersPage() {
                             </button>
                           </div>
 
-                          <p className="text-gray-300 text-xs leading-relaxed mb-6">
+                          <p className="text-gray-300 text-[13px] leading-relaxed mb-6">
                             {job.description}
                           </p>
 
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5">
                             <div>
-                              <strong className="text-[10px] text-gray-400 uppercase tracking-widest block mb-2">Requirements:</strong>
-                              <ul className="flex flex-col gap-1 text-[11px] text-gray-300">
+                              <strong className="text-[11px] text-gray-400 uppercase tracking-widest block mb-2">Requirements:</strong>
+                              <ul className="flex flex-col gap-1 text-xs text-gray-300">
                                 {job.requirements.map((req, i) => (
                                   <li key={i} className="flex gap-2">
                                     <span className="text-accent" aria-hidden="true">&bull;</span>
@@ -243,8 +243,8 @@ export default function CareersPage() {
                               </ul>
                             </div>
                             <div>
-                              <strong className="text-[10px] text-gray-400 uppercase tracking-widest block mb-2">Key Benefits:</strong>
-                              <ul className="flex flex-col gap-1 text-[11px] text-gray-300">
+                              <strong className="text-[11px] text-gray-400 uppercase tracking-widest block mb-2">Key Benefits:</strong>
+                              <ul className="flex flex-col gap-1 text-xs text-gray-300">
                                 {job.benefits.map((ben, i) => (
                                   <li key={i} className="flex gap-2">
                                     <span className="text-mint" aria-hidden="true">&bull;</span>

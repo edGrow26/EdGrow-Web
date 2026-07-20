@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { Sparkles, Linkedin, Github, Twitter, Code, Award } from 'lucide-react';
+import { Sparkles, Github, Code } from 'lucide-react';
 
 import BackgroundWaves from './BackgroundWaves';
 import Navbar from './Navbar';
@@ -74,11 +74,6 @@ export default function TeamPageClient({ team }: { team: TeamMember[] }) {
                       {/* Subtle hover details overlay */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
                         <div className="flex gap-3">
-                          {member.socials.linkedin && (
-                            <a href={member.socials.linkedin} target="_blank" rel="noreferrer" aria-label={`${member.name} LinkedIn profile`} className="p-2 bg-accent rounded-lg text-black hover:bg-mint transition-colors">
-                              <Linkedin className="w-4 h-4" aria-hidden="true" />
-                            </a>
-                          )}
                           {member.socials.github && (
                             <a href={member.socials.github} target="_blank" rel="noreferrer" aria-label={`${member.name} GitHub profile`} className="p-2 bg-accent rounded-lg text-black hover:bg-mint transition-colors">
                               <Github className="w-4 h-4" aria-hidden="true" />
@@ -91,10 +86,6 @@ export default function TeamPageClient({ team }: { team: TeamMember[] }) {
                     <h3 className="text-base font-extrabold text-white group-hover:text-accent transition-colors leading-snug mb-1">
                       {member.name}
                     </h3>
-
-                    <p className="text-gray-400 text-xs font-semibold leading-normal mb-4">
-                      {member.role}
-                    </p>
 
                     {member.bio && (
                       <p className="text-sm text-gray-300 leading-relaxed mb-4 line-clamp-4">

@@ -21,14 +21,14 @@ export default function Footer() {
           <ScrollAnimate variant="fadeUp" delay={0}>
             <div className="flex flex-col gap-6">
               <Link href="/" className="flex items-center gap-2 group">
-                <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary via-accent to-mint p-[1.5px]">
-                  <div className="w-full h-full overflow-hidden bg-white rounded-[10px] flex items-center justify-center p-1">
+                <div className="relative flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-br from-primary via-accent to-mint p-[1.5px]">
+                  <div className="w-full h-full overflow-hidden bg-white rounded-full flex items-center justify-center p-0.5">
                     <Image
-                      src="/EdGrow%20Logo.png"
+                      src="/EdGrow%20Favicon.png"
                       alt="Edgrow Technologies logo"
-                      width={40}
-                      height={40}
-                      className="h-full w-full object-contain"
+                      width={44}
+                      height={44}
+                      className="h-full w-full rounded-full object-cover"
                     />
                   </div>
                 </div>

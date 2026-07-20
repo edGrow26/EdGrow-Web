@@ -77,8 +77,6 @@ export default function AnimationManager() {
               // Refresh scrolltrigger after page content layout settles
               ScrollTrigger.refresh();
               
-              // Trigger hero animations once loader is gone
-              triggerHeroEntrance();
             }
           });
 
@@ -177,14 +175,15 @@ export default function AnimationManager() {
               trigger: element,
               start: 'top 90%',
               end: 'bottom 10%',
-              toggleActions: 'play reverse play reverse',
+              toggleActions: 'play none none none',
+              once: true,
             },
           }
         );
       });
 
       // D. Interactive magnetic / fluid CTA button effect
-      const buttons = document.querySelectorAll('.gsap-magnetic, [href="/contact"], [href="/portfolio"], #cta button, #cta a');
+      const buttons = document.querySelectorAll('.gsap-magnetic, #cta button, #cta a');
       buttons.forEach((btn) => {
         // Add magnetic effect
         const onMouseMove = (e: Event) => {

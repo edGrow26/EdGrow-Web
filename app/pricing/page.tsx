@@ -62,15 +62,12 @@ export default function PricingPage() {
       </section>
 
       {/* Pricing Cards Grid Section */}
-      <section className="pb-24 relative z-10">
+      <section className="pb-24 relative z-10" data-no-scroll-animation="true">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch mb-28">
-            {plans.map((plan, index) => (
-              <motion.div
+            {plans.map((plan) => (
+              <div
                 key={plan.id}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                 className={`p-8 rounded-3xl border flex flex-col justify-between relative overflow-hidden ${
                   plan.isPopular
                     ? 'bg-primary/5 border-accent shadow-2xl shadow-primary/10'
@@ -116,7 +113,7 @@ export default function PricingPage() {
                   Initiate Project Milestone
                 </a>
 
-              </motion.div>
+              </div>
             ))}
           </div>
 
