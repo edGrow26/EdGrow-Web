@@ -155,7 +155,7 @@ export default function PortfolioPage() {
 
           {/* Customer Review Showcase Embed */}
           <div className="mt-28 border-t border-white/5 pt-20" data-no-scroll-animation="true">
-            <div className="text-center mb-16">
+            <div className="text-center mb-16" data-auto-scroll-animate>
               <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Verified Results</span>
               <h2 className="text-3xl font-extrabold text-white tracking-tight">Client Review & Testimonial Showcase</h2>
             </div>

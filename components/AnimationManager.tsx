@@ -203,7 +203,8 @@ export default function AnimationManager() {
         '#main-content article > *, #main-content section > div > *, [data-auto-scroll-animate]'
       )).filter((element, index, elements) => {
         if (elements.indexOf(element) !== index) return false;
-        if (element.closest('[data-scroll-animate], #hero, nav, footer, [data-no-scroll-animation]')) return false;
+        if (element.closest('[data-scroll-animate], #hero, nav, footer')) return false;
+        if (element.closest('[data-no-scroll-animation]') && !element.matches('[data-auto-scroll-animate]')) return false;
 
         const position = window.getComputedStyle(element).position;
         return position !== 'fixed' && position !== 'sticky';
@@ -226,8 +227,8 @@ export default function AnimationManager() {
               trigger: element,
               start: 'top 90%',
               end: 'bottom 10%',
-              toggleActions: 'play none none none',
-              once: true,
+              toggleActions: 'play reverse play reverse',
+              once: false,
             },
           }
         );
@@ -282,20 +283,32 @@ export default function AnimationManager() {
   useEffect(() => {
     if (loading || pathname !== '/') return;
 
+    let heroTimeline: gsap.core.Timeline | null = null;
     const frameId = requestAnimationFrame(() => {
       ScrollTrigger.refresh();
-      triggerHeroEntrance();
+      heroTimeline = triggerHeroEntrance();
     });
 
-    return () => cancelAnimationFrame(frameId);
+    return () => {
+      cancelAnimationFrame(frameId);
+      heroTimeline?.scrollTrigger?.kill();
+      heroTimeline?.kill();
+    };
   }, [loading, pathname]);
 
   // 3. Hero entrance choreography
   const triggerHeroEntrance = () => {
     const hero = document.querySelector('#hero');
-    if (!hero) return;
+    if (!hero) return null;
 
-    const tl = gsap.timeline();
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top 92%',
+        end: 'bottom 8%',
+        toggleActions: 'restart reverse restart reverse',
+      },
+    });
 
     // Stagger hero badge, main heading split words, and sub-paragraphs
     tl.fromTo('#hero div[class*="inline-flex"]',
@@ -322,6 +335,7 @@ export default function AnimationManager() {
       '-=0.5'
     );
 
+    return tl;
   };
 
   if (!loading) return null;

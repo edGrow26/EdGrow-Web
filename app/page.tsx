@@ -343,16 +343,25 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-25 pb-12 pt-8">
-          <div className="text-center max-w-3xl mx-auto mb-20">
-            <span className="theme-on-dark-text text-xs font-mono font-bold uppercase tracking-[0.25em] block mb-4">
-              // CLIENT SUCCESS & TRUST
-            </span>
-            <h2 className="theme-on-dark-text text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-none uppercase font-sans">
-              What Our{' '}
-              <span className="theme-on-dark-text underline decoration-[#5fffe0] decoration-4 underline-offset-8">
-                Clients Say
-              </span>
+          <div className="mx-auto mb-20 max-w-4xl text-center">
+            <div className="theme-on-dark-text mb-7 inline-flex items-center gap-2 rounded-full border border-white/15 bg-black/15 px-4 py-2 text-[11px] font-extrabold uppercase tracking-[0.2em] shadow-[0_12px_40px_rgba(0,0,0,0.12)] backdrop-blur-md">
+              <Award className="h-4 w-4 text-[#5fffe0]" aria-hidden="true" />
+              Verified client outcomes
+            </div>
+
+            <h2 className="theme-on-dark-text font-sans text-4xl font-black leading-[0.98] tracking-[-0.045em] sm:text-5xl md:text-7xl">
+              Real partnerships.
+              <span className="mt-2 block text-[#5fffe0]">Results clients remember.</span>
             </h2>
+
+            <p className="theme-on-dark-text mx-auto mt-7 max-w-2xl text-sm leading-7 text-[#d7eee9] sm:text-base">
+              Honest feedback from the teams that trusted Edgrow to transform complex ideas into reliable digital products.
+            </p>
+
+            <div className="mt-7 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-4" aria-label="Five-star client feedback">
+              <span className="text-xl tracking-[0.18em] text-[#f5b301]" aria-hidden="true">★★★★★</span>
+              <span className="theme-on-dark-text text-xs font-bold uppercase tracking-[0.14em] text-white/80">Built on trust · Proven through delivery</span>
+            </div>
           </div>
 
           <TestimonialCarousel testimonials={testimonials} />
