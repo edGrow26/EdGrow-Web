@@ -44,9 +44,17 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: '/EdGrow%20Favicon.png',
-    shortcut: '/EdGrow%20Favicon.png',
-    apple: '/EdGrow%20Favicon.png',
+    icon: {
+      url: '/favicon.png',
+      type: 'image/png',
+      sizes: '512x512',
+    },
+    shortcut: '/favicon.png',
+    apple: {
+      url: '/favicon.png',
+      type: 'image/png',
+      sizes: '512x512',
+    },
   },
 };
 
