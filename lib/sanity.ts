@@ -874,11 +874,34 @@ export const sanityClient = {
     coverLetter: string;
     resume: File;
   }): Promise<boolean> => {
+    // 1. Primary: Save application document and PDF resume asset directly in Sanity Studio
+    try {
+      const apiFormData = new FormData();
+      apiFormData.append('name', data.name);
+      apiFormData.append('email', data.email);
+      apiFormData.append('roleId', data.roleId);
+      apiFormData.append('roleTitle', data.roleTitle);
+      apiFormData.append('coverLetter', data.coverLetter);
+      apiFormData.append('resume', data.resume);
+
+      const res = await fetch('/api/applications', {
+        method: 'POST',
+        body: apiFormData,
+      });
+
+      const resData = (await res.json().catch(() => null)) as { success?: boolean } | null;
+      if (res.ok && resData?.success) {
+        return true;
+      }
+    } catch (err) {
+      console.warn('[Sanity API] /api/applications request error. Falling back to email.', err);
+    }
+
+    // 2. Fallback: Send email via FormSubmit if API route is unavailable
     const payload = new FormData();
     payload.append('name', data.name);
     payload.append('email', data.email);
 
-    // Construct a comprehensive message body so it's guaranteed to be readable in the email
     const fullMessage = `
 === NEW CAREER APPLICATION ===
 
@@ -896,7 +919,6 @@ The applicant has attached their resume to this email.
     payload.append('message', fullMessage);
     payload.append('role', data.roleTitle);
 
-    // Attach the resume
     if (data.resume) {
       payload.append('attachment', data.resume, data.resume.name);
     }
@@ -908,4 +930,5 @@ The applicant has attached their resume to this email.
 
     return submitEmailForm(payload);
   },
+
 };
