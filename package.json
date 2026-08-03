@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build",,
+    "build": "next build",
     "start": "node serve.js",
     "studio": "npm run dev --workspace=studio",
     "studio:build": "npm run build --workspace=studio",
