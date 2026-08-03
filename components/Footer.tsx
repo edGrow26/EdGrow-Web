@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Mail, Phone, MapPin, Linkedin, Github, Twitter, ExternalLink } from 'lucide-react';
+// Components
 import ScrollAnimate from './ScrollAnimate';
 
 export default function Footer() {
