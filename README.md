@@ -69,3 +69,5 @@ npm start
 - `public/` — Static assets (images, vectors, etc.).
 - `lib/` — Utility helper functions.
 - `serve.js` — Lightweight server for the generated `dist/` site.
+
+## Update README.md
