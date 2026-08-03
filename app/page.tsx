@@ -113,7 +113,7 @@ export default function Home() {
             <ScrollAnimate variant="fadeUp" delay={0}>
               <div className="stats-item flex flex-col gap-1.5">
                 <span className="text-4xl sm:text-5xl font-extrabold text-primary font-mono">
-                  <AnimatedCounter from={0} to={8} duration={2} />+
+                  <AnimatedCounter from={0} to={1} duration={2} />+
                 </span>
                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider">Years of Engineering Excellence</span>
               </div>
@@ -122,7 +122,7 @@ export default function Home() {
             <ScrollAnimate variant="fadeUp" delay={0.15}>
               <div className="stats-item flex flex-col gap-1.5 border-t sm:border-t-0 sm:border-x border-white/5 pt-8 sm:pt-0">
                 <span className="text-4xl sm:text-5xl font-extrabold text-accent font-mono">
-                  <AnimatedCounter from={0} to={120} duration={2.5} />+
+                  <AnimatedCounter from={0} to={20} duration={2.5} />+
                 </span>
                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider">Custom Projects Dispatched</span>
               </div>
@@ -131,7 +131,7 @@ export default function Home() {
             <ScrollAnimate variant="fadeUp" delay={0.3}>
               <div className="stats-item flex flex-col gap-1.5 border-t sm:border-t-0 pt-8 sm:pt-0">
                 <span className="text-4xl sm:text-5xl font-extrabold text-mint font-mono">
-                  <AnimatedCounter from={0} to={95} duration={2} />%
+                  <AnimatedCounter from={0} to={98} duration={2} />%
                 </span>
                 <span className="text-gray-400 text-sm font-semibold uppercase tracking-wider">Client Net Promoter Score (NPS)</span>
               </div>
