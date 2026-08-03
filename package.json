@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "NODE_ENV=production next build && rm -rf dist && mv out dist",
+    "build": "next build",,
     "start": "node serve.js",
     "studio": "npm run dev --workspace=studio",
     "studio:build": "npm run build --workspace=studio",
