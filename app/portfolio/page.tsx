@@ -134,7 +134,7 @@ export default function PortfolioPage() {
 
                     <div className="flex items-center justify-between pt-4 border-t border-white/5 mt-auto">
                       <div className="flex flex-wrap gap-1.5 max-w-[70%]">
-                        {project.technologies.slice(0, 3).map((tech) => (
+                        {(project.technologies || []).slice(0, 3).map((tech) => (
                           <span key={tech} className="text-[9px] font-mono font-semibold bg-white/5 text-gray-400 px-1.5 py-0.5 rounded">
                             {tech}
                           </span>
