@@ -41,7 +41,17 @@ export default function Home() {
       const s = await sanityClient.getServices();
       const p = await sanityClient.getProjects();
       const t = await sanityClient.getTestimonials();
-      setServices(s.slice(0, 3)); // Only show top 3 on home page
+      
+      // Ensure 'custom-web' or 'web' (Web Development) is in the middle (index 1) for the home page layout
+      const topServices = [...s];
+      const webDevIndex = topServices.findIndex(service => 
+        service.id === 'custom-web' || service.id === 'web' || service.title.toLowerCase().includes('web development')
+      );
+      if (webDevIndex !== -1) {
+        const [webService] = topServices.splice(webDevIndex, 1);
+        topServices.splice(1, 0, webService); // insert at index 1
+      }
+      setServices(topServices.slice(0, 3)); // Only show top 3 on home page
       setProjects(p.slice(0, 3));
       setTestimonials(t);
     };
@@ -269,7 +279,8 @@ export default function Home() {
                   delay={index * 0.12}
                 >
                   <Link
-                    href={`/portfolio/${project.id}`}
+                    href={project.projectLink || `/portfolio/${project.id}`}
+                    {...(project.projectLink ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                     aria-label={`View case study: ${project.title}`}
                     className={`portfolio-showcase-card group relative block h-full min-h-[520px] overflow-hidden rounded-[28px] border border-slate-700/70 bg-[#07111f] shadow-[0_24px_70px_rgba(2,8,23,0.28)] transition-all duration-500 hover:-translate-y-2 hover:border-accent/70 hover:shadow-[0_28px_80px_rgba(0,121,107,0.2)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-black ${isMiddle ? 'xl:-translate-y-3 xl:hover:-translate-y-5' : ''
                       }`}
