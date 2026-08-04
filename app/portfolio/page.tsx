@@ -134,14 +134,16 @@ export default function PortfolioPage() {
 
                     <div className="flex items-center justify-between pt-4 border-t border-white/5 mt-auto">
                       <div className="flex flex-wrap gap-1.5 max-w-[70%]">
-                        {project.technologies.slice(0, 3).map((tech) => (
+                        {(project.technologies || []).slice(0, 3).map((tech) => (
                           <span key={tech} className="text-[9px] font-mono font-semibold bg-white/5 text-gray-400 px-1.5 py-0.5 rounded">
                             {tech}
                           </span>
                         ))}
                       </div>
                       <Link
-                        href={`/portfolio/${project.id}`}
+                        href={project.projectLink || '#'}
+                        target={project.projectLink ? "_blank" : undefined}
+                        rel={project.projectLink ? "noopener noreferrer" : undefined}
                         className="text-xs font-bold text-accent hover:text-mint transition-colors inline-flex items-center gap-1 group"
                       >
                         Read study <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
@@ -196,7 +198,9 @@ export default function PortfolioPage() {
                           </div>
                         </div>
                         <Link
-                          href={`/portfolio/${proj.id}`}
+                          href={proj.projectLink || '#'}
+                          target={proj.projectLink ? "_blank" : undefined}
+                          rel={proj.projectLink ? "noopener noreferrer" : undefined}
                           title="Read Case Study"
                           aria-label={`Read case study for ${proj.title}`}
                           className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-accent hover:text-white transition-colors"

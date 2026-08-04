@@ -3,9 +3,9 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "node --env-file=../.env.local ../node_modules/sanity/bin/sanity dev",
-    "build": "node --env-file=../.env.local ../node_modules/sanity/bin/sanity build",
-    "deploy": "node --env-file=../.env.local ../node_modules/sanity/bin/sanity deploy"
+    "dev": "node --env-file-if-exists=../.env --env-file-if-exists=../.env.local ../node_modules/sanity/bin/sanity dev",
+    "build": "node --env-file-if-exists=../.env --env-file-if-exists=../.env.local ../node_modules/sanity/bin/sanity build",
+    "deploy": "node --env-file-if-exists=../.env --env-file-if-exists=../.env.local ../node_modules/sanity/bin/sanity deploy"
   },
   "dependencies": {
     "@sanity/icons": "^5.1.0",
