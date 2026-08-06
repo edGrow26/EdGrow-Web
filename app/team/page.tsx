@@ -14,7 +14,7 @@ import TeamPageClient from '../../components/TeamPageClient';
 import { sanityClient as mockSanityClient } from '../../lib/sanity';
 import { fetchSanityTeam } from '../../sanity/lib/team';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 60;
 
 export default async function TeamPage() {
   const fallbackTeam = await mockSanityClient.getTeam();
