@@ -97,10 +97,10 @@ export default function PortfolioPage() {
           </ScrollAnimate>
 
           {/* Project Cards Grid */}
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project) => (
                 <motion.div
-                  layout
+                  layout="position"
                   initial={false}
                   transition={{ duration: 0.25 }}
                   key={project.id}
@@ -115,7 +115,7 @@ export default function PortfolioPage() {
                       decoding="async"
                       width={400}
                       height={192}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute top-4 left-4 px-2.5 py-1 bg-black/70 backdrop-blur-md rounded-md text-[10px] font-bold text-accent uppercase tracking-wide">
                       {project.category}
@@ -155,64 +155,6 @@ export default function PortfolioPage() {
               ))}
           </motion.div>
 
-          {/* Customer Review Showcase Embed */}
-          <div className="mt-28 border-t border-white/5 pt-20" data-no-scroll-animation="true">
-            <div className="text-center mb-16" data-auto-scroll-animate>
-              <span className="text-xs font-bold text-accent uppercase tracking-widest block mb-3">Verified Results</span>
-              <h2 className="text-3xl font-extrabold text-white tracking-tight">Client Review & Testimonial Showcase</h2>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {projects.map((proj) => {
-                if (!proj.clientReview) return null;
-                const rev = proj.clientReview;
-                return (
-                  <div key={proj.id} className="glass-panel p-8 rounded-2xl border border-white/5 flex flex-col justify-between h-full">
-                      <div>
-                        {/* Rating stars */}
-                        <div className="flex items-center gap-1 text-accent mb-6" role="img" aria-label={`Rating: ${rev.rating} out of 5 stars`}>
-                          {[...Array(rev.rating)].map((_, i) => (
-                            <span key={i} className="text-sm font-bold" aria-hidden="true">★</span>
-                          ))}
-                        </div>
-                        <p className="text-gray-300 text-xs leading-relaxed italic mb-8">
-                          &ldquo;{rev.quote}&rdquo;
-                        </p>
-                      </div>
-
-                      <div className="flex items-center justify-between pt-6 border-t border-white/5">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={rev.avatar}
-                            alt={rev.author}
-                            crossOrigin="anonymous"
-                            loading="lazy"
-                            decoding="async"
-                            width={40}
-                            height={40}
-                            className="w-10 h-10 rounded-full object-cover border border-white/10"
-                          />
-                          <div>
-                            <strong className="text-white text-xs block font-bold">{rev.author}</strong>
-                            <span className="text-[10px] text-gray-400 block">{rev.role} &bull; {rev.company}</span>
-                          </div>
-                        </div>
-                        <Link
-                          href={proj.projectLink || '#'}
-                          target={proj.projectLink ? "_blank" : undefined}
-                          rel={proj.projectLink ? "noopener noreferrer" : undefined}
-                          title="Read Case Study"
-                          aria-label={`Read case study for ${proj.title}`}
-                          className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-accent hover:text-white transition-colors"
-                        >
-                          <ExternalLink className="w-4 h-4" aria-hidden="true" />
-                        </Link>
-                      </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
 
         </div>
       </section>
