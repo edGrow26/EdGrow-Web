@@ -245,11 +245,17 @@ async function submitEmailForm(payload: FormData | Record<string, string>): Prom
 }
 
 const TEAM_QUERY = `
-  *[_type == "teamMember"] | order(displayOrder asc) {
+  *[_type == "team" && status != "inactive"] | order(displayOrder asc, name asc) {
     name,
     role,
+    bio,
+    skills,
     "photo": photo.asset->url,
-    socials
+    "socials": {
+      "linkedin": socialLinks[platform == "linkedin"][0].url,
+      "twitter": socialLinks[platform == "twitter"][0].url,
+      "github": socialLinks[platform == "github"][0].url
+    }
   }
 `;
 

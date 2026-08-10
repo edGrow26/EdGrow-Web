@@ -192,7 +192,7 @@ export default function InteractiveCostCalculator() {
                       <span className="text-[11px] text-gray-400 leading-tight block">{feat.description}</span>
                     </div>
                     <span className="ml-auto text-xs font-mono text-accent font-bold">
-                      +${feat.price}
+                      +Rs. {feat.price.toLocaleString()}
                     </span>
                   </button>
                 );
@@ -215,11 +215,11 @@ export default function InteractiveCostCalculator() {
               <span className="text-gray-400 text-xs block mb-1">Projected Cost Range:</span>
               <div className="flex items-baseline gap-2">
                 <span className="text-4xl sm:text-5xl font-black text-white tracking-tight font-mono">
-                  ${priceRange.min.toLocaleString()}
+                  Rs. {priceRange.min.toLocaleString()}
                 </span>
                 <span className="text-gray-500 font-medium">to</span>
                 <span className="text-3xl sm:text-4xl font-extrabold text-accent/90 font-mono">
-                  ${priceRange.max.toLocaleString()}
+                  Rs. {priceRange.max.toLocaleString()}
                 </span>
               </div>
               <span className="text-[10px] text-gray-500 block mt-2">

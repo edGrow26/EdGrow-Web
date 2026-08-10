@@ -31,6 +31,12 @@ export default function AnimationManager() {
     let animationFrameId: number | null = null;
     let loaderTimeline: gsap.core.Timeline | null = null;
 
+    // Check if we've already shown the loader this session
+    if (sessionStorage.getItem('edgrow-loader-seen')) {
+      setLoading(false);
+      return;
+    }
+
     // Disable scrolling during load
     document.body.style.overflow = 'hidden';
 
@@ -65,14 +71,17 @@ export default function AnimationManager() {
 
     if (!loaderRef.current) return;
 
+    const onLoaderComplete = () => {
+      if (cancelled) return;
+      sessionStorage.setItem('edgrow-loader-seen', 'true');
+      setLoading(false);
+      document.body.style.overflow = '';
+      ScrollTrigger.refresh();
+    };
+
     if (reducedMotion) {
       loaderTimeline = gsap.timeline({
-        onComplete: () => {
-          if (cancelled) return;
-          setLoading(false);
-          document.body.style.overflow = '';
-          ScrollTrigger.refresh();
-        },
+        onComplete: onLoaderComplete,
       });
       loaderTimeline.to(loaderRef.current, { autoAlpha: 0, duration: 0.18, delay: 0.3 });
     } else {
@@ -81,12 +90,7 @@ export default function AnimationManager() {
 
       loaderTimeline = gsap.timeline({
         defaults: { ease: 'power3.out' },
-        onComplete: () => {
-          if (cancelled) return;
-          setLoading(false);
-          document.body.style.overflow = '';
-          ScrollTrigger.refresh();
-        },
+        onComplete: onLoaderComplete,
       });
 
       // Phase 1 — build the mark and reveal the wordmark.
@@ -210,25 +214,20 @@ export default function AnimationManager() {
         return position !== 'fixed' && position !== 'sticky';
       });
 
-      autoRevealCandidates.forEach((element, index) => {
-        const horizontalDistance = window.innerWidth < 640 ? 20 : 46;
-        const x = index % 2 === 0 ? -horizontalDistance : horizontalDistance;
-
+      autoRevealCandidates.forEach((element) => {
         gsap.fromTo(element,
-          { autoAlpha: 0, x, y: 24, scale: 0.97 },
+          { autoAlpha: 0, y: 30 },
           {
             autoAlpha: 1,
-            x: 0,
             y: 0,
-            scale: 1,
-            duration: 0.75,
-            ease: 'power3.out',
+            duration: 0.4,
+            ease: 'back.out(1.2)',
             scrollTrigger: {
               trigger: element,
               start: 'top 90%',
               end: 'bottom 10%',
-              toggleActions: 'play reverse play reverse',
-              once: false,
+              toggleActions: 'play none none none',
+              once: true,
             },
           }
         );

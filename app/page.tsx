@@ -14,6 +14,7 @@ import {
   Users,
   CheckCircle,
   Globe,
+  ShoppingCart,
   ChevronRight,
   MapPin,
   ExternalLink,
@@ -179,10 +180,13 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch pt-4">
             {services.map((service, index) => {
               // Icon mapping helper
+              const titleLow = service.title.toLowerCase();
               const IconComponent =
-                service.id === 'custom-web' ? Code :
-                  service.id === 'enterprise-software' ? Cpu :
-                    service.id === 'ecommerce-solutions' ? ShoppingBag : Code;
+                titleLow.includes('web') ? Code :
+                titleLow.includes('software') ? Cpu :
+                titleLow.includes('ecommerce') || titleLow.includes('e-commerce') ? ShoppingBag :
+                titleLow.includes('analytics') || titleLow.includes('data') ? TrendingUp :
+                Code;
 
               // Asymmetrical Grid styling: highlight the middle element
               const isMiddle = index === 1;
@@ -293,7 +297,7 @@ export default function Home() {
                         crossOrigin="anonymous"
                         loading="lazy"
                         decoding="async"
-                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#07111f] via-transparent to-black/10" aria-hidden="true" />
                       <span className="absolute left-5 top-5 rounded-full border border-accent/30 bg-[#03120f]/90 px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#5fffe0] shadow-lg backdrop-blur-md">
@@ -326,10 +330,7 @@ export default function Home() {
                         ))}
                       </div>
 
-                      <div className="mt-auto flex items-center justify-between border-t border-slate-700/70 pt-5">
-                        <span className="portfolio-card-meta text-xs font-bold uppercase tracking-wider">
-                          Case study
-                        </span>
+                      <div className="mt-auto flex items-center justify-end border-t border-slate-700/70 pt-5">
                         <span className="portfolio-card-action inline-flex items-center gap-2 text-sm font-black transition-colors">
                           View project <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                         </span>
