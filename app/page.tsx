@@ -19,7 +19,8 @@ import {
   MapPin,
   ExternalLink,
   MessageSquare,
-  Award
+  Award,
+  Loader2
 } from 'lucide-react';
 
 import BackgroundWaves from '../components/BackgroundWaves';
@@ -35,10 +36,12 @@ export default function Home() {
   const [services, setServices] = useState<Service[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Load dynamic data from Sanity engine
     const loadData = async () => {
+      setIsLoading(true);
       const s = await sanityClient.getServices();
       const p = await sanityClient.getProjects();
       const t = await sanityClient.getTestimonials();
@@ -55,6 +58,7 @@ export default function Home() {
       setServices(topServices.slice(0, 3)); // Only show top 3 on home page
       setProjects(p.slice(0, 3));
       setTestimonials(t);
+      setIsLoading(false);
     };
     loadData();
   }, []);
@@ -177,6 +181,11 @@ export default function Home() {
             </div>
           </ScrollAnimate>
 
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-10 h-10 text-accent animate-spin" />
+            </div>
+          ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch pt-4">
             {services.map((service, index) => {
               // Icon mapping helper
@@ -248,6 +257,7 @@ export default function Home() {
               );
             })}
           </div>
+          )}
 
         </div>
       </section>
@@ -273,6 +283,11 @@ export default function Home() {
             </div>
           </ScrollAnimate>
 
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-10 h-10 text-accent animate-spin" />
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 pt-4">
             {projects.map((project, index) => {
               const isMiddle = index === 1;
@@ -341,6 +356,7 @@ export default function Home() {
               );
             })}
           </div>
+          )}
 
         </div>
       </section>
@@ -376,7 +392,13 @@ export default function Home() {
             </div>
           </div>
 
-          <TestimonialCarousel testimonials={testimonials} />
+          {isLoading ? (
+            <div className="flex justify-center items-center py-20">
+              <Loader2 className="w-10 h-10 text-accent animate-spin" />
+            </div>
+          ) : (
+            <TestimonialCarousel testimonials={testimonials} />
+          )}
         </div>
 
         {/* Bottom wave background vector design to match white layout transition */}

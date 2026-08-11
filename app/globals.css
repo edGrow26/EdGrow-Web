@@ -541,41 +541,66 @@ html.light .theme-on-dark-text {
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Homepage portfolio cards keep an intentional dark, high-contrast surface. */
-.portfolio-showcase-card,
-html.light .portfolio-showcase-card {
+/* Homepage portfolio cards */
+.portfolio-showcase-card {
   background-color: #07111f !important;
   color: #ffffff !important;
 }
 
-.portfolio-card-title,
-html.light .portfolio-card-title {
+html.light .portfolio-showcase-card {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(0, 102, 214, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 102, 214, 0.05) !important;
+}
+
+.portfolio-card-title {
   color: #ffffff !important;
 }
 
-.portfolio-showcase-card:hover .portfolio-card-title,
-html.light .portfolio-showcase-card:hover .portfolio-card-title {
+html.light .portfolio-card-title {
+  color: #0f172a !important;
+}
+
+.portfolio-showcase-card:hover .portfolio-card-title {
   color: #5fffe0 !important;
 }
 
-.portfolio-card-copy,
-html.light .portfolio-card-copy {
+html.light .portfolio-showcase-card:hover .portfolio-card-title {
+  color: #0066D6 !important;
+}
+
+.portfolio-card-copy {
   color: #cbd5e1 !important;
 }
 
-.portfolio-card-meta,
-html.light .portfolio-card-meta {
+html.light .portfolio-card-copy {
+  color: #475569 !important;
+}
+
+.portfolio-card-meta {
   color: #94a3b8 !important;
 }
 
-.portfolio-card-chip,
-html.light .portfolio-card-chip {
+html.light .portfolio-card-meta {
+  color: #64748b !important;
+}
+
+.portfolio-card-chip {
   color: #e2e8f0 !important;
 }
 
-.portfolio-card-action,
-html.light .portfolio-card-action {
+html.light .portfolio-card-chip {
+  color: #334155 !important;
+  background-color: rgba(0, 102, 214, 0.05) !important;
+}
+
+.portfolio-card-action {
   color: #5fffe0 !important;
+}
+
+html.light .portfolio-card-action {
+  color: #0066D6 !important;
 }
 
 /* Theme-aware startup and route loading screens. */
