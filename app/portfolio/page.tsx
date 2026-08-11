@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, type Transition, type Variants } from 'motion/react';
 import { Sparkles, ArrowRight } from 'lucide-react';
 
 import BackgroundWaves from '../../components/BackgroundWaves';
@@ -21,10 +21,10 @@ const FILTER_CATEGORIES = [
 ];
 
 // Smooth spring for layout reflow
-const SPRING = { type: 'spring', stiffness: 400, damping: 35, mass: 0.8 };
+const SPRING: Transition = { type: 'spring', stiffness: 400, damping: 35, mass: 0.8 };
 
 // Stagger container
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.08, delayChildren: 0.1 },
@@ -32,7 +32,7 @@ const containerVariants = {
 };
 
 // Individual card entrance
-const cardVariants = {
+const cardVariants: Variants = {
   hidden: { opacity: 0, y: 32, scale: 0.96 },
   visible: {
     opacity: 1,
