@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Sun, Moon, Palette } from 'lucide-react';
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Retrieve theme from localStorage or default to dark
+    // Retrieve theme from localStorage or default to light
     const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
     if (savedTheme) {
       setTheme(savedTheme);
@@ -20,8 +20,8 @@ export default function ThemeToggle() {
         document.documentElement.classList.remove('light');
       }
     } else {
-      // Default to dark mode
-      document.documentElement.classList.remove('light');
+      // Default to light mode
+      document.documentElement.classList.add('light');
     }
   }, []);
 
