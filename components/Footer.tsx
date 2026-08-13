@@ -48,14 +48,11 @@ export default function Footer() {
               </p>
 
               <div className="flex items-center gap-4">
-                <a href="https://linkedin.com" target="_blank" rel="noreferrer" aria-label="Edgrow LinkedIn page" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-white/10 transition-all duration-300">
+                <a href="https://www.linkedin.com/company/edgrow-tech/posts/" target="_blank" rel="noreferrer" aria-label="Edgrow LinkedIn page" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-white/10 transition-all duration-300">
                   <Linkedin className="w-4 h-4" aria-hidden="true" />
                 </a>
-                <a href="https://github.com" target="_blank" rel="noreferrer" aria-label="Edgrow GitHub page" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-white/10 transition-all duration-300">
+                <a href="https://github.com/edGrow26" target="_blank" rel="noreferrer" aria-label="Edgrow GitHub page" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-white/10 transition-all duration-300">
                   <Github className="w-4 h-4" aria-hidden="true" />
-                </a>
-                <a href="https://twitter.com" target="_blank" rel="noreferrer" aria-label="Edgrow Twitter page" className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-accent hover:bg-white/10 transition-all duration-300">
-                  <Twitter className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
             </div>
