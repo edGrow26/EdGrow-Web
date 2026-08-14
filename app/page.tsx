@@ -318,9 +318,7 @@ export default function Home() {
                       <span className="absolute left-5 top-5 rounded-full border border-accent/30 bg-[#03120f]/90 px-3.5 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.14em] text-[#5fffe0] shadow-lg backdrop-blur-md">
                         {project.category}
                       </span>
-                      <span className="absolute right-5 top-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-black/60 font-mono text-xs font-black text-white backdrop-blur-md" aria-hidden="true">
-                        {String(index + 1).padStart(2, '0')}
-                      </span>
+
                     </div>
 
                     {/* Opaque content panel guarantees readable copy in both themes. */}
