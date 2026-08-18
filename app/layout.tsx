@@ -73,6 +73,7 @@ export default function RootLayout({
         />
         {/* Preconnect to external origins for faster resource loading */}
         <link rel="preconnect" href="https://images.unsplash.com" />
+        <meta name="google-site-verification" content="1UicDHCBng8e-ubNnSeRUFEKKi9IW2uDP1SNRkQ0W48" />
       </head>
       <body className={`${plusJakartaSans.variable} font-sans h-full bg-black text-white antialiased selection:bg-primary selection:text-white`}>
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[99999] focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:bg-accent focus:text-black focus:rounded-lg focus:font-bold focus:text-xs">
