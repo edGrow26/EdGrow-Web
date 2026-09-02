@@ -83,13 +83,13 @@ export default function Home() {
 
             {/* Headline */}
             <h1
-              className="hero-title opacity-0 text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6"
-            >
-              We Engineer High-Performance{' '}
-              <span className="bg-gradient-to-r from-primary via-accent to-mint bg-clip-text text-transparent">
-                Web & Software Architectures
-              </span>
-            </h1>
+  className="hero-title opacity-0 text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6"
+>
+  Web & Software Development Company{' '}
+  <span className="bg-gradient-to-r from-primary via-accent to-mint bg-clip-text text-transparent">
+    Building High-Performance Digital Solutions
+  </span>
+</h1>
 
             {/* Subheading with naturally placed SEO keywords */}
             <p
