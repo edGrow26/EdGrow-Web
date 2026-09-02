@@ -13,36 +13,55 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Edgrow Technologies | Leading Web & Software Development Company',
-    template: '%s | Edgrow Technologies'
+    default: 'Web & Software Development Company in Sri Lanka | Edgrow Technologies',
+    template: '%s | Edgrow Technologies',
   },
-  description: 'Edgrow Technologies delivers world-class custom software development, web applications, and SEO services for Sri Lanka, the UK, and global enterprises.',
+
+  description:
+    'Edgrow Technologies is a web and software development company providing custom software, high-performance websites, web applications, and SEO services in Sri Lanka, the UK, and worldwide.',
+
   keywords: [
-    'Edgrow', 'Edgrow Tech', 'Edgrow Technologies', 'web development Sri Lanka',
-    'software development Sri Lanka', 'web development UK', 'Colombo web development',
-    'custom software development', 'e-commerce solutions', 'SEO services Sri Lanka'
+    'Edgrow Technologies',
+    'web development company Sri Lanka',
+    'software development company Sri Lanka',
+    'custom software development Sri Lanka',
+    'web application development',
+    'website development Sri Lanka',
+    'Next.js development',
+    'SEO services Sri Lanka',
+    'web development UK',
   ],
-  metadataBase: new URL('https://edgrow.co'),
+
+  metadataBase: new URL('https://edgrowtech.com'),
+
   alternates: {
     canonical: '/',
   },
+
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://edgrow.co',
-    title: 'Edgrow Technologies | Premium Software & Web Solutions',
-    description: 'Empowering global brands with custom software development, high-performance web applications, and UI/UX design. Based in Sri Lanka & UK.',
+    url: 'https://edgrowtech.com',
+    title:
+      'Web & Software Development Company in Sri Lanka | Edgrow Technologies',
+    description:
+      'Custom software, high-performance websites, web applications, and SEO services for businesses in Sri Lanka, the UK, and worldwide.',
     siteName: 'Edgrow Technologies',
   },
+
   twitter: {
     card: 'summary_large_image',
-    title: 'Edgrow Technologies | Web & Software Innovation',
-    description: 'World-class offshore software development and web applications serving UK, Sri Lanka, and global markets.',
+    title:
+      'Web & Software Development Company in Sri Lanka | Edgrow Technologies',
+    description:
+      'Custom software, high-performance websites, web applications, and SEO services for businesses in Sri Lanka, the UK, and worldwide.',
   },
+
   robots: {
     index: true,
     follow: true,
   },
+
   icons: {
     icon: {
       url: '/favicon.png',
