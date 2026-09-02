@@ -72,4 +72,52 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <url>
+    <loc>https://edgrowtech.com/contact?subject=Plan%20Inquiry:%20Enterprise%20Growth&plan=growth</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://edgrowtech.com/contact?subject=Plan%20Inquiry:%20SaaS%20Starter&plan=starter</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://edgrowtech.com/contact?subject=Calculator%20Estimate:%20WEB%20-%200-0&type=web&pages=5&timeline=6</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://edgrowtech.com/contact?subject=Service%20Inquiry:%20Web%20Development</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://edgrowtech.com/contact?subject=Plan%20Inquiry:%20Custom%20Corporate%20Scale&plan=custom</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://edgrowtech.com/contact?subject=Service%20Inquiry:%20E-commerce%20Solutions</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://edgrowtech.com/pricing?service=ecommerce-solutions</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://edgrowtech.com/contact?subject=Service%20Inquiry:%20Data%20Analytics</loc>
+    <lastmod>2026-07-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>
