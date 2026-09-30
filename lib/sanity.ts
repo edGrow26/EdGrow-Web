@@ -7,6 +7,7 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '';
 const dataset   = process.env.NEXT_PUBLIC_SANITY_DATASET   ?? 'production';
 // SANITY_API_READ_TOKEN is server-only. NEXT_PUBLIC_SANITY_API_READ_TOKEN works in the browser too.
 const apiToken  = process.env.SANITY_API_READ_TOKEN ?? process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN;
+const validToken = apiToken && apiToken !== 'your-read-token' ? apiToken : undefined;
 const formRecipient = process.env.NEXT_PUBLIC_FORM_RECIPIENT || 'edgrowproduct@gmail.com';
 const formEndpoint = `https://formsubmit.co/ajax/${formRecipient}`;
 
@@ -15,7 +16,7 @@ export const client = createClient({
   dataset,
   apiVersion: '2024-01-01',
   useCdn: false,         // Disable CDN cache so Sanity edits show immediately
-  token: apiToken,
+  token: validToken,
   perspective: 'published',
 });
 

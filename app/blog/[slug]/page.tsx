@@ -1,11 +1,58 @@
 import React from 'react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { ArrowLeft, Calendar, Clock, Sparkles, Share2 } from 'lucide-react';
 
 import BackgroundWaves from '../../../components/BackgroundWaves';
 import Navbar from '../../../components/Navbar';
 import Footer from '../../../components/Footer';
 import { sanityClient } from '../../../lib/sanity';
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  const post = await sanityClient.getBlogPostBySlug(slug);
+
+  if (!post) {
+    return {
+      title: 'Post Not Found | Edgrow Technologies',
+      description: 'The requested publication could not be parsed from our database.',
+    };
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.edgrow.com';
+  const postUrl = `${baseUrl}/blog/${slug}`;
+
+  return {
+    title: post.title,
+    description: post.excerpt,
+    alternates: {
+      canonical: postUrl,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: postUrl,
+      type: 'article',
+      publishedTime: post.publishedAt,
+      authors: [post.author.name],
+      images: [
+        {
+          url: post.mainImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [post.mainImage],
+    },
+  };
+}
 
 export async function generateStaticParams() {
   const posts = await sanityClient.getBlogPosts();
@@ -36,10 +83,43 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
     );
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.edgrow.com';
+  
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.mainImage,
+    datePublished: post.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: post.author.name,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Edgrow Technologies',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`,
+      }
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${baseUrl}/blog/${slug}`,
+    },
+  };
+
   return (
     <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
       <BackgroundWaves />
       <Navbar />
+
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       {/* Main Content Article Body */}
       <article className="relative pt-32 pb-32 z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
