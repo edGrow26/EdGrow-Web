@@ -200,15 +200,14 @@ export default function AnimationManager() {
     // A. Clean up helper
     const ctx = gsap.context(() => {
 
-      // B. Animate page blocks that have not opted into the shared Motion
-      // component. This covers CMS detail pages and legal content without
-      // double-transforming components wrapped in <ScrollAnimate>.
+      // B. Animate page blocks that have explicitly opted into auto scroll animation.
+      // This prevents double-transforming components wrapped in <ScrollAnimate>
+      // and ensures page content is never stuck at opacity: 0.
       const autoRevealCandidates = Array.from(document.querySelectorAll<HTMLElement>(
-        '#main-content article > *, #main-content section > div > *, [data-auto-scroll-animate]'
+        '[data-auto-scroll-animate]'
       )).filter((element, index, elements) => {
         if (elements.indexOf(element) !== index) return false;
         if (element.closest('[data-scroll-animate], #hero, nav, footer')) return false;
-        if (element.closest('[data-no-scroll-animation]') && !element.matches('[data-auto-scroll-animate]')) return false;
 
         const position = window.getComputedStyle(element).position;
         return position !== 'fixed' && position !== 'sticky';
@@ -304,34 +303,39 @@ export default function AnimationManager() {
       scrollTrigger: {
         trigger: hero,
         start: 'top 92%',
-        end: 'bottom 8%',
-        toggleActions: 'restart reverse restart reverse',
+        toggleActions: 'play none none none',
+        once: true,
       },
     });
 
-    // Stagger hero badge, main heading split words, and sub-paragraphs
-    tl.fromTo('#hero div[class*="inline-flex"]',
-      { opacity: 0, y: 25 },
-      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }
+    // Stagger hero badge, main heading, sub-paragraphs, CTAs, and console smoothly
+    tl.fromTo('.hero-badge',
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }
     );
 
-    // Split text simulation on heading for ultra-premium feel
-    tl.fromTo('#hero h1',
-      { opacity: 0, y: 40 },
-      { opacity: 1, y: 0, duration: 0.9, ease: 'power4.out' },
-      '-=0.5'
+    tl.fromTo('.hero-title',
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: 'power4.out' },
+      '-=0.4'
     );
 
-    tl.fromTo('#hero p',
+    tl.fromTo('.hero-text',
       { opacity: 0, y: 15 },
-      { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' },
-      '-=0.6'
+      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' },
+      '-=0.5'
     );
 
-    tl.fromTo('#hero div[class*="flex-col sm:flex-row"]',
-      { opacity: 0, scale: 0.95, y: 10 },
-      { opacity: 1, scale: 1, y: 0, duration: 0.7, ease: 'power3.out' },
-      '-=0.5'
+    tl.fromTo('.hero-ctas',
+      { opacity: 0, scale: 0.96, y: 15 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'power3.out' },
+      '-=0.4'
+    );
+
+    tl.fromTo('.hero-console',
+      { opacity: 0, y: 30, scale: 0.98 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' },
+      '-=0.3'
     );
 
     return tl;

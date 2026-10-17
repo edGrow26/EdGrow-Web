@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, Sparkles, CheckCircle2, User, Mail, Upload } from 'lucide-react';
+import { Send, Sparkles, CheckCircle2, User, Mail, Upload, Briefcase, GraduationCap, ArrowUpRight, ArrowRight, Shield, Zap } from 'lucide-react';
 
 import BackgroundWaves from '../../components/BackgroundWaves';
 import Navbar from '../../components/Navbar';
@@ -29,7 +29,6 @@ export default function CareersPage() {
   useEffect(() => {
     const fetchJobs = async () => {
       const data = await sanityClient.getJobs();
-      // Show all jobs, or if status field is present, only show active ones
       const activeJobs = data.filter(j => !j.status || j.status === 'active');
       setJobs(activeJobs);
     };
@@ -59,7 +58,6 @@ export default function CareersPage() {
 
     if (success) {
       setSubmitted(true);
-      // Reset form states
       setFormName('');
       setFormEmail('');
       setFormCover('');
@@ -102,7 +100,6 @@ export default function CareersPage() {
     setSelectedJobId(jobId);
     setApplicationRoleId(jobId);
     setSubmitted(false);
-    // Smooth scroll to application form
     const formSection = document.getElementById('application-flow-section');
     if (formSection) {
       formSection.scrollIntoView({ behavior: 'smooth' });
@@ -114,16 +111,20 @@ export default function CareersPage() {
       <BackgroundWaves />
       <Navbar />
 
-      {/* Careers Banner */}
-      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 z-10">
+      {/* ═══════════════════════════════════════════════════════════
+          HERO — CAREERS COMMAND CENTER
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="relative pt-36 pb-20 md:pt-48 md:pb-28 z-10">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-radial from-primary/15 via-transparent to-transparent rounded-full blur-[120px] pointer-events-none" aria-hidden="true" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-accent font-medium tracking-wide mb-6"
+            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-[13px] text-white/70 font-medium tracking-wide mb-8 backdrop-blur-sm"
           >
-            <Sparkles className="w-3.5 h-3.5 text-mint" aria-hidden="true" />
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" aria-hidden="true" />
             <span>Join Edgrow Academy & Global Engineering Teams</span>
           </motion.div>
 
@@ -131,67 +132,90 @@ export default function CareersPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.1] mb-6"
+            className="text-5xl sm:text-6xl md:text-7xl font-black tracking-[-0.03em] leading-[0.95] mb-8"
           >
             Build Your Career with{' '}
-            <span className="bg-gradient-to-r from-primary via-accent to-mint bg-clip-text text-transparent">
-              Edgrow Tech
+            <span className="bg-gradient-to-r from-white via-slate-100 to-white/60 bg-clip-text text-transparent">
+              Edgrow Technologies
             </span>
           </motion.h1>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed"
+            className="text-white/50 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed font-light mb-12"
           >
-            We compile world-class applications and build lifelong career foundations. Discover open roles or submit an internship inquiry below.
+            We compile world-class distributed applications and build lifelong careers. Discover open positions or submit an academy internship inquiry below.
           </motion.p>
+
+          {/* Metric Rail */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="inline-flex items-center gap-8 sm:gap-14 px-8 py-4 rounded-2xl bg-white/[0.03] border border-white/[0.06]"
+          >
+            {[
+              { val: '90%+', label: 'Intern-to-FTE Conversion' },
+              { val: '1:1', label: 'Senior Architect Mentorship' },
+              { val: 'Remote / Hybrid', label: 'Flexible Work Culture' },
+            ].map((s) => (
+              <div key={s.label} className="text-center">
+                <span className="block text-2xl sm:text-3xl font-black text-white font-mono tracking-tight">{s.val}</span>
+                <span className="block text-[11px] text-white/40 font-medium uppercase tracking-widest mt-1">{s.label}</span>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
 
-      {/* Job listings & Tabs Section */}
-      <section className="pb-24 relative z-10">
+      {/* ═══════════════════════════════════════════════════════════
+          JOB LISTINGS & APPLICATION PORTAL — DOPPELRAND
+          ═══════════════════════════════════════════════════════════ */}
+      <section className="pb-36 relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Toggle Tabs */}
-          <ScrollAnimate variant="fadeDown">
-            <div className="flex justify-center gap-4 mb-16">
-              <div className="p-1 bg-white/5 border border-white/5 rounded-2xl flex" role="tablist" aria-label="Career sections">
-                <button
-                  onClick={() => { setActiveTab('positions'); setSelectedJobId(null); setSubmitted(false); }}
-                  role="tab"
-                  aria-selected={activeTab === 'positions'}
-                  className={`px-6 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'positions'
-                      ? 'bg-gradient-to-r from-primary to-accent text-black shadow'
-                      : 'text-gray-400 hover:text-white'
-                    }`}
-                >
-                  Open Positions ({jobs.length})
-                </button>
-                <button
-                  onClick={() => {
-                    setActiveTab('internship');
-                    setSelectedJobId(null);
-                    setApplicationRoleId('internship');
-                    setSubmitted(false);
-                  }}
-                  role="tab"
-                  aria-selected={activeTab === 'internship'}
-                  className={`px-6 py-3 rounded-xl text-xs font-bold transition-all cursor-pointer ${activeTab === 'internship'
-                      ? 'bg-gradient-to-r from-primary to-accent text-black shadow'
-                      : 'text-gray-400 hover:text-white'
-                    }`}
-                >
-                  Internship Program (Always Open)
-                </button>
-              </div>
+          {/* Tab Switcher Segmented Control */}
+          <div className="flex justify-center mb-16">
+            <div className="p-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] flex gap-1 shadow-[0_8px_32px_rgba(0,0,0,0.4)] backdrop-blur-md" role="tablist">
+              <button
+                onClick={() => { setActiveTab('positions'); setSelectedJobId(null); setSubmitted(false); }}
+                role="tab"
+                aria-selected={activeTab === 'positions'}
+                className={`px-6 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                  activeTab === 'positions'
+                    ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                    : 'text-white/60 hover:text-white'
+                }`}
+              >
+                Open Positions ({jobs.length})
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab('internship');
+                  setSelectedJobId(null);
+                  setApplicationRoleId('internship');
+                  setSubmitted(false);
+                }}
+                role="tab"
+                aria-selected={activeTab === 'internship'}
+                className={`px-6 py-2.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                  activeTab === 'internship'
+                    ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+                    : 'text-white/60 hover:text-white'
+                }`}
+              >
+                Internship Program (Always Open)
+              </button>
             </div>
-          </ScrollAnimate>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
 
             {/* Left Column: Positions or Internship Info */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+            <div className="lg:col-span-7 flex flex-col gap-8">
               <AnimatePresence mode="wait">
                 {activeTab === 'positions' ? (
                   <motion.div
@@ -201,63 +225,85 @@ export default function CareersPage() {
                     exit={{ opacity: 0, x: -10 }}
                     className="flex flex-col gap-6"
                   >
-                    {jobs.map((job, idx) => (
-                      <ScrollAnimate key={job.id} variant="slideRight" delay={idx * 0.1}>
-                        <div
-                          className={`p-6 sm:p-8 rounded-2xl border transition-all ${selectedJobId === job.id
-                              ? 'bg-primary/5 border-accent'
-                              : 'bg-white/[0.01] border-white/5 hover:border-white/10'
-                            }`}
-                        >
-                          <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
-                            <div>
-                              <span className="text-[11px] bg-accent/10 text-accent font-bold px-2.5 py-1 rounded-md uppercase tracking-wider block w-fit mb-2">
-                                {job.department}
-                              </span>
-                              <h3 className="text-lg font-bold text-white">{job.title}</h3>
-                              <p className="text-gray-400 text-[13px] font-medium mt-1">{job.location} &bull; {job.type}</p>
-                            </div>
-
-                            <button
-                              onClick={() => handleApplyClick(job.id)}
-                              className="px-4 py-2 bg-white/5 hover:bg-accent hover:text-black border border-white/10 rounded-xl text-xs font-bold transition-all"
-                            >
-                              Apply Now
-                            </button>
-                          </div>
-
-                          <p className="text-gray-300 text-[13px] leading-relaxed mb-6">
-                            {job.description}
-                          </p>
-
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5">
-                            <div>
-                              <strong className="text-[11px] text-gray-400 uppercase tracking-widest block mb-2">Requirements:</strong>
-                              <ul className="flex flex-col gap-1 text-xs text-gray-300">
-                                {job.requirements.map((req, i) => (
-                                  <li key={i} className="flex gap-2">
-                                    <span className="text-accent" aria-hidden="true">&bull;</span>
-                                    <span>{req}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                            <div>
-                              <strong className="text-[11px] text-gray-400 uppercase tracking-widest block mb-2">Key Benefits:</strong>
-                              <ul className="flex flex-col gap-1 text-xs text-gray-300">
-                                {job.benefits.map((ben, i) => (
-                                  <li key={i} className="flex gap-2">
-                                    <span className="text-mint" aria-hidden="true">&bull;</span>
-                                    <span>{ben}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          </div>
-
+                    {jobs.length === 0 ? (
+                      <div className="rounded-[2rem] p-[1px] bg-gradient-to-b from-white/[0.12] via-white/[0.03] to-transparent ring-1 ring-white/[0.06]">
+                        <div className="rounded-[calc(2rem-1px)] bg-[#040812]/95 p-12 text-center">
+                          <p className="text-white/50 text-sm">No currently listed positions. Consider submitting an inquiry to our Internship Program!</p>
                         </div>
-                      </ScrollAnimate>
-                    ))}
+                      </div>
+                    ) : (
+                      jobs.map((job, idx) => {
+                        const isSelected = selectedJobId === job.id;
+                        return (
+                          <ScrollAnimate key={job.id} variant="slideRight" delay={idx * 0.08}>
+                            {/* Doppelrand outer shell */}
+                            <div className={`rounded-[2rem] p-[1px] transition-all duration-500 ring-1 ${
+                              isSelected
+                                ? 'bg-gradient-to-b from-accent/50 via-accent/20 to-transparent ring-accent/30'
+                                : 'bg-gradient-to-b from-white/[0.14] via-white/[0.03] to-transparent ring-white/[0.06] hover:from-white/[0.22]'
+                            }`}>
+                              {/* Inner card core */}
+                              <div className="rounded-[calc(2rem-1px)] bg-[#040812]/95 p-7 sm:p-9 relative overflow-hidden backdrop-blur-xl">
+                                <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
+                                  <div>
+                                    <span className="px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono font-bold tracking-widest text-accent uppercase block w-fit mb-3">
+                                      {job.department}
+                                    </span>
+                                    <h3 className="text-xl font-bold text-white tracking-tight">{job.title}</h3>
+                                    <p className="text-white/40 text-xs font-mono mt-1.5">{job.location} • {job.type}</p>
+                                  </div>
+
+                                  <button
+                                    onClick={() => handleApplyClick(job.id)}
+                                    className="btn-premium-pill !px-5 !py-2.5 !text-xs cursor-pointer"
+                                  >
+                                    Apply For Role
+                                    <span className="btn-icon-wrapper">
+                                      <ArrowRight className="w-3.5 h-3.5" />
+                                    </span>
+                                  </button>
+                                </div>
+
+                                <p className="text-white/60 text-xs sm:text-sm leading-relaxed mb-6 font-light">
+                                  {job.description}
+                                </p>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-5 border-t border-white/[0.06]">
+                                  <div>
+                                    <strong className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-[0.2em] block mb-3">
+                                      Requirements
+                                    </strong>
+                                    <ul className="flex flex-col gap-2 text-xs text-white/60">
+                                      {job.requirements.map((req, i) => (
+                                        <li key={i} className="flex items-start gap-2">
+                                          <span className="text-accent mt-0.5">•</span>
+                                          <span>{req}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+
+                                  <div>
+                                    <strong className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-[0.2em] block mb-3">
+                                      Key Benefits
+                                    </strong>
+                                    <ul className="flex flex-col gap-2 text-xs text-white/60">
+                                      {job.benefits.map((ben, i) => (
+                                        <li key={i} className="flex items-start gap-2">
+                                          <span className="text-emerald-400 mt-0.5">•</span>
+                                          <span>{ben}</span>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </ScrollAnimate>
+                        );
+                      })
+                    )}
                   </motion.div>
                 ) : (
                   <ScrollAnimate variant="slideRight">
@@ -266,211 +312,212 @@ export default function CareersPage() {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -10 }}
-                      className="p-8 sm:p-10 rounded-2xl bg-white/[0.01] border border-white/5 flex flex-col gap-6"
+                      className="rounded-[2rem] p-[1px] bg-gradient-to-b from-accent/25 via-white/[0.04] to-transparent ring-1 ring-white/[0.08]"
                     >
-                      <div className="w-12 h-12 bg-mint/10 rounded-xl flex items-center justify-center text-mint">
-                        <Sparkles className="w-6 h-6" aria-hidden="true" />
-                      </div>
+                      <div className="rounded-[calc(2rem-1px)] bg-[#040812]/95 p-8 sm:p-12 relative overflow-hidden flex flex-col gap-8 backdrop-blur-xl">
+                        <div className="w-14 h-14 rounded-2xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-accent">
+                          <GraduationCap className="w-7 h-7" aria-hidden="true" />
+                        </div>
 
-                      <h3 className="text-xl sm:text-2xl font-extrabold text-white">Edgrow Tech Academy Internship</h3>
+                        <div>
+                          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-[10px] font-mono font-bold uppercase tracking-widest text-accent mb-3">
+                            <span>Open All Year Round</span>
+                          </div>
+                          <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-4">
+                            Edgrow Tech Academy Internship
+                          </h3>
+                          <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light">
+                            Our Internship Program is an immersive, always-open recruitment stream aimed at promising university students and coding graduates in Sri Lanka and globally. Over 90% of our interns secure full-time engineering contracts inside Edgrow upon program completion.
+                          </p>
+                        </div>
 
-                      <p className="text-gray-300 text-sm leading-relaxed">
-                        Our Internship Program is an immersive, always-open recruitment stream aimed at promising university students and coding graduates in Sri Lanka and globally. Over 90% of our interns secure full-time engineering contracts inside Edgrow upon program completion.
-                      </p>
+                        <div className="flex flex-col gap-5 py-6 border-y border-white/[0.06]">
+                          <div className="flex items-start gap-4">
+                            <div className="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-accent shrink-0 mt-0.5">
+                              <Zap className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <strong className="text-sm text-white block font-bold mb-1">One-on-One Technical Mentorship</strong>
+                              <span className="text-white/50 text-xs leading-relaxed block">Work directly alongside Kasun and our senior lead architects in Colombo and London.</span>
+                            </div>
+                          </div>
 
-                      <div className="flex flex-col gap-4 py-4 border-y border-white/5">
-                        <div className="flex items-start gap-3">
-                          <CheckCircle2 className="w-5 h-5 text-mint shrink-0 mt-0.5" aria-hidden="true" />
-                          <div>
-                            <strong className="text-xs text-white block">One-on-One Technical Mentorship</strong>
-                            <span className="text-gray-400 text-xs">Work directly alongside Kasun and our senior lead architects.</span>
+                          <div className="flex items-start gap-4">
+                            <div className="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-accent shrink-0 mt-0.5">
+                              <Shield className="w-4 h-4" />
+                            </div>
+                            <div>
+                              <strong className="text-sm text-white block font-bold mb-1">Real Production Project Deliveries</strong>
+                              <span className="text-white/50 text-xs leading-relaxed block">No dummy sandbox apps. You will contribute code directly to live, high-traffic client platforms.</span>
+                            </div>
                           </div>
                         </div>
-                        <div className="flex items-start gap-3">
-                          <CheckCircle2 className="w-5 h-5 text-mint shrink-0 mt-0.5" aria-hidden="true" />
-                          <div>
-                            <strong className="text-xs text-white block">Real Production Project Deliveries</strong>
-                            <span className="text-gray-400 text-xs">No dummy sandbox apps. You will contribute to live, high-traffic client platforms.</span>
-                          </div>
-                        </div>
-                      </div>
 
-                      <p className="text-gray-400 text-xs italic">
-                        Interested? Submit your resume, cover letter, and role preferences in the right-hand application portal to launch your review pipeline.
-                      </p>
+                        <p className="text-white/40 text-xs font-mono leading-relaxed">
+                          Interested? Submit your resume, cover letter, and role preferences in the right-hand portal to launch your technical review.
+                        </p>
+                      </div>
                     </motion.div>
                   </ScrollAnimate>
                 )}
               </AnimatePresence>
             </div>
 
-            {/* Right Column: Unified Application Form */}
-            <ScrollAnimate variant="slideLeft" delay={0.15} className="lg:col-span-5 scroll-mt-24">
-              <div id="application-flow-section" className="glass-panel p-6 sm:p-8 rounded-2xl border border-white/5 relative">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full filter blur-2xl pointer-events-none" aria-hidden="true" />
+            {/* Right Column: Unified Application Form in Doppelrand Card */}
+            <ScrollAnimate variant="slideLeft" delay={0.15} className="lg:col-span-5 scroll-mt-28">
+              <div id="application-flow-section" className="rounded-[2rem] p-[1px] bg-gradient-to-b from-white/[0.14] via-white/[0.04] to-transparent ring-1 ring-white/[0.08]">
+                <div className="rounded-[calc(2rem-1px)] bg-[#040812]/95 p-8 sm:p-9 relative overflow-hidden backdrop-blur-xl">
+                  {/* Glow */}
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-radial from-accent/15 via-transparent to-transparent rounded-full blur-[80px] pointer-events-none" />
 
-                <h3 className="text-lg font-bold text-white mb-1">
-                  {activeTab === 'internship' ? 'Academy Application Portal' : 'Candidate Application Form'}
-                </h3>
-                <p className="text-xs text-gray-400 mb-6">
-                  Applying for: {jobs.find((job) => job.id === applicationRoleId)?.title || 'Internship Program'}
-                </p>
+                  <h3 className="text-xl font-bold text-white tracking-tight mb-1">
+                    {activeTab === 'internship' ? 'Academy Application Portal' : 'Candidate Application Form'}
+                  </h3>
+                  <p className="text-xs font-mono text-white/40 mb-8">
+                    Role: {jobs.find((job) => job.id === applicationRoleId)?.title || 'Internship Program'}
+                  </p>
 
-                {submitted ? (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="p-8 text-center bg-accent/5 border border-accent/20 rounded-xl flex flex-col items-center gap-4"
-                  >
-                    <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center text-accent">
-                      <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
-                    </div>
-                    <h4 className="text-base font-extrabold text-white">Application Recorded Successfully</h4>
-                    <p className="text-gray-300 text-xs leading-relaxed">
-                      Thank you for applying. Our talent recruitment team in Colombo or London will review your portfolio files and connect via email within 48 hours.
-                    </p>
-                    <button
-                      onClick={() => setSubmitted(false)}
-                      className="mt-2 px-4 py-2 bg-white/5 hover:bg-white/10 rounded-lg text-xs font-semibold text-gray-400 hover:text-white transition-colors"
+                  {submitted ? (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="py-10 px-6 text-center bg-white/[0.02] border border-white/[0.08] rounded-2xl flex flex-col items-center gap-4"
                     >
-                      File Another Form
-                    </button>
-                  </motion.div>
-                ) : (
-                  <form
-                    action="https://formsubmit.co/edgrowproduct@gmail.com"
-                    method="POST"
-                    encType="multipart/form-data"
-                    onSubmit={handleApplySubmit}
-                    className="flex flex-col gap-4"
-                  >
-
-                    {/* Full Name */}
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="career-name" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
-                        <User className="w-3 h-3 text-accent" aria-hidden="true" /> Full Name
-                      </label>
-                      <input
-                        id="career-name"
-                        name="name"
-                        type="text"
-                        required
-                        value={formName}
-                        onChange={(e) => setFormName(e.target.value)}
-                        placeholder="Dilshan Silva"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-accent transition-colors"
-                      />
-                    </div>
-
-                    {/* Email */}
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="career-email" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center gap-1">
-                        <Mail className="w-3 h-3 text-accent" aria-hidden="true" /> Email Address
-                      </label>
-                      <input
-                        id="career-email"
-                        name="email"
-                        type="email"
-                        required
-                        value={formEmail}
-                        onChange={(e) => setFormEmail(e.target.value)}
-                        placeholder="dilshan@mail.com"
-                        className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-accent transition-colors"
-                      />
-                    </div>
-
-                    {/* Active Sanity positions plus the always-open internship. */}
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="career-role" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
-                        Role of Interest
-                      </label>
-                      <select
-                        id="career-role"
-                        name="role"
-                        required
-                        value={applicationRoleId}
-                        onChange={(event) => {
-                          const roleId = event.target.value;
-                          setApplicationRoleId(roleId);
-                          setSelectedJobId(roleId === 'internship' ? null : roleId);
-                          setActiveTab(roleId === 'internship' ? 'internship' : 'positions');
-                        }}
-                        className="w-full bg-black border border-white/10 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-accent text-white"
-                      >
-                        <option value="internship">Internship Program</option>
-                        {jobs.map((job) => (
-                          <option key={job.id} value={job.id}>{job.title}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* Cover Note */}
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="career-cover" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
-                        Brief Cover Note / Pitch
-                      </label>
-                      <textarea
-                        id="career-cover"
-                        name="coverLetter"
-                        rows={4}
-                        value={formCover}
-                        onChange={(e) => setFormCover(e.target.value)}
-                        placeholder="Explain why you are excited to join Edgrow Tech..."
-                        className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-xs focus:outline-none focus:border-accent transition-colors resize-none"
-                      />
-                    </div>
-
-                    {/* Resume Upload */}
-                    <div className="flex flex-col gap-1.5">
-                      <label htmlFor="career-resume" className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block">
-                        Resume File Selection (PDF)
-                      </label>
-                      <label htmlFor="career-resume" className="border border-dashed border-white/10 hover:border-accent/40 rounded-xl p-6 text-center cursor-pointer bg-white/[0.005] hover:bg-white/[0.02] transition-all flex flex-col items-center gap-2">
-                        <Upload className="w-6 h-6 text-accent" aria-hidden="true" />
-                        <span className="text-xs text-gray-300">
-                          {formResume ? formResume.name : 'Click to select your PDF resume'}
-                        </span>
-                        <span className="text-[10px] text-gray-500 font-mono">Max size: 5MB</span>
-
-                        <input
-                          id="career-resume"
-                          name="attachment"
-                          type="file"
-                          ref={resumeInputRef}
-                          required
-                          accept="application/pdf,.pdf"
-                          onChange={handleResumeChange}
-                          className="sr-only"
-                        />
-                      </label>
-                    </div>
-
-                    {/* Submit Button */}
-                    {submitError && (
-                      <p className="text-sm text-red-300 bg-red-500/10 border border-red-400/20 rounded-xl px-4 py-3" role="alert">
-                        {submitError}
+                      <div className="w-12 h-12 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center text-emerald-400">
+                        <CheckCircle2 className="w-6 h-6" aria-hidden="true" />
+                      </div>
+                      <h4 className="text-base font-bold text-white">Application Recorded Successfully</h4>
+                      <p className="text-white/50 text-xs leading-relaxed max-w-xs">
+                        Thank you for applying. Our talent recruitment team in Colombo or London will review your portfolio files and connect via email within 48 hours.
                       </p>
-                    )}
+                      <button
+                        onClick={() => setSubmitted(false)}
+                        className="btn-secondary-pill !px-5 !py-2 !text-xs mt-2"
+                      >
+                        File Another Form
+                      </button>
+                    </motion.div>
+                  ) : (
+                    <form onSubmit={handleApplySubmit} className="flex flex-col gap-5">
+                      {/* Full Name */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="career-name" className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest flex items-center gap-1.5">
+                          <User className="w-3 h-3 text-accent" aria-hidden="true" /> Full Name
+                        </label>
+                        <input
+                          id="career-name"
+                          name="name"
+                          type="text"
+                          required
+                          value={formName}
+                          onChange={(e) => setFormName(e.target.value)}
+                          placeholder="Dilshan Silva"
+                          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-colors"
+                        />
+                      </div>
 
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-4 bg-gradient-to-r from-accent to-mint hover:bg-gradient-to-r hover:from-mint hover:to-accent text-black font-bold text-xs rounded-xl shadow-lg transition-all duration-300 mt-4 flex items-center justify-center gap-2"
-                    >
-                      {isSubmitting ? (
-                        <>
-                          <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" aria-hidden="true" /> Recording application...
-                        </>
-                      ) : (
-                        <>
-                          <Send className="w-4 h-4" aria-hidden="true" /> Submit Application
-                        </>
+                      {/* Email */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="career-email" className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest flex items-center gap-1.5">
+                          <Mail className="w-3 h-3 text-accent" aria-hidden="true" /> Email Address
+                        </label>
+                        <input
+                          id="career-email"
+                          name="email"
+                          type="email"
+                          required
+                          value={formEmail}
+                          onChange={(e) => setFormEmail(e.target.value)}
+                          placeholder="dilshan@mail.com"
+                          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-3 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-colors"
+                        />
+                      </div>
+
+                      {/* Role Selector */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="career-role" className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest block">
+                          Role of Interest
+                        </label>
+                        <select
+                          id="career-role"
+                          name="role"
+                          required
+                          value={applicationRoleId}
+                          onChange={(event) => {
+                            const roleId = event.target.value;
+                            setApplicationRoleId(roleId);
+                            setSelectedJobId(roleId === 'internship' ? null : roleId);
+                            setActiveTab(roleId === 'internship' ? 'internship' : 'positions');
+                          }}
+                          className="w-full bg-[#040812] border border-white/[0.08] rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-white/30"
+                        >
+                          <option value="internship">Internship Program</option>
+                          {jobs.map((job) => (
+                            <option key={job.id} value={job.id}>{job.title}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {/* Cover Note */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="career-cover" className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest block">
+                          Brief Cover Note / Pitch
+                        </label>
+                        <textarea
+                          id="career-cover"
+                          name="coverLetter"
+                          rows={3}
+                          value={formCover}
+                          onChange={(e) => setFormCover(e.target.value)}
+                          placeholder="Explain why you are excited to join Edgrow Tech..."
+                          className="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl p-4 text-xs text-white placeholder-white/30 focus:outline-none focus:border-white/30 transition-colors resize-none"
+                        />
+                      </div>
+
+                      {/* Resume Upload */}
+                      <div className="flex flex-col gap-1.5">
+                        <label htmlFor="career-resume" className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest block">
+                          Resume (PDF)
+                        </label>
+                        <label htmlFor="career-resume" className="border border-dashed border-white/[0.12] hover:border-white/30 rounded-xl p-5 text-center cursor-pointer bg-white/[0.01] hover:bg-white/[0.03] transition-all flex flex-col items-center gap-2">
+                          <Upload className="w-5 h-5 text-accent" aria-hidden="true" />
+                          <span className="text-xs text-white/80">
+                            {formResume ? formResume.name : 'Select your PDF resume'}
+                          </span>
+                          <span className="text-[10px] font-mono text-white/40">PDF only • Max 5MB</span>
+
+                          <input
+                            id="career-resume"
+                            name="attachment"
+                            type="file"
+                            ref={resumeInputRef}
+                            required
+                            accept="application/pdf,.pdf"
+                            onChange={handleResumeChange}
+                            className="sr-only"
+                          />
+                        </label>
+                      </div>
+
+                      {submitError && (
+                        <p className="text-xs text-rose-300 bg-rose-500/10 border border-rose-500/20 rounded-xl px-4 py-3" role="alert">
+                          {submitError}
+                        </p>
                       )}
-                    </button>
 
-                  </form>
-                )}
-
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        className="btn-premium-pill w-full text-center mt-2 cursor-pointer"
+                      >
+                        {isSubmitting ? 'Recording Application...' : 'Submit Application'}
+                        <span className="btn-icon-wrapper">
+                          <Send className="w-3.5 h-3.5" />
+                        </span>
+                      </button>
+                    </form>
+                  )}
+                </div>
               </div>
             </ScrollAnimate>
 
