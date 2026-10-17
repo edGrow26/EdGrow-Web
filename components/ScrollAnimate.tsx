@@ -60,7 +60,7 @@ export default function ScrollAnimate({
       initial={initial}
       whileInView={animate}
       viewport={{
-        once: false,
+        once: true,
         amount: 0.16,
         margin: '-3% 0px -3% 0px',
       }}

@@ -11,6 +11,23 @@ function isCompleteTeamMember(member: Partial<TeamMember>): member is TeamMember
   );
 }
 
+// export async function fetchSanityTeam(
+//   fallbackTeam: TeamMember[],
+// ): Promise<TeamMember[]> {
+//   if (!sanityClient) return fallbackTeam;
+
+//   try {
+//     const team = await sanityClient.fetch<TeamMember[]>(TEAM_QUERY);
+//     const completeTeam = team.filter(isCompleteTeamMember);
+
+//     return completeTeam.length > 0 ? completeTeam : fallbackTeam;
+//   } catch (error) {
+//     console.warn('Unable to load team from Sanity; using fallback content.', error);
+//     return fallbackTeam;
+//   }
+// }
+
+
 export async function fetchSanityTeam(
   fallbackTeam: TeamMember[],
 ): Promise<TeamMember[]> {
@@ -18,11 +35,14 @@ export async function fetchSanityTeam(
 
   try {
     const team = await sanityClient.fetch<TeamMember[]>(TEAM_QUERY);
-    const completeTeam = team.filter(isCompleteTeamMember);
 
-    return completeTeam.length > 0 ? completeTeam : fallbackTeam;
+    return team.filter(isCompleteTeamMember);
   } catch (error) {
-    console.warn('Unable to load team from Sanity; using fallback content.', error);
+    console.warn(
+      'Unable to load team from Sanity; using fallback content.',
+      error
+    );
+
     return fallbackTeam;
   }
 }

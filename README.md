@@ -1,6 +1,6 @@
 # Edgrow Web Application
 
-Edgrow is a statically exported Next.js App Router application built with React, Tailwind CSS, GSAP, and Motion.
+Edgrow is a modern, statically exported web application built with the Next.js App Router. It features fluid animations powered by GSAP and Motion, responsive styling with Tailwind CSS, and a fully integrated Sanity CMS for managing services and client reviews dynamically.
 
 ## Prerequisites
 

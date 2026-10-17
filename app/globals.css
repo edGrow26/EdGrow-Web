@@ -13,15 +13,15 @@
 :root {
   color-scheme: dark;
   --bg-ambient-from: rgba(0, 102, 214, 0.15);
-  --bg-ambient-via: #000000;
+  --bg-ambient-via: #02070d;
   --bg-ambient-to: #000000;
   --grid-line-color: rgba(255, 255, 255, 0.03);
 }
 
 html.light {
   color-scheme: light;
-  --bg-ambient-from: rgba(0, 102, 214, 0.04);
-  --bg-ambient-via: #ffffff;
+  --bg-ambient-from: rgba(0, 102, 214, 0.05);
+  --bg-ambient-via: #f8fafc;
   --bg-ambient-to: #ffffff;
   --grid-line-color: rgba(0, 102, 214, 0.04);
 }
@@ -171,6 +171,10 @@ html.light .from-white {
 html.light .via-slate-100 {
   --tw-gradient-via: #0066D6 !important;
 }
+html.light .to-white\/60,
+html.light .to-white {
+  --tw-gradient-to: #334155 !important;
+}
 
 /* Use darker brand stops for gradient headings rendered on white surfaces. */
 html.light .bg-clip-text.text-transparent.bg-gradient-to-r {
@@ -180,6 +184,47 @@ html.light .bg-clip-text.text-transparent.bg-gradient-to-r {
 /* Overriding white text values for accessibility and contrast in light mode */
 html.light .text-white {
   color: #0f172a !important;
+}
+
+html.light .text-white\/90,
+html.light .text-white\/80 {
+  color: #0f172a !important;
+}
+
+html.light .text-white\/70,
+html.light .text-white\/60 {
+  color: #334155 !important;
+}
+
+html.light .text-white\/50,
+html.light .text-white\/40 {
+  color: #475569 !important;
+}
+
+html.light .text-white\/30,
+html.light .text-white\/20,
+html.light .text-white\/10 {
+  color: #64748b !important;
+}
+
+html.light .text-slate-100 {
+  color: #0f172a !important;
+}
+
+html.light .text-slate-200 {
+  color: #1e293b !important;
+}
+
+html.light .text-slate-300 {
+  color: #334155 !important;
+}
+
+html.light .text-slate-400 {
+  color: #475569 !important;
+}
+
+html.light .text-slate-500 {
+  color: #64748b !important;
 }
 
 html.light .text-gray-400 {
@@ -227,7 +272,7 @@ html.light .text-primary {
   color: #0066D6 !important;
 }
 
-/* Backgrounds & Glass Panels inversion */
+/* Invert all dark surface cards to clean white porcelain cards */
 html.light .bg-black,
 html.light .bg-zinc-950,
 html.light .bg-zinc-900,
@@ -236,8 +281,22 @@ html.light .bg-slate-900,
 html.light .bg-neutral-900,
 html.light .bg-zinc-900\/50,
 html.light .bg-black\/50,
-html.light .bg-black\/80 {
+html.light .bg-black\/80,
+html.light .bg-\[\#040812\]\/95,
+html.light .bg-\[\#040812\],
+html.light .bg-\[\#02070d\],
+html.light .bg-\[\#050b14\]\/95,
+html.light .bg-\[\#040e10\]\/95,
+html.light .bg-\[\#07111f\],
+html.light .bg-\[\#040915\]\/95,
+html.light .bg-\[\#030914\]\/80,
+html.light .bg-\[\#030812\]\/50,
+html.light .bg-\[\#041612\],
+html.light .bg-\[\#050d16\]\/90 {
   background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: rgba(0, 102, 214, 0.08) !important;
+  box-shadow: 0 10px 30px -10px rgba(0, 102, 214, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
 }
 
 /* Prevent black-fade gradients from being dark in light mode */
@@ -248,16 +307,42 @@ html.light .to-black {
   --tw-gradient-to: #ffffff !important;
 }
 
+/* Doppelrand outer bezel subtle border & frame in light mode */
+html.light [class*="rounded-"][class*="p-\[1px\]"],
+html.light [class*="rounded-"][class*="p-1\.5"],
+html.light [class*="rounded-"][class*="p-2"] {
+  background-image: linear-gradient(to bottom, rgba(0, 102, 214, 0.12), rgba(0, 102, 214, 0.03), transparent) !important;
+  --tw-ring-color: rgba(0, 102, 214, 0.08) !important;
+}
+
 html.light .bg-white\/5,
-html.light .bg-white\/10 {
+html.light .bg-white\/10,
+html.light .bg-white\/\[0\.01\],
+html.light .bg-white\/\[0\.02\],
+html.light .bg-white\/\[0\.03\],
+html.light .bg-white\/\[0\.04\],
+html.light .bg-white\/\[0\.05\],
+html.light .bg-white\/\[0\.06\],
+html.light .bg-white\/\[0\.08\] {
   background-color: rgba(0, 102, 214, 0.04) !important;
+}
+
+html.light .bg-black\/40,
+html.light .bg-black\/50,
+html.light .bg-black\/60,
+html.light .bg-black\/70 {
+  background-color: rgba(0, 102, 214, 0.05) !important;
 }
 
 html.light .border-white\/5,
 html.light .border-white\/10,
+html.light .border-white\/15,
+html.light .border-white\/\[0\.06\],
+html.light .border-white\/\[0\.08\],
+html.light .border-white\/\[0\.1\],
 html.light .border-zinc-800,
 html.light .border-neutral-800 {
-  border-color: rgba(0, 102, 214, 0.07) !important;
+  border-color: rgba(0, 102, 214, 0.08) !important;
 }
 
 html.light .glass-panel {
@@ -278,7 +363,7 @@ html.light .glass-panel-hover:hover {
 /* Hero Badge */
 html.light .hero-badge {
   background-color: rgba(0, 102, 214, 0.05) !important;
-  border-color: rgba(0, 102, 214, 0.1) !important;
+  border-color: rgba(0, 102, 214, 0.12) !important;
   color: #0066D6 !important;
 }
 
@@ -434,13 +519,13 @@ html.light .btn-premium-pill:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
   color: #ffffff !important;
   font-family: "Plus Jakarta Sans", "Avenir Next", "Segoe UI", sans-serif !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   font-size: 1rem !important;
   border-radius: 9999px !important;
-  padding: 0.9rem 2.25rem !important;
+  padding: 0.85rem 2rem !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   text-align: center;
@@ -450,9 +535,10 @@ html.light .btn-premium-pill:hover {
 }
 
 .btn-secondary-pill:hover {
-  background-color: rgba(255, 255, 255, 0.08) !important;
-  border-color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
   transform: translateY(-1px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
 }
 
 .btn-secondary-pill:active {
@@ -460,13 +546,41 @@ html.light .btn-premium-pill:hover {
 }
 
 html.light .btn-secondary-pill {
+  background-color: rgba(15, 23, 42, 0.04) !important;
   color: #0f172a !important;
-  border-color: rgba(15, 23, 42, 0.2) !important;
+  border-color: rgba(15, 23, 42, 0.22) !important;
 }
 
 html.light .btn-secondary-pill:hover {
-  background-color: rgba(15, 23, 42, 0.05) !important;
+  background-color: rgba(15, 23, 42, 0.08) !important;
   border-color: #0f172a !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Button-in-Button Nested Trailing Icon wrapper */
+.btn-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.18);
+  margin-left: 0.5rem;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-premium-pill:hover .btn-icon-wrapper,
+.btn-secondary-pill:hover .btn-icon-wrapper {
+  transform: translate(2px, -1px);
+}
+
+html.light .btn-premium-pill .btn-icon-wrapper {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+html.light .btn-secondary-pill .btn-icon-wrapper {
+  background-color: rgba(15, 23, 42, 0.08);
 }
 
 @keyframes marquee {
@@ -484,15 +598,7 @@ html.light .btn-secondary-pill:hover {
   animation-play-state: paused;
 }
 
-.html-light-fill-white {
-  fill: #000000;
-}
-
-html.light .html-light-fill-white {
-  fill: #ffffff !important;
-}
-
-/* Keep portfolio text white/readable in light mode */
+/* Keep specified dark surfaces always light/readable in light mode */
 .text-light-always h3:not(.text-accent):not(.text-mint),
 .text-light-always p,
 .text-light-always span:not(.text-accent):not(.text-mint),
@@ -517,65 +623,198 @@ html.light .theme-on-dark-text {
   color: #ffffff !important;
 }
 
-.text-light-always .text-gray-300 {
-  color: #d1d5db !important;
+/* ==========================================================================
+   TELEMETRY COCKPIT HUD (Preserves High-Tech Dark Terminal in Both Modes)
+   ========================================================================== */
+.hero-console-dark-hud,
+html.light .hero-console-dark-hud {
+  color: #ffffff !important;
 }
 
-.text-light-always .text-gray-400 {
-  color: #9ca3af !important;
+html.light .hero-console-dark-hud .bg-\[\#040812\]\/95,
+html.light .hero-console-dark-hud .bg-\[\#040812\] {
+  background-color: #040812 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 30px 100px rgba(0, 102, 214, 0.25) !important;
 }
 
-.text-light-always .text-gray-500 {
-  color: #6b7280 !important;
+html.light .hero-console-dark-hud h4,
+html.light .hero-console-dark-hud .text-white {
+  color: #ffffff !important;
 }
 
-.text-light-always .bg-white\/10 {
-  background-color: rgba(255, 255, 255, 0.1) !important;
+html.light .hero-console-dark-hud p,
+html.light .hero-console-dark-hud .text-slate-300 {
+  color: #cbd5e1 !important;
 }
 
-.text-light-always .border-white\/5 {
-  border-color: rgba(255, 255, 255, 0.05) !important;
+html.light .hero-console-dark-hud .text-slate-200 {
+  color: #e2e8f0 !important;
 }
 
-.text-light-always .border-white\/10 {
+html.light .hero-console-dark-hud .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+html.light .hero-console-dark-hud .text-slate-500 {
+  color: #64748b !important;
+}
+
+html.light .hero-console-dark-hud .text-accent {
+  color: #00BFA5 !important;
+}
+
+html.light .hero-console-dark-hud .text-mint {
+  color: #1DE9B6 !important;
+}
+
+html.light .hero-console-dark-hud .bg-white\/\[0\.05\],
+html.light .hero-console-dark-hud .bg-white\/\[0\.02\],
+html.light .hero-console-dark-hud .bg-white\/5 {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+html.light .hero-console-dark-hud .bg-black\/40 {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+html.light .hero-console-dark-hud .border-white\/10,
+html.light .hero-console-dark-hud .border-white\/5 {
   border-color: rgba(255, 255, 255, 0.1) !important;
 }
 
-/* Homepage portfolio cards keep an intentional dark, high-contrast surface. */
-.portfolio-showcase-card,
-html.light .portfolio-showcase-card {
+/* ==========================================================================
+   HOMEPAGE STATS & TESTIMONIALS & CTA
+   ========================================================================== */
+html.light #stats {
+  background-color: #f8fafc !important;
+  border-color: rgba(0, 102, 214, 0.08) !important;
+}
+
+html.light .stats-item {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 102, 214, 0.08) !important;
+  box-shadow: 0 4px 20px -5px rgba(0, 102, 214, 0.05) !important;
+}
+
+html.light #testimonials {
+  background: linear-gradient(to bottom, #ffffff, #f0fdf4, #ffffff) !important;
+  border-color: rgba(0, 102, 214, 0.08) !important;
+}
+
+html.light .testimonial-fade-mask-left {
+  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0.8), transparent) !important;
+}
+
+html.light .testimonial-fade-mask-right {
+  background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0.8), transparent) !important;
+}
+
+html.light #cta .bg-\[\#040915\]\/95 {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 102, 214, 0.12) !important;
+  box-shadow: 0 20px 60px -15px rgba(0, 102, 214, 0.1) !important;
+}
+
+/* ==========================================================================
+   INTERACTIVE COST CALCULATOR (LIGHT MODE)
+   ========================================================================== */
+html.light input[type="range"] {
+  accent-color: #0066D6 !important;
+  background-color: #e2e8f0 !important;
+}
+
+html.light #cost-calculator-widget .bg-black\/60 {
+  background-color: #f8fafc !important;
+  border: 1px solid rgba(0, 102, 214, 0.12) !important;
+  box-shadow: 0 4px 20px rgba(0, 102, 214, 0.04) !important;
+}
+
+/* ==========================================================================
+   PORTFOLIO FILTER TABS (LIGHT MODE)
+   ========================================================================== */
+html.light [role="tablist"] {
+  background-color: rgba(0, 102, 214, 0.04) !important;
+  border-color: rgba(0, 102, 214, 0.1) !important;
+}
+
+html.light [role="tab"][aria-selected="true"] {
+  color: #ffffff !important;
+}
+
+html.light [role="tab"][aria-selected="true"] span[class*="bg-white"] {
+  background-color: #0f172a !important;
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.2) !important;
+}
+
+html.light [role="tab"][aria-selected="false"] {
+  color: #475569 !important;
+}
+
+html.light [role="tab"][aria-selected="false"]:hover {
+  color: #0f172a !important;
+}
+
+/* Homepage portfolio cards */
+.portfolio-showcase-card {
   background-color: #07111f !important;
   color: #ffffff !important;
 }
 
-.portfolio-card-title,
-html.light .portfolio-card-title {
+html.light .portfolio-showcase-card {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(0, 102, 214, 0.1) !important;
+  box-shadow: 0 10px 30px rgba(0, 102, 214, 0.05) !important;
+}
+
+.portfolio-card-title {
   color: #ffffff !important;
 }
 
-.portfolio-showcase-card:hover .portfolio-card-title,
-html.light .portfolio-showcase-card:hover .portfolio-card-title {
+html.light .portfolio-card-title {
+  color: #0f172a !important;
+}
+
+.portfolio-showcase-card:hover .portfolio-card-title {
   color: #5fffe0 !important;
 }
 
-.portfolio-card-copy,
-html.light .portfolio-card-copy {
+html.light .portfolio-showcase-card:hover .portfolio-card-title {
+  color: #0066D6 !important;
+}
+
+.portfolio-card-copy {
   color: #cbd5e1 !important;
 }
 
-.portfolio-card-meta,
-html.light .portfolio-card-meta {
+html.light .portfolio-card-copy {
+  color: #475569 !important;
+}
+
+.portfolio-card-meta {
   color: #94a3b8 !important;
 }
 
-.portfolio-card-chip,
-html.light .portfolio-card-chip {
+html.light .portfolio-card-meta {
+  color: #64748b !important;
+}
+
+.portfolio-card-chip {
   color: #e2e8f0 !important;
 }
 
-.portfolio-card-action,
-html.light .portfolio-card-action {
+html.light .portfolio-card-chip {
+  color: #334155 !important;
+  background-color: rgba(0, 102, 214, 0.05) !important;
+}
+
+.portfolio-card-action {
   color: #5fffe0 !important;
+}
+
+html.light .portfolio-card-action {
+  color: #0066D6 !important;
 }
 
 /* Theme-aware startup and route loading screens. */
