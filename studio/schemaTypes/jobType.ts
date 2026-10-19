@@ -60,12 +60,12 @@ export const jobType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'description',
-      title: 'Role Description',
-      type: 'text',
-      rows: 6,
-      validation: (rule) => rule.required(),
-    }),
+  name: 'description',
+  title: 'Role Description / Responsibilities',
+  type: 'array',
+  of: [{ type: 'string' }],
+  validation: (rule) => rule.required(),
+}),
     defineField({
       name: 'requirements',
       title: 'Requirements',

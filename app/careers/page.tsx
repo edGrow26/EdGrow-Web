@@ -226,10 +226,48 @@ export default function CareersPage() {
                             </button>
                           </div>
 
-                          <p className="text-gray-300 text-[13px] leading-relaxed mb-6">
-                            {job.description}
-                          </p>
+                         <div className="text-gray-300 text-[13px] leading-relaxed mb-6 space-y-3">
+  {(() => {
+    const rawText = typeof job.description === 'string' 
+      ? job.description 
+      : Array.isArray(job.description)
+      ? job.description.map((i: any) => typeof i === 'string' ? i : i.children?.[0]?.text || '').join('\n')
+      : String(job.description || '');
 
+    
+    const parts = rawText.split(/Key Responsibilities:?/i);
+    const intro = parts[0]?.trim();
+    const responsibilitiesText = parts[1] || '';
+
+    
+    const points = responsibilitiesText
+      .split(/[-–—]\s+|\n+/)
+      .map((p) => p.trim())
+      .filter(Boolean);
+
+    return (
+      <>
+        
+        {intro && <p className="text-gray-300">{intro}</p>}
+
+       
+        {points.length > 0 && (
+          <div className="mt-4">
+            <strong className="text-white font-semibold block mb-2">Key Responsibilities:</strong>
+            <ul className="flex flex-col gap-2 pl-1">
+              {points.map((pt, idx) => (
+                <li key={idx} className="flex items-start gap-2 text-gray-300">
+                  <span className="text-accent font-bold mt-0.5">•</span>
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </>
+    );
+  })()}
+</div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-white/5">
                             <div>
                               <strong className="text-[11px] text-gray-400 uppercase tracking-widest block mb-2">Requirements:</strong>
