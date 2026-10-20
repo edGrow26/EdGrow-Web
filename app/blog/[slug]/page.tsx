@@ -57,13 +57,66 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export async function generateStaticParams() {
   const posts = await sanityClient.getBlogPosts();
   const slugs = new Set(posts.map((p) => p.slug));
-  // Always include the two known mock slugs as a safety net
   ['why-nextjs-sanity-beats-wordpress', 'ultimate-guide-technical-seo-core-web-vitals'].forEach(s => slugs.add(s));
   return Array.from(slugs).map((slug) => ({ slug }));
 }
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+// Format Blog Content: Ensures both main section titles are Bold H2 (22-26px)
+function formatBlogContent(content: any): string {
+  if (!content) return '';
+  
+  let rawText = '';
+  if (typeof content === 'string') {
+    rawText = content;
+  } else if (Array.isArray(content)) {
+    rawText = content.map((block: any) => 
+      block.children ? block.children.map((c: any) => c.text).join('') : ''
+    ).join('\n\n');
+  } else {
+    rawText = String(content);
+  }
+
+  // 1. Convert raw URLs into clickable anchor tags
+  let html = rawText.replace(
+    /(https?:\/\/[^\s<]+)/g,
+    '<a href="$1" target="_blank" rel="noopener noreferrer" class="text-accent underline hover:text-mint transition-colors font-semibold cursor-pointer">$1</a>'
+  );
+
+  // 2. Split into blocks/lines
+  let lines = html.split(/\n+/).map(l => l.trim()).filter(Boolean);
+
+  // Merge orphan punctuation
+  const cleanedBlocks: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const current = lines[i];
+    if ((current === '?' || current === '.' || current === '!') && cleanedBlocks.length > 0) {
+      cleanedBlocks[cleanedBlocks.length - 1] += current;
+    } else {
+      cleanedBlocks.push(current);
+    }
+  }
+
+  let formattedHtml = '';
+
+  cleanedBlocks.forEach((block) => {
+    // Both section titles + numbered list headers get Bold H2 styling
+    const isMainHeading = 
+      /^\d+\.\s+/.test(block) ||
+      block.includes("Build a Website That Works for Your Business") ||
+      block.includes("Is It Time for a Website Upgrade?");
+
+    if (isMainHeading) {
+      formattedHtml += `<h2 class="text-[22px] sm:text-[24px] md:text-[26px] font-bold text-white mt-10 mb-4 leading-snug">${block}</h2>`;
+    } else {
+      formattedHtml += `<p class="text-[16px] sm:text-[17px] md:text-[18px] text-gray-300 leading-relaxed mb-6">${block}</p>`;
+    }
+  });
+
+  return formattedHtml;
 }
 
 export default async function BlogPostDetailPage({ params }: PageProps) {
@@ -110,6 +163,8 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
     },
   };
 
+  const formattedHtmlContent = formatBlogContent(post.content);
+
   return (
     <div className="relative min-h-screen bg-black text-white overflow-x-hidden">
       <BackgroundWaves />
@@ -148,8 +203,8 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
           </span>
         </div>
 
-        {/* Dynamic Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight mb-8">
+        {/* Main Title (H1) - 32-40px */}
+        <h1 className="text-3xl sm:text-4xl md:text-[40px] font-black tracking-tight leading-[1.15] mb-8 text-white">
           {post.title}
         </h1>
 
@@ -180,14 +235,14 @@ export default async function BlogPostDetailPage({ params }: PageProps) {
           />
         </div>
 
-        {/* Rich-Text rendered directly in pristine prose */}
+        {/* Formatted Content */}
         <div 
-          className="prose prose-invert max-w-none text-gray-300 text-sm sm:text-base leading-relaxed space-y-6
-            prose-headings:text-white prose-headings:font-black prose-headings:tracking-tight prose-headings:mt-10 prose-headings:mb-4
-            prose-h2:text-2xl prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-2
-            prose-strong:text-white prose-strong:font-bold
-            prose-ul:list-disc prose-ul:pl-6 prose-ul:space-y-2"
-          dangerouslySetInnerHTML={{ __html: post.content }}
+          className="prose prose-invert max-w-none text-gray-300
+            [&>p]:text-[16px] sm:[&>p]:text-[17px] md:[&>p]:text-[18px] [&>p]:leading-relaxed [&>p]:mb-6 [&>p]:text-gray-300
+            [&>h2]:text-[22px] sm:[&>h2]:text-[24px] md:[&>h2]:text-[26px] [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-10 [&>h2]:mb-4 [&>h2]:leading-snug
+            [&>strong]:font-bold [&>strong]:text-white 
+            [&>a]:text-accent [&>a]:underline hover:[&>a]:text-mint [&>a]:transition-colors [&>a]:font-semibold"
+          dangerouslySetInnerHTML={{ __html: formattedHtmlContent }}
         />
 
         {/* Related Posts CTA Card */}
